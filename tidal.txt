@@ -173,6 +173,8 @@ A smaller window that overlaps only the first event:
 
 So we're getting a list of events from the query.  Each event contains a ValueMap.
 
+## Event type
+
 If we just take the first event:
 
     Prelude Sound.Tidal.Context Map> head $ query a $ State (Arc 0 1/6) Map.empty
