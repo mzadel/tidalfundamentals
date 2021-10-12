@@ -239,6 +239,94 @@ So it looks like the way to interpret (⅓>½)-⅔ is
 
 And then s: "n" is the key-value pair from the ValueMap .
 
+There are some functions to query the window start / ends:
+
+    Prelude Sound.Tidal.Context Map> wholeStart firstevent
+    0 % 1
+    Prelude Sound.Tidal.Context Map> wholeStop firstevent
+    1 % 3
+    Prelude Sound.Tidal.Context Map> eventPartStart firstevent
+    1 % 6
+    Prelude Sound.Tidal.Context Map> eventPartStop firstevent
+    1 % 3
+    Prelude Sound.Tidal.Context Map> eventValue firstevent
+    s: "m"
+
+I'm not sure if these functions are typically used.  They're probably internal.
+
+
+## You don't need the s function to examine the internals
+
+You can omit the s function, which is an alias for sound (see Params.hs).
+But is seems to only accept certain letters then:
+
+    Prelude Sound.Tidal.Context> parseBP_E "t r s"
+    *** Exception: Syntax error in sequence:
+      "t r s"
+       ^
+    unexpected 't'
+    expecting white space, "-", "+", number, "c", "d", "e", "f", "g", "a", "b", "'", rest, "[", "{", "<", "^", ".", "?" or end of input
+
+I guess s somehow makes the string mini-language accept more tokens.  But anyway, this works:
+
+    Prelude Sound.Tidal.Context> parseBP_E "a e g"
+    (0>⅓)|9
+    (⅓>⅔)|4
+    (⅔>1)|7
+
+## Defining and showing patterns
+
+You can use the output as above, or drawLine:
+
+    Prelude Sound.Tidal.Context> parseBP_E "a b c"
+    (0>⅓)|9
+    (⅓>⅔)|11
+    (⅔>1)|0
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a b c"
+
+    [19 cycles]
+    |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
+
+Underscore is a rest
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a _ c"
+    (0>⅔)|s: "a"
+    (⅔>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a _ c"
+
+    [19 cycles]
+    |a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c
+
+Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a*2 c"
+    (0>¼)|s: "a"
+    (¼>½)|s: "a"
+    (½>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a*2 c"
+
+    [15 cycles]
+    |aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-
+
+So instead of getting the cycle divided into three, it's divided into four.
+
+Tilde is a rest:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "bd ~ bd ~"
+    (0>¼)|s: "bd"
+    (½>¾)|s: "bd"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "bd ~ bd ~"
+
+    [11 cycles]
+    |bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.
+
+So the dot in the drawLine output is the rest.  If it's a hyphen as above it's a
+continuation of the previous character.
+
+
+
+
+
 
 
 
