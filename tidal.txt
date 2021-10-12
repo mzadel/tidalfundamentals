@@ -71,6 +71,146 @@ https://tidalcycles.org/docs/getting-started/macos_install
 
 
 
+## Starting to look at some expressions
+
+This seems to work in the examples but not in ghci:
+
+    Prelude Sound.Tidal.Context> s $ "bd bd bd"
+
+    <interactive>:14:5: error:
+        • Couldn't match expected type ‘Pattern String’
+                      with actual type ‘[Char]’
+        • In the second argument of ‘($)’, namely ‘"bd bd bd"’
+          In the expression: s $ "bd bd bd"
+          In an equation for ‘it’: it = s $ "bd bd bd"
+
+It needs parseBP_E, which is automatically, silently added when running from the text editor.  In a normal ghci:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "bd bd bd"
+    (0>⅓)|s: "bd"
+    (⅓>⅔)|s: "bd"
+    (⅔>1)|s: "bd"
+
+You can turn on the implict string handling with {-# language OverloadedStrings #-}, or the equivalent :set -XOverloadedStrings in ghci (see waldmann article above).
+
+    $ stack ghci
+    ...
+    Configuring GHCi with the following packages:
+    GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /private/var/folders/ny/rrw1ccy54sxdp2rv844cxx0rqv33h5/T/haskell-stack-ghci/2a3bbd58/ghci-script
+    Prelude> import Sound.Tidal.Context
+    Prelude Sound.Tidal.Context> :set -XOverloadedStrings
+    Prelude Sound.Tidal.Context> s $ "bd bd bd"
+    (0>⅓)|s: "bd"
+    (⅓>⅔)|s: "bd"
+    (⅔>1)|s: "bd"
+
+OverloadedStrings is described at https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html .
+I'd prefer not to use it right now since I'm explicitly trying to figure out the types and to understand the core definitions.
+
+
+
+## Pattern type
+
+    Prelude Sound.Tidal.Context> a = s $ parseBP_E "m n o"
+    Prelude Sound.Tidal.Context> a
+    (0>⅓)|s: "m"
+    (⅓>⅔)|s: "n"
+    (⅔>1)|s: "o"
+    Prelude Sound.Tidal.Context> :t a
+    a :: ControlPattern
+
+m n o is arbitrary here.  There's a mini pattern language that's used in the string literal that's parsed by parseBP_E.
+
+"m n o" takes one bar (ie one cycle) and divides it into three, and each one is
+an event.
+
+Pattern is defined in Sound/Tidal/Pattern.hs .
+
+    -- | A datatype representing events taking place over time
+    data Pattern a = Pattern {query :: State -> [Event a]}
+      deriving (Generic, Functor)
+
+The idea is that a pattern divides a cycle evenly into event windows with data
+attached to them, and then you can query a time window of the pattern to see
+which event windows it overlaps.
+
+An arc goes from one time to another.  Time is expressed as a rational (i.e., a fraction)  (defined in Sound/Tidal/Time.hs)
+
+    -- | Time is rational
+    type Time = Rational
+
+    -- | An arc of time, with a start time (or onset) and a stop time (or offset)
+    data ArcF a = Arc
+      { start :: a
+      , stop :: a
+      } deriving (Eq, Ord, Functor, Show, Generic)
+
+    type Arc = ArcF Time
+
+So we can create an arc of time:
+
+    Prelude Sound.Tidal.Context> arcoftime = Arc 0.5 1.2
+    Prelude Sound.Tidal.Context> arcoftime
+    Arc {start = 0.5, stop = 1.2}
+
+And then query our pattern:
+
+    Prelude Sound.Tidal.Context> import qualified Data.Map.Strict as Map
+    Prelude Sound.Tidal.Context Map> query a (State arcoftime Map.empty)
+    [[((1,1),(2,1))](1>1⅕)-1⅓|s: "m",[((3,1),(4,1))]⅓-(½>⅔)|s: "n",[((5,1),(6,1))](⅔>1)|s: "o"]
+
+A smaller window that overlaps only the first event:
+
+    Prelude Sound.Tidal.Context Map> query a (State (Arc 0 1/6) Map.empty)
+    [[((1,1),(2,1))](0>⅙)-⅓|s: "m"]
+    Prelude Sound.Tidal.Context Map> :t query a (State (Arc 0 1/6) Map.empty)
+    query a (State (Arc 0 1/6) Map.empty) :: [Event ValueMap]
+
+So we're getting a list of events from the query.  Each event contains a ValueMap.
+
+If we just take the first event:
+
+    Prelude Sound.Tidal.Context Map> head $ query a $ State (Arc 0 1/6) Map.empty
+    [((1,1),(2,1))](0>⅙)-⅓|s: "m"
+
+Let's pull the event apart.  The event has this type (see Sound/Tidal/Pattern.hs):
+
+    -- | An event is a value that's active during a timespan. If a whole
+    -- is present, the part should be equal to or fit inside it.
+    data EventF a b = Event
+      { context :: Context
+      , whole :: Maybe a
+      , part :: a
+      , value :: b
+      } deriving (Eq, Ord, Functor, Generic)
+    instance (NFData a, NFData b) => NFData (EventF a b)
+
+    type Event a = EventF (ArcF Time) a
+
+so
+
+    Prelude Sound.Tidal.Context Map> firstevent = head $ query a $ State (Arc 0 1/6) Map.empty
+    Prelude Sound.Tidal.Context Map> value firstevent
+    s: "m"
+    Prelude Sound.Tidal.Context Map> whole firstevent
+    Just 0>⅓
+    Prelude Sound.Tidal.Context Map> part firstevent
+    0>⅙
+    Prelude Sound.Tidal.Context Map> context firstevent
+    [((1,1),(2,1))]
+
+The value is from the string we passed into the initial string expression (s $ parseBP_E "m n o")
+
+The whole is the entire span of the event that our little window overlaps.
+(The whole event goes from 0 to one third, our window goes from zero to one
+sixth.)
+
+The context is apparently the position within the sourcecode, I guess used when
+interpreting expressions in a live coding context.
+
+
+
 
 
 
