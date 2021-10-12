@@ -2,6 +2,9 @@
 
 ## See also
 
+Live code with Tidal Cycles | Tidal Cycles
+https://tidalcycles.org/
+
 Types in tidal-cycles
 https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/
 
@@ -10,6 +13,10 @@ https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F
 
 Tidal Adventures. Introduction | by Carsten Heisterkamp | Medium
 https://heisterkamp.medium.com/tidal-adventures-ab627f05ef7c
+
+tidal: Pattern language for improvised music
+https://hackage.haskell.org/package/tidal
+
 
 
 
