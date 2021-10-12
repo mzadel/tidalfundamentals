@@ -131,9 +131,11 @@ Pattern is defined in Sound/Tidal/Pattern.hs .
     data Pattern a = Pattern {query :: State -> [Event a]}
       deriving (Generic, Functor)
 
+So a pattern is something that can be queried, returning a list of events.
+
 The idea is that a pattern divides a cycle evenly into event windows with data
-attached to them, and then you can query a time window of the pattern to see
-which event windows it overlaps.
+attached to each one.  You can query a time range of the pattern to see which
+event windows it overlaps.
 
 An arc goes from one time to another.  Time is expressed as a rational (i.e., a fraction)  (defined in Sound/Tidal/Time.hs)
 
