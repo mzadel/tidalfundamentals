@@ -422,7 +422,36 @@ Contrast with doing it in the other order:
 It doesn't show the c in the first expression since I guess it only queries it
 over one cycle.
 
+You can set the length of the polymetric sequence with %  . The first pair of
+expressions divide the cycle in to eight, and the second pair divide the cycle
+into seven.
 
+    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%8"
+    (0>⅛)|s: "a"
+    (⅛>¼)|s: "b"
+    (¼>⅜)|s: "c"
+    (⅜>½)|s: "d"
+    (½>⅝)|s: "e"
+    (⅝>¾)|s: "a"
+    (¾>⅞)|s: "b"
+    (⅞>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c d e}%8"
+
+    [8 cycles]
+    |abcdeabc|deabcdea|bcdeabcd|eabcdeab|cdeabcde|abcdeabc|deabcdea|bcdeabcd
+    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%7"
+      (0>⅐)|s: "a"
+     (⅐>²₇)|s: "b"
+    (²₇>³₇)|s: "c"
+    (³₇>⁴₇)|s: "d"
+    (⁴₇>⁵₇)|s: "e"
+    (⁵₇>⁶₇)|s: "a"
+     (⁶₇>1)|s: "b"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c d e}%7"
+
+    [9 cycles]
+    |abcdeab|cdeabcd|eabcdea|bcdeabc|deabcde|abcdeab|cdeabcd|eabcdea|bcdeabc
+    Prelude Sound.Tidal.Context>
 
 
 
