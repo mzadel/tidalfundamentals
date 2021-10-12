@@ -231,5 +231,8 @@ So it looks like the way to interpret (⅓>½)-⅔ is
     ⅓ to ⅔ is the whole event window
     and (⅓>½)-⅔ is a representation that combines both the partial window from the query and the whole event window
 
+And then s: "n" is the key-value pair from the ValueMap .
+
+
 
 
