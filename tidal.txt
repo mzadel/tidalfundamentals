@@ -451,7 +451,28 @@ into seven.
 
     [9 cycles]
     |abcdeab|cdeabcd|eabcdea|bcdeabc|deabcde|abcdeab|cdeabcd|eabcdea|bcdeabc
-    Prelude Sound.Tidal.Context>
+
+Use angle brackets to alternate between the events
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "<a b c> d <e f>"
+    (0>⅓)|s: "a"
+    (⅓>⅔)|s: "d"
+    (⅔>1)|s: "e"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "<a b c> d <e f>"
+
+    [19 cycles]
+    |ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade
+
+Use brackets to create a Euclidean rhythm:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a(3,7)"
+      (0>⅐)|s: "a"
+    (²₇>³₇)|s: "a"
+    (⁴₇>⁵₇)|s: "a"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a(3,7)"
+
+    [9 cycles]
+    |a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..
 
 
 
