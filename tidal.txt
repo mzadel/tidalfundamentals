@@ -287,7 +287,22 @@ You can use the output as above, or drawLine:
     [19 cycles]
     |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
 
-Underscore is a rest
+See https://tidalcycles.org/docs/patternlib/tutorials/mini_notation for notes
+on the syntax of the following examples.
+
+Tilde is a rest:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "bd ~ bd ~"
+    (0>¼)|s: "bd"
+    (½>¾)|s: "bd"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "bd ~ bd ~"
+
+    [11 cycles]
+    |bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.
+
+So the dot in the drawLine output is the rest.
+
+Underscore elongates a note:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a _ c"
     (0>⅔)|s: "a"
@@ -296,6 +311,8 @@ Underscore is a rest
 
     [19 cycles]
     |a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c
+
+The hyphen means that the a note is held for an extra division.
 
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 
@@ -310,21 +327,100 @@ Repeat an event with * . Notice how it takes the time the event would have taken
 
 So instead of getting the cycle divided into three, it's divided into four.
 
-Tilde is a rest:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "bd ~ bd ~"
-    (0>¼)|s: "bd"
-    (½>¾)|s: "bd"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "bd ~ bd ~"
+Use ! to repeat an event.  Contrast this with * .
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a!2 c"
+    (0>⅓)|s: "a"
+    (⅓>⅔)|s: "a"
+    (⅔>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a!2 c"
+
+    [19 cycles]
+    |aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac
+
+Use square brackets for grouping.
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "[a b c] [d e]"
+    (0>⅙)|s: "a"
+    (⅙>⅓)|s: "b"
+    (⅓>½)|s: "c"
+    (½>¾)|s: "d"
+    (¾>1)|s: "e"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "[a b c] [d e]"
+
+    [6 cycles]
+    |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
+
+So it divided the pattern into two halves, and then divided the first half into
+three and the second half into two.
+
+You can do the same with a dot:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a b c . d e"
+    (0>⅙)|s: "a"
+    (⅙>⅓)|s: "b"
+    (⅓>½)|s: "c"
+    (½>¾)|s: "d"
+    (¾>1)|s: "e"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a b c . d e"
+
+    [6 cycles]
+    |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
+
+
+So this is where I think it starts to get interesting.
+Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "[a b c , d e]"
+    (0>⅓)|s: "a"
+    (0>½)|s: "d"
+    (⅓>⅔)|s: "b"
+    (½>1)|s: "e"
+    (⅔>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "[a b c , d e]"
 
     [11 cycles]
-    |bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.
+    |a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-
+    |d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--
 
-So the dot in the drawLine output is the rest.  If it's a hyphen as above it's a
-continuation of the previous character.
+I'm officially feeling this.
+The first expression's output orders the events by onset time.
 
+You can create polymetric sequences with braces:
 
+    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c , d e}"
+    (0>⅓)|s: "a"
+    (0>⅓)|s: "d"
+    (⅓>⅔)|s: "b"
+    (⅓>⅔)|s: "e"
+    (⅔>1)|s: "c"
+    (⅔>1)|s: "d"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c , d e}"
 
+    [19 cycles]
+    |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
+    |ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded
+
+So it looks like it takes the first pattern and divides the cycle by the number
+of elements it has, and then uses that length for each element of the second
+pattern.
+
+Contrast with doing it in the other order:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "{d e , a b c}"
+    (0>½)|s: "d"
+    (0>½)|s: "a"
+    (½>1)|s: "e"
+    (½>1)|s: "b"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{d e , a b c}"
+
+    [26 cycles]
+    |de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de
+    |ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca
+
+It doesn't show the c in the first expression since I guess it only queries it
+over one cycle.
 
 
 
