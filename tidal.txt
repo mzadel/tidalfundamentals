@@ -1,0 +1,62 @@
+
+
+## See also
+
+Types in tidal-cycles
+https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/
+
+What is a pattern? - TidalCycles userbase
+https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F
+
+
+## Installing the tidal haskell libraries
+
+MacOS | Tidal Cycles
+https://tidalcycles.org/docs/getting-started/macos_install
+
+(Reconstructed these steps from memory...)
+(Can redo the install to confirm)
+
+ - Used stack
+     - Stack (Haskell) - Wikipedia https://en.wikipedia.org/wiki/Stack_(Haskell)
+     - https://haskellstack.org
+     - https://docs.haskellstack.org/en/stable/install_and_upgrade/
+ - Can blow away `~/.stack` to reset your install
+ - In `~/.stack/global-project/stack.yaml`, used `resolver: lts-18.12`
+     - Go to stackage and click on LTS at the top
+     - https://www.stackage.org/lts-18.12
+ - Installed the global ghc with `stack setup` (I think)
+     - Ends up in `~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc`
+         - See `stack path`
+     - Invoke as `stack ghc` or `stack ghci`
+ - Then it seems like I did `stack install tidal`
+
+
+## Testing the basic tidal install
+
+    $ stack ghci
+
+    Note: No local targets specified, so a plain ghci will be started with no package hiding
+          or package options.
+
+          You are using snapshot: lts-18.12
+
+          If you want to use package hiding and options, then you can try one of the
+          following:
+
+          * If you want to start a different project configuration
+            than /.../.stack/global-project/stack.yaml, then you can use stack init to
+            create a new stack.yaml for the packages in the current directory.
+
+          * If you want to use the project configuration
+            at /.../.stack/global-project/stack.yaml, then you can add to its 'packages' field.
+
+    Configuring GHCi with the following packages:
+    GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /private/var/folders/ny/rrw1ccy54sxdp2rv844cxx0rqv33h5/T/haskell-stack-ghci/2a3bbd58/ghci-script
+    Prelude> import Sound.Tidal.Context
+    Prelude Sound.Tidal.Context> tidal_version
+    "1.7.8"
+
+
+
