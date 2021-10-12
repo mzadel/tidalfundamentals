@@ -209,8 +209,27 @@ sixth.)
 The context is apparently the position within the sourcecode, I guess used when
 interpreting expressions in a live coding context.
 
+So if we overlap the first two events and get the second event:
 
+    Prelude Sound.Tidal.Context Map> firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
+    Prelude Sound.Tidal.Context Map> firstevent
+    [((1,1),(2,1))]0-(⅙>⅓)|s: "m"
+    Prelude Sound.Tidal.Context Map> whole firstevent
+    Just 0>⅓
+    Prelude Sound.Tidal.Context Map> part firstevent
+    ⅙>⅓
+    Prelude Sound.Tidal.Context Map> secondevent
+    [((3,1),(4,1))](⅓>½)-⅔|s: "n"
+    Prelude Sound.Tidal.Context Map> whole secondevent
+    Just ⅓>⅔
+    Prelude Sound.Tidal.Context Map> part secondevent
+    ⅓>½
 
+So it looks like the way to interpret (⅓>½)-⅔ is
+
+    (⅓>½) is the part, where the query window overlaps with the event window
+    ⅓ to ⅔ is the whole event window
+    and (⅓>½)-⅔ is a representation that combines both the partial window from the query and the whole event window
 
 
 
