@@ -150,6 +150,8 @@ An arc goes from one time to another.  Time is expressed as a rational (i.e., a 
 
     type Arc = ArcF Time
 
+The reason it's called an arc is that a cycle is imagined to lie on a circle.  An arc is a portion of that circle.
+
 So we can create an arc of time:
 
     Prelude Sound.Tidal.Context> arcoftime = Arc 0.5 1.2
