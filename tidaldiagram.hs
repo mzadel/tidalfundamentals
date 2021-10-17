@@ -45,7 +45,7 @@ patternEvents = w
         a :: Angle Double
         a = (4 * tau / 7 - tau / 4) @@ rad
 
-combined = circleWithTicks <> patternEvents
+combined = patternEvents <> circleWithTicks
 
 outputScaling = 1000 :: Double
 
