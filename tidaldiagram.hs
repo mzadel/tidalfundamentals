@@ -21,25 +21,25 @@ circleWithTicks :: Diagram B
 circleWithTicks = circle theRadius <> mconcat tickMarks <> mconcat tickMarkLabels
     where
         numParts = 7
-        tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Rational]
-        tickMarks = map tickMark tickMarkPositions
-        tickMarkLabels = map (tickMarkLabel 0.05) tickMarkPositions
+        tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
+        tickMarks = map tickMark tickMarkLocations
+        tickMarkLabels = map (tickMarkLabel 0.05) tickMarkLocations
 
 tickMark :: Rational -> Diagram B
-tickMark tickPos = mark
+tickMark tickLoc = mark
     where
         tickMarkSize = 0.1 * theRadius
         topPoint = p2 (0, theRadius)
         lineSeg = vrule tickMarkSize # moveTo topPoint
-        rotAmount = fromRational tickPos
+        rotAmount = fromRational tickLoc
         mark = rotateBy rotAmount lineSeg
 
 tickMarkLabel :: Double -> Rational -> Diagram B
-tickMarkLabel extraRadius tickPos = label
+tickMarkLabel extraRadius tickLoc = label
     where
         labelPoint = p2 (0, theRadius + extraRadius)
-        rotAmount = fromRational tickPos
-        labelText = show tickPos
+        rotAmount = fromRational tickLoc
+        labelText = show tickLoc
         label = text labelText # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
 
 patternEvents :: Diagram B
