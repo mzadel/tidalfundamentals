@@ -49,10 +49,10 @@ patternEvents :: Diagram B
 patternEvents = w
     where
         d :: Direction V2 Double
-        d = rotateBy (1/4) xDir
-        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a # fc red # lw none
+        d = xDir
+        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a # transform overallTransform # fc red # lw none
         a :: Angle Double
-        a = (4 * tau / 7 - tau / 4) @@ rad
+        a = (1/4) @@ turn
 
 combined = patternEvents <> circleWithTicks
 
