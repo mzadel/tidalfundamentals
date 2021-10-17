@@ -21,18 +21,19 @@ circleWithTicks :: Diagram B
 circleWithTicks = circle theRadius <> mconcat tickMarks
     where
         numParts = 7
-        tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Double]
+        tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Rational]
         tickMarks = map tickMark tickMarkPositions
 
-tickMark :: Double -> Diagram B
+tickMark :: Rational -> Diagram B
 tickMark tickPos = mark
     where
         tickMarkSize = 0.1 * theRadius
         topPoint = p2 (0, theRadius)
         labelPoint = p2 (0, theRadius + 2 * tickMarkSize)
         lineSeg = vrule tickMarkSize # moveTo topPoint
-        mark = rotateBy tickPos lineSeg <> label
-        label = text "blah" # fontSize (local 0.015) # moveTo (rotateBy tickPos $ labelPoint)
+        rotAmount = fromRational tickPos
+        mark = rotateBy rotAmount lineSeg <> label
+        label = text "blah" # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
 
 outputScaling = 1000 :: Double
 
