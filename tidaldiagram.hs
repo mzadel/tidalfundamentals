@@ -41,7 +41,7 @@ patternEvents = w
     where
         d :: Direction V2 Double
         d = rotateBy (1/4) xDir
-        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a
+        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a # fc red # lw none
         a :: Angle Double
         a = (4 * tau / 7 - tau / 4) @@ rad
 
