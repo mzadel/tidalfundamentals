@@ -45,14 +45,19 @@ tickMarkLabel extraRadius tickLoc = label
         labelText = show tickLoc
         label = text labelText # fontSize (local 0.015) # moveTo labelPoint
 
-patternEvents :: Diagram B
-patternEvents = w
+patternEvent :: Rational -> Rational -> Diagram B
+patternEvent startLoc endLoc = transformedWedge
     where
-        d :: Direction V2 Double
-        d = xDir
-        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a # transform overallTransform # fc red # lw none
-        a :: Angle Double
-        a = (1/4) @@ turn
+        angle = (fromRational (endLoc - startLoc)) @@ turn
+        startDir = xDir # rotateBy (fromRational startLoc)
+        wedgeWidth = 0.035
+        innerRadius = theRadius - (wedgeWidth/2)
+        outerRadius = theRadius + (wedgeWidth/2)
+        theWedge = annularWedge outerRadius innerRadius startDir angle # fc red # lw none
+        transformedWedge = theWedge # transform overallTransform
+
+patternEvents :: Diagram B
+patternEvents = patternEvent (1/7) (2/7)
 
 combined = patternEvents <> circleWithTicks
 
