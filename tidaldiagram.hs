@@ -21,6 +21,8 @@ myCircle = circle radiusOfUnitCircumfrenceCircle # fc green
 
 outputScaling = 1000 :: Double
 
+outputDiagram = myCircle
+
 main :: IO ()
-main = mainWith (myCircle # scale outputScaling)
+main = mainWith (outputDiagram # scale outputScaling)
 
