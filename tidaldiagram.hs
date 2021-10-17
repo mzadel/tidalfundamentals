@@ -5,10 +5,22 @@
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
-outputScaling = 50 :: Double
+outputScaling = 1000 :: Double
+
+radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
+
+{--
+Verify that radiusOfUnitCircumfrenceCircle gives us a circle of circumfrence
+1.0:
+
+> c = circle radiusOfUnitCircumfrenceCircle :: Trail V2 Double
+> stdArcLength c
+1.0001402927134473
+--}
 
 myCircle :: Diagram B
-myCircle = circle 1 # fc green
+myCircle = circle radiusOfUnitCircumfrenceCircle # fc green
 
+main :: IO ()
 main = mainWith (myCircle # scale outputScaling)
 
