@@ -19,10 +19,11 @@ Verify that radiusOfUnitCircumfrenceCircle gives us a circle of circumfrence
 circleWithTicks :: Diagram B
 circleWithTicks = circle radiusOfUnitCircumfrenceCircle <> mconcat tickMarks
     where
+        numParts = 7
         tickMarkSize = 0.1 * radiusOfUnitCircumfrenceCircle
         topPoint = p2 (0, radiusOfUnitCircumfrenceCircle)
         lineSeg = vrule tickMarkSize # moveTo topPoint
-        tickMarkPositions = map (/ 7) [0..6] :: [Double]
+        tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Double]
         tickMarks = [ rotateBy r $ lineSeg | r <- tickMarkPositions]
 
 myCircle :: Diagram B
