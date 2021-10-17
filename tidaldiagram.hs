@@ -25,22 +25,25 @@ circleWithTicks = circle theRadius <> mconcat tickMarks <> mconcat tickMarkLabel
         tickMarks = map tickMark tickMarkLocations
         tickMarkLabels = map (tickMarkLabel 0.05) tickMarkLocations
 
+overallTransform :: Transformation V2 Double
+overallTransform = scalingY (-1) <> (rotation $ (-1/4) @@ turn)
+
 tickMark :: Rational -> Diagram B
 tickMark tickLoc = mark
     where
         tickMarkSize = 0.1 * theRadius
-        topPoint = p2 (0, theRadius)
-        lineSeg = vrule tickMarkSize # moveTo topPoint
+        startPoint = p2 (theRadius, 0)
         rotAmount = fromRational tickLoc
-        mark = rotateBy rotAmount lineSeg
+        mark = hrule tickMarkSize # moveTo startPoint # rotateBy rotAmount # transform overallTransform
 
 tickMarkLabel :: Double -> Rational -> Diagram B
 tickMarkLabel extraRadius tickLoc = label
     where
-        labelPoint = p2 (0, theRadius + extraRadius)
+        labelStartPoint = p2 (theRadius + extraRadius, 0)
         rotAmount = fromRational tickLoc
+        labelPoint = labelStartPoint # rotateBy rotAmount # transform overallTransform
         labelText = show tickLoc
-        label = text labelText # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
+        label = text labelText # fontSize (local 0.015) # moveTo labelPoint
 
 patternEvents :: Diagram B
 patternEvents = w
