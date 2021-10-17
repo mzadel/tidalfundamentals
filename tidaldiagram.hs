@@ -18,21 +18,27 @@ Verify that radiusOfUnitCircumfrenceCircle gives us a circle of circumfrence
 --}
 
 circleWithTicks :: Diagram B
-circleWithTicks = circle theRadius <> mconcat tickMarks
+circleWithTicks = circle theRadius <> mconcat tickMarks <> mconcat tickMarkLabels
     where
         numParts = 7
         tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Rational]
         tickMarks = map tickMark tickMarkPositions
+        tickMarkLabels = map (tickMarkLabel 0.05) tickMarkPositions
 
 tickMark :: Rational -> Diagram B
 tickMark tickPos = mark
     where
         tickMarkSize = 0.1 * theRadius
         topPoint = p2 (0, theRadius)
-        labelPoint = p2 (0, theRadius + 2 * tickMarkSize)
         lineSeg = vrule tickMarkSize # moveTo topPoint
         rotAmount = fromRational tickPos
-        mark = rotateBy rotAmount lineSeg <> label
+        mark = rotateBy rotAmount lineSeg
+
+tickMarkLabel :: Double -> Rational -> Diagram B
+tickMarkLabel extraRadius tickPos = label
+    where
+        labelPoint = p2 (0, theRadius + extraRadius)
+        rotAmount = fromRational tickPos
         labelText = show tickPos
         label = text labelText # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
 
