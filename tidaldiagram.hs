@@ -39,5 +39,5 @@ outputScaling = 1000 :: Double
 outputDiagram = circleWithTicks
 
 main :: IO ()
-main = mainWith (outputDiagram # scale outputScaling)
+main = mainWith (outputDiagram # frame 0.05 # scale outputScaling)
 
