@@ -21,11 +21,16 @@ circleWithTicks :: Diagram B
 circleWithTicks = circle theRadius <> mconcat tickMarks
     where
         numParts = 7
-        tickMarkSize = 0.1 * theRadius
-        topPoint = p2 (0, theRadius)
-        lineSeg = vrule tickMarkSize # moveTo topPoint
         tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Double]
-        tickMarks = [ rotateBy r $ lineSeg | r <- tickMarkPositions]
+        tickMarks = map tickMark tickMarkPositions
+
+tickMark :: Double -> Diagram B
+tickMark tickPos = mark
+    where
+        topPoint = p2 (0, theRadius)
+        tickMarkSize = 0.1 * theRadius
+        lineSeg = vrule tickMarkSize # moveTo topPoint
+        mark = rotateBy tickPos $ lineSeg
 
 outputScaling = 1000 :: Double
 
