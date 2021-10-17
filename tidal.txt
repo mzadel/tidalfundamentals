@@ -68,6 +68,17 @@ second try:
      - but runhaskell works for me
          - runhaskell DiagramsTutorial.hs -o circle.svg -w 400
 
+third try:
+
+ - deleted ~/.stack/snapshots
+ - stack install --no-library-stripping diagrams-core
+ - stack install --no-library-stripping diagrams-lib
+ - stack install --no-library-stripping diagrams-svg
+ - this also worked.
+     - diagrams still doesn't compile with ghc --make
+         - I din't feel like uninstalling homebrew right now so I'll try it later
+     - runghc works, runhaskell works
+
 
 
 
