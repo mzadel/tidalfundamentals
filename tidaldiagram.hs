@@ -27,10 +27,12 @@ circleWithTicks = circle theRadius <> mconcat tickMarks
 tickMark :: Double -> Diagram B
 tickMark tickPos = mark
     where
-        topPoint = p2 (0, theRadius)
         tickMarkSize = 0.1 * theRadius
+        topPoint = p2 (0, theRadius)
+        labelPoint = p2 (0, theRadius + 2 * tickMarkSize)
         lineSeg = vrule tickMarkSize # moveTo topPoint
-        mark = rotateBy tickPos $ lineSeg
+        mark = rotateBy tickPos lineSeg <> label
+        label = text "blah" # fontSize (local 0.015) # moveTo (rotateBy tickPos $ labelPoint)
 
 outputScaling = 1000 :: Double
 
