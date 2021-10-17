@@ -48,7 +48,7 @@ tickMarkLabel extraRadius tickLoc = label
 patternEvent :: Rational -> Rational -> Diagram B
 patternEvent startLoc endLoc = transformedWedge
     where
-        angle = (fromRational (endLoc - startLoc)) @@ turn
+        angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
         wedgeWidth = 0.035
         innerRadius = theRadius - (wedgeWidth/2)
