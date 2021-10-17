@@ -27,9 +27,6 @@ circleWithTicks = circle theRadius <> mconcat tickMarks
         tickMarkPositions = map (/ numParts) [0..(numParts-1)] :: [Double]
         tickMarks = [ rotateBy r $ lineSeg | r <- tickMarkPositions]
 
-myCircle :: Diagram B
-myCircle = circle theRadius # fc green
-
 outputScaling = 1000 :: Double
 
 outputDiagram = circleWithTicks
