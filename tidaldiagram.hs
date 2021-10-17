@@ -33,7 +33,8 @@ tickMark tickPos = mark
         lineSeg = vrule tickMarkSize # moveTo topPoint
         rotAmount = fromRational tickPos
         mark = rotateBy rotAmount lineSeg <> label
-        label = text "blah" # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
+        labelText = show tickPos
+        label = text labelText # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
 
 outputScaling = 1000 :: Double
 
