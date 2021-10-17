@@ -5,8 +5,10 @@
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
-myCircle :: Diagram B
-myCircle = circle 25 # fc green
+outputScaling = 50 :: Double
 
-main = mainWith myCircle
+myCircle :: Diagram B
+myCircle = circle 1 # fc green
+
+main = mainWith (myCircle # scale outputScaling)
 
