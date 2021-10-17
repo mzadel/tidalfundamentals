@@ -36,9 +36,20 @@ tickMark tickPos = mark
         labelText = show tickPos
         label = text labelText # fontSize (local 0.015) # moveTo (rotateBy rotAmount $ labelPoint)
 
+patternEvents :: Diagram B
+patternEvents = w
+    where
+        d :: Direction V2 Double
+        d = rotateBy (1/4) xDir
+        w = annularWedge (theRadius*1.1) (theRadius*0.9) d a
+        a :: Angle Double
+        a = (4 * tau / 7 - tau / 4) @@ rad
+
+combined = circleWithTicks <> patternEvents
+
 outputScaling = 1000 :: Double
 
-outputDiagram = circleWithTicks
+outputDiagram = combined
 
 main :: IO ()
 main = mainWith (outputDiagram # frame 0.05 # scale outputScaling)
