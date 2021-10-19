@@ -17,14 +17,6 @@ Verify that radiusOfUnitCircumfrenceCircle gives us a circle of circumfrence
 1.0001402927134473
 --}
 
-circleWithTicks :: Diagram B
-circleWithTicks = circle theRadius <> mconcat tickMarks <> mconcat tickMarkLabels
-    where
-        numParts = 7
-        tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
-        tickMarks = map tickMark tickMarkLocations
-        tickMarkLabels = map (tickMarkLabel 0.05) tickMarkLocations
-
 overallTransform :: Transformation V2 Double
 overallTransform = scalingY (-1) <> (rotation $ (-1/4) @@ turn)
 
@@ -62,10 +54,14 @@ patternEventLabel labelString wedgeStartLoc = labelDiagram
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
         labelDiagram = text labelString # fontSize (local 0.03) # moveTo labelPos
 
-patternEvents :: Diagram B
-patternEvents = patternEventLabel "a" (1/7) <> patternEvent (1/7) (2/7)
+numParts = 7
+tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
 
-combined = patternEvents <> circleWithTicks
+combined = patternEventLabel "a" (1/7)
+    <> patternEvent (1/7) (2/7)
+    <> mconcat (map tickMark tickMarkLocations)
+    <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
+    <> circle theRadius
 
 outputScaling = 1000 :: Double
 
