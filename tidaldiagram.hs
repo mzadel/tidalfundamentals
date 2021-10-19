@@ -56,8 +56,14 @@ patternEvent startLoc endLoc = transformedWedge
         theWedge = annularWedge outerRadius innerRadius startDir angle # fc red # lw none
         transformedWedge = theWedge # transform overallTransform
 
+patternEventLabel :: String -> Rational -> Diagram B
+patternEventLabel labelString wedgeStartLoc = labelDiagram
+    where
+        labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
+        labelDiagram = text labelString # fontSize (local 0.03) # moveTo labelPos
+
 patternEvents :: Diagram B
-patternEvents = patternEvent (1/7) (2/7)
+patternEvents = patternEventLabel "a" (1/7) <> patternEvent (1/7) (2/7)
 
 combined = patternEvents <> circleWithTicks
 
