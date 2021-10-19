@@ -4,6 +4,7 @@
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
+import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
@@ -55,6 +56,12 @@ patternEventLabel labelString wedgeStartLoc = labelDiagram
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
         labelDiagram = text labelString # fontSize (local 0.03) # fc (d3Colors2 Light eventColour) # moveTo labelPos
 
+cycleDirectionArrow :: Diagram B
+cycleDirectionArrow = arro
+    where
+        shaft = arc' (theRadius * 1.45) xDir (0.08 @@ turn) # transform overallTransform
+        arro = arrowFromLocatedTrail shaft
+
 numParts = 7
 tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
 
@@ -64,6 +71,7 @@ combined = patternEventLabel "a" (1/7)
     <> patternEvent (1/7) (2/7)
     <> patternEventLabel "b" (3/7)
     <> patternEvent (3/7) (5/7)
+    <> cycleDirectionArrow
     <> mconcat (map tickMark tickMarkLocations)
     <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
     <> circle theRadius
