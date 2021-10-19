@@ -4,6 +4,7 @@
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
+import Data.Colour.Palette.ColorSet
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -45,17 +46,19 @@ patternEvent startLoc endLoc = transformedWedge
         wedgeWidth = 0.035
         innerRadius = theRadius - (wedgeWidth/2)
         outerRadius = theRadius + (wedgeWidth/2)
-        theWedge = annularWedge outerRadius innerRadius startDir angle # fc red # lw none
+        theWedge = annularWedge outerRadius innerRadius startDir angle # fc (d3Colors2 Dark eventColour) # lw none
         transformedWedge = theWedge # transform overallTransform
 
 patternEventLabel :: String -> Rational -> Diagram B
 patternEventLabel labelString wedgeStartLoc = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
-        labelDiagram = text labelString # fontSize (local 0.03) # moveTo labelPos
+        labelDiagram = text labelString # fontSize (local 0.03) # fc (d3Colors2 Light eventColour) # moveTo labelPos
 
 numParts = 7
 tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
+
+eventColour = 2
 
 combined = patternEventLabel "a" (1/7)
     <> patternEvent (1/7) (2/7)
