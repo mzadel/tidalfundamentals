@@ -59,6 +59,8 @@ tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
 
 combined = patternEventLabel "a" (1/7)
     <> patternEvent (1/7) (2/7)
+    <> patternEventLabel "b" (3/7)
+    <> patternEvent (3/7) (5/7)
     <> mconcat (map tickMark tickMarkLocations)
     <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
     <> circle theRadius
