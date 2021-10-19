@@ -6,6 +6,7 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
+import Data.Ratio
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -30,13 +31,17 @@ tickMark tickLoc = mark
         rotAmount = fromRational tickLoc
         mark = hrule tickMarkSize # moveTo startPoint # rotateBy rotAmount # transform overallTransform
 
+ratioToString :: Rational -> String
+ratioToString 0 = "0"
+ratioToString r = (show $ numerator r) ++ "/" ++ (show $ denominator r)
+
 tickMarkLabel :: Double -> Rational -> Diagram B
 tickMarkLabel extraRadius tickLoc = label
     where
         labelStartPoint = p2 (theRadius + extraRadius, 0)
         rotAmount = fromRational tickLoc
         labelPoint = labelStartPoint # rotateBy rotAmount # transform overallTransform
-        labelText = show tickLoc
+        labelText = ratioToString tickLoc
         label = text labelText # fontSize (local 0.015) # moveTo labelPoint
 
 patternEvent :: Rational -> Rational -> Diagram B
