@@ -1,7 +1,7 @@
 
 MK=/usr/bin/make
 
-output=tidaldiagram
+output=TidalPatternDiagram
 
 all: $(output).svg
 
