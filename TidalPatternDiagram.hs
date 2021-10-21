@@ -2,6 +2,8 @@
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE TypeFamilies              #-}
 
+module TidalPatternDiagram where
+
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
@@ -83,8 +85,5 @@ combined = patternEventLabel "a" (1/7)
 
 outputScaling = 1000 :: Double
 
-outputDiagram = combined
-
-main :: IO ()
-main = mainWith (outputDiagram # frame 0.05 # scale outputScaling)
+outputDiagram = combined # frame 0.05 # scale outputScaling
 
