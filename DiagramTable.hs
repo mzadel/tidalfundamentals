@@ -27,6 +27,8 @@ patternTable = fromList [
     ,("repeateventbang", ("a!2 c", 3))
     ,("squarebrackets", ("[a b c] [d e]", 4))
     ,("thedot", ("a b c . d e", 4))
+    ,("parallelpat1", ("a b c", 4))
+    ,("parallelpat2", ("d e", 4))
     ]
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
