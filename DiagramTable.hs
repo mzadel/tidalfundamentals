@@ -14,6 +14,8 @@ colourTable = fromList [
      ("a", 0)
     ,("b", 2)
     ,("c", 1)
+    ,("d", 7)
+    ,("e", 3)
     ,("bd", 0)]
 
 patternTable :: Map String (String, Integer)
@@ -23,6 +25,8 @@ patternTable = fromList [
     ,("underscoreelongates", ("a _ c", 3))
     ,("repeateventasterisk", ("a*2 c", 4))
     ,("repeateventbang", ("a!2 c", 3))
+    ,("squarebrackets", ("[a b c] [d e]", 4))
+    ,("thedot", ("a b c . d e", 4))
     ]
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)

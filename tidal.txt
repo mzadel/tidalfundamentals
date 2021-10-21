@@ -407,6 +407,8 @@ Use square brackets for grouping.
 So it divided the pattern into two halves, and then divided the first half into
 three and the second half into two.
 
+![](squarebrackets.svg)
+
 You can do the same with a dot:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a b c . d e"
@@ -420,6 +422,7 @@ You can do the same with a dot:
     [6 cycles]
     |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
 
+![](thedot.svg)
 
 So this is where I think it starts to get interesting.
 Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
