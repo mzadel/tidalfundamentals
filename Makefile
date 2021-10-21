@@ -4,14 +4,16 @@ MK=/usr/bin/make
 output=diagram
 modules=TidalPatternDiagram
 
-all: $(output).svg
+all: show
 
 $(output): $(output).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
 
 $(output).svg: $(output)
 	./$< -o $@
-	open -a firefox $@
+
+show: $(output).svg
+	open -a firefox $<
 
 watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
