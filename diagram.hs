@@ -9,13 +9,13 @@ outputScaling = 1000 :: Double
 
 colourTable1 :: Map String Int
 colourTable1 = fromList [
-     ("\"a\"", 2)
-    ,("\"b\"", 2)]
+     ("a", 2)
+    ,("b", 2)]
 
 colourTable2 :: Map String Int
 colourTable2 = fromList [
-     ("\"a\"", 0)
-    ,("\"b\"", 2)]
+     ("a", 0)
+    ,("b", 2)]
 
 pat1 = T.s $ T.parseBP_E "a a b"
 pat2 = T.s $ T.parseBP_E "a b b"

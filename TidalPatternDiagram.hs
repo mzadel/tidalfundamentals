@@ -74,8 +74,11 @@ cycleDirectionArrow = arro
 tickMarkLocations :: Integer -> [Rational]
 tickMarkLocations numTicks = map (% numTicks) [0..(numTicks-1)]
 
+stripFirstAndLast :: String -> String
+stripFirstAndLast = init . tail
+
 eventToTriple :: T.Event T.ValueMap -> (String,Rational,Rational)
-eventToTriple (T.Event _ _ (T.Arc start end) valueMap) = (show value, start, end)
+eventToTriple (T.Event _ _ (T.Arc start end) valueMap) = (stripFirstAndLast $ show value, start, end)
     where
         (_, value) = head $ toList valueMap
 
