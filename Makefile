@@ -3,8 +3,11 @@ MK=/usr/bin/make
 
 all: tidaldiagram.svg
 
-%.svg: %.hs
-	runhaskell $< -o $@
+%: %.hs
+	ghc --make $<
+
+%.svg: %
+	./$< -o $@
 	open -a firefox $@
 
 watch:
