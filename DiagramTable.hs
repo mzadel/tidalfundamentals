@@ -14,16 +14,17 @@ colourTable = fromList [
      ("a", 0)
     ,("b", 2)]
 
-patternTable :: Map String (T.Pattern T.ValueMap, Integer)
+patternTable :: Map String (String, Integer)
 patternTable = fromList [
-    ("pat1", ((T.s $ T.parseBP_E "a a b"), 3)),
-    ("pat2", ((T.s $ T.parseBP_E "a b b"), 3))
+    ("pat1", ("a a b", 3)),
+    ("pat2", ("a b b", 3))
     ]
 
-diagramEntry :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
-diagramEntry (label, (pat, numticks)) = (label, diagram)
+diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
+diagramEntry (label, (patString, numticks)) = (label, diagram)
     where
         diagram = patternDiagram pat numticks colourTable # frame 0.05 # scale outputScaling
+        pat = T.s $ T.parseBP_E patString
 
 diagramListForMainWith :: [(String, Diagram B)]
 diagramListForMainWith = map diagramEntry $ toList patternTable
