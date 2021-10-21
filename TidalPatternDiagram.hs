@@ -103,12 +103,12 @@ patternDiagram tidalPattern numTicks colourTable =
         tickLocList = tickMarkLocations numTicks
 
 patternEventLinear :: Rational -> Rational -> Diagram B
-patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) 0.02 # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) 0.035 # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
 patternEventLabelLinear :: String -> Rational -> Diagram B
 patternEventLabelLinear labelString slabStartLoc = label
     where
-        label = text labelString # fontSize (local 0.015) # moveTo labelPoint
+        label = text labelString # fontSize (local 0.03) # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + 0.02)) ^& 0
 
 patternDiagramLinear :: T.ControlPattern -> Diagram B
