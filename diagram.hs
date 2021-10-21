@@ -17,8 +17,8 @@ colourTable2 = fromList [
      ("\"a\"", 0)
     ,("\"b\"", 2)]
 
-pat1 = tidalPatternToEventList $ T.s $ T.parseBP_E "a a b"
-pat2 = tidalPatternToEventList $ T.s $ T.parseBP_E "a b b"
+pat1 = T.s $ T.parseBP_E "a a b"
+pat2 = T.s $ T.parseBP_E "a b b"
 
 outputDiagram1 :: Diagram B
 outputDiagram1 = patternDiagram pat1 7 colourTable1
