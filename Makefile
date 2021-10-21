@@ -2,15 +2,15 @@
 MK=/usr/bin/make
 
 output=diagram
-modules=TidalPatternDiagram
+modules=TidalPatternDiagram DiagramTable
 
-all: $(output).svg
+all: pat1.svg
 
 $(output): $(output).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
 
-$(output).svg: $(output)
-	./$< -o $@
+%.svg: $(output)
+	./$< -S $(basename $@) -o $@
 	open -a firefox $@
 
 watch:
