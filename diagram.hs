@@ -6,13 +6,10 @@ import Data.Ratio
 
 outputScaling = 1000 :: Double
 
-numParts = 7
-
-tickMarkLocations :: [Rational]
-tickMarkLocations = map (/ numParts) [0..(numParts-1)]
+numTicks = 7
 
 outputDiagram :: Diagram B
-outputDiagram = patternDiagram [("a", 1/7, 2/7), ("b", 3/7, 5/7)] tickMarkLocations
+outputDiagram = patternDiagram [("a", 1/7, 2/7), ("b", 3/7, 5/7)] numTicks
 
 content = outputDiagram === (outputDiagram # scale 0.5)
 
