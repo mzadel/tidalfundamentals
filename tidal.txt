@@ -330,6 +330,8 @@ You can use the output as above, or drawLine:
     [19 cycles]
     |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
 
+![](basicpattern.svg)
+
 See https://tidalcycles.org/docs/patternlib/tutorials/mini_notation for notes
 on the syntax of the following examples.
 
@@ -345,6 +347,8 @@ Tilde is a rest:
 
 So the dot in the drawLine output is the rest.
 
+![](tildeisarest.svg)
+
 Underscore elongates a note:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a _ c"
@@ -356,6 +360,8 @@ Underscore elongates a note:
     |a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c
 
 The hyphen means that the a note is held for an extra division.
+
+![](underscoreelongates.svg)
 
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 

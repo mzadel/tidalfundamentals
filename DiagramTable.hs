@@ -12,12 +12,15 @@ outputScaling = 1000 :: Double
 colourTable :: Map String Int
 colourTable = fromList [
      ("a", 0)
-    ,("b", 2)]
+    ,("b", 2)
+    ,("c", 1)
+    ,("bd", 0)]
 
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
-    ("pat1", ("a a b", 3)),
-    ("pat2", ("a b b", 3))
+    ("basicpattern", ("a b c", 3))
+    ,("tildeisarest", ("bd ~ bd ~", 4))
+    ,("underscoreelongates", ("a _ c", 3))
     ]
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
