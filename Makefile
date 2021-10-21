@@ -19,4 +19,5 @@ watch:
 clean:
 	git clean -f $(wildcard $(output)*)
 	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
+	git clean -f *.svg
 
