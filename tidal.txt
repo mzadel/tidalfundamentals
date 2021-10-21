@@ -80,6 +80,10 @@ third try:
      - runghc works, runhaskell works
 
 
+later:
+
+Eventually also did
+    cabal install palette --lib
 
 
 ## Sanity checking the basic tidal install
