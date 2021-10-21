@@ -2,10 +2,11 @@
 MK=/usr/bin/make
 
 output=diagram
+modules=TidalPatternDiagram
 
 all: $(output).svg
 
-$(output): $(output).hs
+$(output): $(output).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
 
 $(output).svg: $(output)
