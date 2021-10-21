@@ -376,6 +376,7 @@ Repeat an event with * . Notice how it takes the time the event would have taken
 
 So instead of getting the cycle divided into three, it's divided into four.
 
+![](repeateventasterisk.svg)
 
 Use ! to repeat an event.  Contrast this with * .
 
@@ -387,6 +388,8 @@ Use ! to repeat an event.  Contrast this with * .
 
     [19 cycles]
     |aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac
+
+![](repeateventbang.svg)
 
 Use square brackets for grouping.
 

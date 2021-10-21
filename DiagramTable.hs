@@ -21,6 +21,8 @@ patternTable = fromList [
     ("basicpattern", ("a b c", 3))
     ,("tildeisarest", ("bd ~ bd ~", 4))
     ,("underscoreelongates", ("a _ c", 3))
+    ,("repeateventasterisk", ("a*2 c", 3))
+    ,("repeateventbang", ("a!2 c", 3))
     ]
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
