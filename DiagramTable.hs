@@ -37,6 +37,11 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
         diagram = patternDiagram pat numticks colourTable # frame 0.05 # scale outputScaling
         pat = T.s $ T.parseBP_E patString
 
+diagramTableLinear :: [(String, Diagram B)]
+diagramTableLinear = [("lineartest", diagram)]
+    where
+        diagram = (patternDiagramLinear $ T.s $ T.parseBP_E "a b c d") # frame 0.05 # scale outputScaling
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = map diagramEntry $ toList patternTable
+diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear
 
