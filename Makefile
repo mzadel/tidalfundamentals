@@ -4,7 +4,7 @@ MK=/usr/bin/make
 output=diagram
 modules=TidalPatternDiagram DiagramTable
 
-all: pat1.svg
+all: basicpattern.svg
 
 $(output): $(output).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
