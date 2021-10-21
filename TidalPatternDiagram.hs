@@ -9,7 +9,8 @@ import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
 import Data.Ratio
-import Data.Map (Map, (!))
+import Data.Map (Map, (!), toList)
+import qualified Sound.Tidal.Context as T
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -72,6 +73,17 @@ cycleDirectionArrow = arro
 
 tickMarkLocations :: Integer -> [Rational]
 tickMarkLocations numTicks = map (% numTicks) [0..(numTicks-1)]
+
+eventToTriple :: T.Event T.ValueMap -> (String,Rational,Rational)
+eventToTriple (T.Event _ _ (T.Arc start end) valueMap) = (show value, start, end)
+    where
+        (_, value) = head $ toList valueMap
+
+tidalPatternToEventList :: T.ControlPattern -> [(String,Rational,Rational)]
+tidalPatternToEventList pat = eventList
+    where
+        queryResult = T.queryArc pat (T.Arc 0 1)
+        eventList = map eventToTriple queryResult
 
 patternDiagram :: [(String,Rational,Rational)] -> Integer -> Map String Int -> Diagram B
 patternDiagram events numTicks colourTable =
