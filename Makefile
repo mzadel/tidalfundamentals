@@ -1,12 +1,14 @@
 
 MK=/usr/bin/make
 
-all: tidaldiagram.svg
+output=tidaldiagram
 
-%: %.hs
+all: $(output).svg
+
+$(output): $(output).hs
 	ghc --make $<
 
-%.svg: %
+$(output).svg: $(output)
 	./$< -o $@
 	open -a firefox $@
 
