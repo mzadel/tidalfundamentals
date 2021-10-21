@@ -83,7 +83,5 @@ combined = patternEventLabel "a" (1/7)
     <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
     <> circle theRadius
 
-outputScaling = 1000 :: Double
-
-outputDiagram = combined # frame 0.05 # scale outputScaling
+outputDiagram = combined
 
