@@ -9,6 +9,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
 import Data.Ratio
+import Data.Map (Map, (!))
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -46,8 +47,8 @@ tickMarkLabel extraRadius tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize (local 0.015) # moveTo labelPoint
 
-patternEvent :: Rational -> Rational -> Diagram B
-patternEvent startLoc endLoc = transformedWedge
+patternEvent :: Rational -> Rational -> Int -> Diagram B
+patternEvent startLoc endLoc eventColour = transformedWedge
     where
         angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
@@ -57,8 +58,8 @@ patternEvent startLoc endLoc = transformedWedge
         theWedge = annularWedge outerRadius innerRadius startDir angle # fc (d3Colors2 Dark eventColour) # lw none
         transformedWedge = theWedge # transform overallTransform
 
-patternEventLabel :: String -> Rational -> Diagram B
-patternEventLabel labelString wedgeStartLoc = labelDiagram
+patternEventLabel :: String -> Rational -> Int -> Diagram B
+patternEventLabel labelString wedgeStartLoc eventColour = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
         labelDiagram = text labelString # fontSize (local 0.03) # fc (d3Colors2 Light eventColour) # moveTo labelPos
@@ -72,10 +73,8 @@ cycleDirectionArrow = arro
 tickMarkLocations :: Integer -> [Rational]
 tickMarkLocations numTicks = map (% numTicks) [0..(numTicks-1)]
 
-eventColour = 2
-
-patternDiagram :: [(String,Rational,Rational)] -> Integer -> Diagram B
-patternDiagram events numTicks =
+patternDiagram :: [(String,Rational,Rational)] -> Integer -> Map String Int -> Diagram B
+patternDiagram events numTicks colourTable =
         mconcat patterneventlabels
         <> mconcat patternevents
         <> cycleDirectionArrow
@@ -83,7 +82,7 @@ patternDiagram events numTicks =
         <> mconcat (map (tickMarkLabel 0.05) tickLocList)
         <> circle theRadius
     where
-        patternevents = [patternEvent start end | (_,start,end) <- events]
-        patterneventlabels = [patternEventLabel label start | (label,start,_) <- events]
+        patternevents = [patternEvent start end (colourTable ! label) | (label,start,end) <- events]
+        patterneventlabels = [patternEventLabel label start (colourTable ! label) | (label,start,_) <- events]
         tickLocList = tickMarkLocations numTicks
 
