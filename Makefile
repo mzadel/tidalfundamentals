@@ -16,3 +16,7 @@ $(output).svg: $(output)
 watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
 
+clean:
+	git clean -f $(wildcard $(output)*)
+	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
+
