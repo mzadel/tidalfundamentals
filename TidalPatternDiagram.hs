@@ -69,19 +69,17 @@ cycleDirectionArrow = arro
         shaft = arc' (theRadius * 1.45) xDir (0.08 @@ turn) # transform overallTransform
         arro = arrowFromLocatedTrail shaft
 
-numParts = 7
-tickMarkLocations = map (/ numParts) [0..(numParts-1)] :: [Rational]
-
 eventColour = 2
 
-combined = patternEventLabel "a" (1/7)
-    <> patternEvent (1/7) (2/7)
-    <> patternEventLabel "b" (3/7)
-    <> patternEvent (3/7) (5/7)
-    <> cycleDirectionArrow
-    <> mconcat (map tickMark tickMarkLocations)
-    <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
-    <> circle theRadius
-
-outputDiagram = combined
+patternDiagram :: [(String,Rational,Rational)] -> [Rational] -> Diagram B
+patternDiagram events tickMarkLocations =
+        mconcat patterneventlabels
+        <> mconcat patternevents
+        <> cycleDirectionArrow
+        <> mconcat (map tickMark tickMarkLocations)
+        <> mconcat (map (tickMarkLabel 0.05) tickMarkLocations)
+        <> circle theRadius
+    where
+        patternevents = [patternEvent start end | (_,start,end) <- events]
+        patterneventlabels = [patternEventLabel label start | (label,start,_) <- events]
 
