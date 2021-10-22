@@ -35,8 +35,6 @@ patternTable = fromList [
     ,("repeateventbang", ("a!2 c", 3))
     ,("squarebrackets", ("[a b c] [d e]", 4))
     ,("thedot", ("a b c . d e", 4))
-    ,("parallelpat1", ("a b c", 4))
-    ,("parallelpat2", ("d e", 4))
     ]
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
@@ -46,9 +44,10 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
         pat = T.s $ T.parseBP_E patString
 
 diagramTableLinear :: [(String, Diagram B)]
-diagramTableLinear = [("lineartest", diagram)]
-    where
-        diagram = (patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 laneTable colourTable) # frame 0.05 # scale outputScaling
+diagramTableLinear = [
+    ("commaforparallel"
+    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ]
 
 diagramListForMainWith :: [(String, Diagram B)]
 diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear

@@ -442,8 +442,7 @@ Use a comma to play two patterns in parallel.  Apparently you need the square br
 I'm officially feeling this.
 The first expression's output orders the events by onset time.
 
-![](parallelpat1.svg)
-![](parallelpat2.svg)
+![](commaforparallel.svg)
 
 You can create polymetric sequences with braces:
 
