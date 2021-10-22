@@ -21,7 +21,9 @@ diagrams=\
     polymetricdividebyseven \
     anglebrackets \
     euclideanrhythm \
-    slowfunction
+    slowfunction \
+    slowoneandahalf \
+    slowoneandahalfoneeighthticks
 
 all: $(document).html
 

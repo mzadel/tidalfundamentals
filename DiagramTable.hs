@@ -71,6 +71,10 @@ diagramTableLinear = [
     ,(patternDiagramLinear (T.s $ T.parseBP_E "a(3,7)") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowfunction"
     ,(patternDiagramLinear (T.s $ T.slow 2 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,("slowoneandahalf"
+    ,(patternDiagramLinear (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,("slowoneandahalfoneeighthticks"
+    ,(patternDiagramLinear (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 8 3 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

@@ -629,7 +629,50 @@ I'll start to play with some of the basic ones here to understand what they're d
 
 ![](slowfunction.svg)
 
+Interestingly, `slow` seems to split events on cycle boundaries:
 
+    Prelude Sound.Tidal.Context> s $ slow 1.5 $ parseBP_E "a a b c"
+       (0>⅜)|s: "a"
+       (⅜>¾)|s: "a"
+    (¾>1)-1⅛|s: "b"
+    Prelude Sound.Tidal.Context> drawLine $ slow 1.5 $ parseBP_E "a a b c"
 
+    [8 cycles]
+    |a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a
 
+![](slowoneandahalf.svg)
+
+Using `queryArc` to ask for the events:
+
+    Prelude Sound.Tidal.Context> queryArc (s $ slow 1.5 $ parseBP_E "a a b c") (Arc 0 3)
+    [[((1,1),(2,1))](0>⅜)|s: "a",[((3,1),(4,1))](⅜>¾)|s: "a",[((5,1),(6,1))](¾>1)-1⅛|s: "b",[((1,1),(2,1))](1½>1⅞)|s: "a",[((3,1),(4,1))](1⅞>2)-2¼|s: "a",[((5,1),(6,1))]¾-(1>1⅛)|s: "b",[((7,1),(8,1))](1⅛>1½)|s: "c",[((3,1),(4,1))]1⅞-(2>2¼)|s: "a",[((5,1),(6,1))](2¼>2⅝)|s: "b",[((7,1),(8,1))](2⅝>3)|s: "c"]
+
+Pulling this apart (manually) and sorting (manually) we get
+
+    (0>⅜)|s: "a"
+    (⅜>¾)|s: "a"
+    (¾>1)-1⅛|s: "b"
+    ¾-(1>1⅛)|s: "b"
+    (1⅛>1½)|s: "c"
+    (1½>1⅞)|s: "a"
+    (1⅞>2)-2¼|s: "a"
+    1⅞-(2>2¼)|s: "a"
+    (2¼>2⅝)|s: "b"
+    (2⅝>3)|s: "c"
+
+![](slowoneandahalfoneeighthticks.svg)
+
+So it looks like the query is giving back two parts for the first "b" event since it crosses a cycle boundary
+
+ - (¾>1)-1⅛|s: "b"
+ - ¾-(1>1⅛)|s: "b"
+
+but note that for both `Event`s the `whole` is the same: (¾>1⅛).  (*This* is
+why I take the time to understand how to read the output of these functions...)
+I think it'll still only play the one note even though the result of `queryArc`
+seems 'wrong' here.
+
+So query windows seem to be split at cycle boundaries.
+I'm going to chalk this up to an implementation detail and not worry about it
+too much right now.  (That'll teach me - use round numbers!)
 
