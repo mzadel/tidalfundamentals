@@ -459,6 +459,8 @@ You can create polymetric sequences with braces:
     |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
     |ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded
 
+![](polymetricbraces.svg)
+
 So it looks like it takes the first pattern and divides the cycle by the number
 of elements it has, and then uses that length for each element of the second
 pattern.
