@@ -93,13 +93,15 @@ tidalPatternToEventList pat = eventList
         queryResult = T.queryArc pat (T.Arc 0 1)
         eventList = map eventToTriple queryResult
 
+tickMarkLabelOffset = 0.05
+
 patternDiagram :: T.ControlPattern -> Integer -> Map String Int -> Diagram B
 patternDiagram tidalPattern numTicks colourTable =
         mconcat patterneventlabels
         <> mconcat patternevents
         <> cycleDirectionArrow
         <> mconcat (map tickMark tickLocList)
-        <> mconcat (map (tickMarkLabel 0.05) tickLocList)
+        <> mconcat (map (tickMarkLabel tickMarkLabelOffset) tickLocList)
         <> circle theRadius
     where
         events = tidalPatternToEventList tidalPattern
