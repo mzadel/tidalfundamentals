@@ -149,3 +149,26 @@ patternDiagramLinear tidalPattern numTicks colourTable =
         patterneventlabels = [patternEventLabelLinear label start (colourTable ! label) | (label,start,_) <- events]
         tickLocList = tickMarkLocations (1%numTicks) 1
 
+laneYOffset :: Int -> Double
+laneYOffset lane = (fromIntegral $ -lane) * eventWidth
+
+-- lanes are numbered from zero, starting at the top
+patternEventLinearWithLane :: Rational -> Rational -> Int -> Int -> Diagram B
+patternEventLinearWithLane startLoc endLoc lane eventColour = (patternEventLinear startLoc endLoc eventColour) # translateY (laneYOffset lane)
+
+patternEventLabelLinearWithLane :: String -> Rational -> Int -> Int -> Diagram B
+patternEventLabelLinearWithLane labelString slabStartLoc lane eventColour = (patternEventLabelLinear labelString slabStartLoc eventColour) # translateY (laneYOffset lane)
+
+patternDiagramLinearWithLanes :: T.ControlPattern -> Integer -> Map String Int -> Map String Int -> Diagram B
+patternDiagramLinearWithLanes tidalPattern numTicks laneTable colourTable =
+        vsep linearDiagramVerticalPadding [
+            mconcat (map tickMarkLabelLinear tickLocList)
+            ,mconcat (map tickMarkLinear tickLocList)
+            ,(mconcat patterneventlabels <> mconcat patternevents)
+            ]
+    where
+        events = tidalPatternToEventList tidalPattern
+        patternevents = [patternEventLinearWithLane start end (laneTable ! label) (colourTable ! label) | (label,start,end) <- events]
+        patterneventlabels = [patternEventLabelLinearWithLane label start (laneTable ! label) (colourTable ! label) | (label,start,_) <- events]
+        tickLocList = tickMarkLocations (1%numTicks) 1
+

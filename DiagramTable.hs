@@ -18,6 +18,14 @@ colourTable = fromList [
     ,("e", 3)
     ,("bd", 0)]
 
+laneTable :: Map String Int
+laneTable = fromList [
+     ("a", 0)
+    ,("b", 0)
+    ,("c", 0)
+    ,("d", 1)
+    ,("e", 1)]
+
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
     ("basicpattern", ("a b c", 3))
@@ -40,7 +48,7 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [("lineartest", diagram)]
     where
-        diagram = (patternDiagramLinear (T.s $ T.parseBP_E "a b c d") 4 colourTable) # frame 0.05 # scale outputScaling
+        diagram = (patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 laneTable colourTable) # frame 0.05 # scale outputScaling
 
 diagramListForMainWith :: [(String, Diagram B)]
 diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear
