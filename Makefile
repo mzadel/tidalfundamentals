@@ -21,7 +21,7 @@ diagrams=\
     anglebrackets \
     euclideanrhythm
 
-all: basicpattern.svg
+all: $(document).html
 
 $(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
