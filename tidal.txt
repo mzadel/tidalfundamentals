@@ -52,42 +52,42 @@ second try:
  - stack lts didn't work with diagrams
  - tried installing tidal and diagrams with stack nightly
      - tidal worked, but diagrams couldn't be imported for some reason
- - deleted .stack
- - tried ghcup
-     - installed ghc with ghcup
-     - installed cabal with ghcup
-     - cabal update
-     - cabal install tidal --lib
+ - deleted `.stack`
+ - tried `ghcup`
+     - installed `ghc` with `ghcup`
+     - installed `cabal` with `ghcup`
+     - `cabal update`
+     - `cabal install tidal --lib`
      - had trouble with diagrams again...
-         - cabal install diagrams # didn't work!!  couldn't load library, it was hidden or something
-         - cabal install diagrams --lib  # didn't work!!
-         - cabal install diagrams-rasterific  # didn't work!!
+         - `cabal install diagrams` # didn't work!!  couldn't load library, it was hidden or something
+         - `cabal install diagrams --lib`  # didn't work!!
+         - `cabal install diagrams-rasterific`  # didn't work!!
      - this did work though
-         - cabal install diagrams-core --lib
-         - cabal install diagrams-lib --lib
-         - cabal install diagrams-svg --lib
+         - `cabal install diagrams-core --lib`
+         - `cabal install diagrams-lib --lib`
+         - `cabal install diagrams-svg --lib`
  - worked
-     - diagrams still doesn't compile with ghc --make
+     - diagrams still doesn't compile with `ghc --make`
          - seems like it's a linker error due to homebrew?
-     - but runhaskell works for me
-         - runhaskell DiagramsTutorial.hs -o circle.svg -w 400
+     - but `runhaskell` works for me
+         - `runhaskell DiagramsTutorial.hs -o circle.svg -w 400`
 
 third try:
 
- - deleted ~/.stack/snapshots
- - stack install --no-library-stripping diagrams-core
- - stack install --no-library-stripping diagrams-lib
- - stack install --no-library-stripping diagrams-svg
+ - deleted `~/.stack/snapshots`
+ - `stack install --no-library-stripping diagrams-core`
+ - `stack install --no-library-stripping diagrams-lib`
+ - `stack install --no-library-stripping diagrams-svg`
  - this also worked.
-     - diagrams still doesn't compile with ghc --make
+     - diagrams still doesn't compile with `ghc --make`
          - I din't feel like uninstalling homebrew right now so I'll try it later
-     - runghc works, runhaskell works
+     - `runghc` works, `runhaskell` works
 
 
 later:
 
 Eventually also did
-    cabal install palette --lib
+    `cabal install palette --lib`
 
 
 ## Sanity checking the basic tidal install
