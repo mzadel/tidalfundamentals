@@ -46,7 +46,7 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [
     ("commaforparallel"
-    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
