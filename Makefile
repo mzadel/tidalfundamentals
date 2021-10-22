@@ -24,7 +24,8 @@ diagrams=\
     slowfunction \
     slowoneandahalf \
     slowoneandahalfoneeighthticks \
-    fastfunction
+    fastfunction \
+    fastgapfunction
 
 all: $(document).html
 

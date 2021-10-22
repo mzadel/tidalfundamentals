@@ -718,5 +718,18 @@ Meh, I should just drop it.
 
 ![](fastfunction.svg)
 
+--------------------------------------------------
 
+`fastGap` speeds things up but aligns to the cycle
+
+    Prelude Sound.Tidal.Context> s $ fastGap 3 $ parseBP_E "a b c"
+     (0>⅑)|s: "a"
+    (⅑>²₉)|s: "b"
+    (²₉>⅓)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ fastGap 3 $ parseBP_E "a b c"
+
+    [7 cycles]
+    |abc......|abc......|abc......|abc......|abc......|abc......|abc......
+
+![](fastgapfunction.svg)
 
