@@ -2,20 +2,20 @@
 
 ## See also
 
-Live code with Tidal Cycles | Tidal Cycles
-https://tidalcycles.org/
+Live code with Tidal Cycles | Tidal Cycles<br/>
+<https://tidalcycles.org/>
 
-Types in tidal-cycles
-https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/
+Types in tidal-cycles<br/>
+<https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/>
 
-What is a pattern? - TidalCycles userbase
-https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F
+What is a pattern? - TidalCycles userbase<br/>
+<https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F>
 
-Tidal Adventures. Introduction | by Carsten Heisterkamp | Medium
-https://heisterkamp.medium.com/tidal-adventures-ab627f05ef7c
+Tidal Adventures. Introduction | by Carsten Heisterkamp | Medium<br/>
+<https://heisterkamp.medium.com/tidal-adventures-ab627f05ef7c>
 
-tidal: Pattern language for improvised music
-https://hackage.haskell.org/package/tidal
+tidal: Pattern language for improvised music<br/>
+<https://hackage.haskell.org/package/tidal>
 
 
 
