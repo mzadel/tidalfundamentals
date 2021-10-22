@@ -629,7 +629,7 @@ I'll start to play with some of the basic ones here to understand what they're d
 
 ![](slowfunction.svg)
 
-Interestingly, `slow` seems to split events on cycle boundaries:
+Interestingly, `slow` seems to query results on cycle boundaries:
 
     Prelude Sound.Tidal.Context> s $ slow 1.5 $ parseBP_E "a a b c"
        (0>⅜)|s: "a"
@@ -641,6 +641,8 @@ Interestingly, `slow` seems to split events on cycle boundaries:
     |a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a
 
 ![](slowoneandahalf.svg)
+
+(I'm using `queryArc` and `part` to make the diagrams, so it shows up there as well.)
 
 Using `queryArc` to ask for the events:
 
