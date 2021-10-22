@@ -7,7 +7,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Map (Map,fromList,toList)
 import qualified Sound.Tidal.Context as T
 
-outputScaling = 1000 :: Double
+outputScaling = 600 :: Double
 
 colourTable :: Map String Int
 colourTable = fromList [

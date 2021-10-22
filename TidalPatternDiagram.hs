@@ -40,7 +40,7 @@ ratioToString r = case (denominator r) of
     1 -> show $ numerator r
     _ -> (show $ numerator r) ++ "/" ++ (show $ denominator r)
 
-tickMarkLabelSize = local 0.015
+tickMarkLabelSize = local 0.02
 
 tickMarkLabel :: Double -> Rational -> Diagram B
 tickMarkLabel extraRadius tickLoc = label
