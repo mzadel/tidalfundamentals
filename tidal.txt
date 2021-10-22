@@ -480,8 +480,12 @@ Contrast with doing it in the other order:
 
 ![](polymetricbracesotherorder.svg)
 
-It doesn't show the c in the first expression since I guess it only queries it
-over one cycle.
+So in this second version, the 'a b c' events have a longer duration:
+putting the "d e" first divides the cycle in two, and so the "a b c" pattern
+repeats every 1.5 cycles.
+
+The vertical bar in the text output seems to show a one-cycle duration.
+
 
 You can set the length of the polymetric sequence with %  . The first pair of
 expressions divide the cycle in to eight, and the second pair divide the cycle
