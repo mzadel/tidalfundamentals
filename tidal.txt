@@ -696,3 +696,27 @@ I just found `showAll`, which gives the same info
 Meh, I should just drop it.
 
 
+--------------------------------------------------
+
+`fast` speeds things up
+
+    Prelude Sound.Tidal.Context> s $ fast 3 $ parseBP_E "a b c"
+      (0>⅑)|s: "a"
+     (⅑>²₉)|s: "b"
+     (²₉>⅓)|s: "c"
+     (⅓>⁴₉)|s: "a"
+    (⁴₉>⁵₉)|s: "b"
+     (⁵₉>⅔)|s: "c"
+     (⅔>⁷₉)|s: "a"
+    (⁷₉>⁸₉)|s: "b"
+     (⁸₉>1)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ fast 3 $ parseBP_E "a b c"
+
+    [7 cycles]
+    |abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc
+
+
+![](fastfunction.svg)
+
+
+

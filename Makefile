@@ -23,7 +23,8 @@ diagrams=\
     euclideanrhythm \
     slowfunction \
     slowoneandahalf \
-    slowoneandahalfoneeighthticks
+    slowoneandahalfoneeighthticks \
+    fastfunction
 
 all: $(document).html
 
