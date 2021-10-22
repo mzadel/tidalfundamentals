@@ -60,11 +60,13 @@ patternEvent startLoc endLoc eventColour = transformedWedge
         theWedge = annularWedge outerRadius innerRadius startDir angle # fc (d3Colors2 Dark eventColour) # lw none
         transformedWedge = theWedge # transform overallTransform
 
+eventLabelSize = local 0.03
+
 patternEventLabel :: String -> Rational -> Int -> Diagram B
 patternEventLabel labelString wedgeStartLoc eventColour = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + 0.02) # transform overallTransform
-        labelDiagram = text labelString # fontSize (local 0.03) # fc (d3Colors2 Light eventColour) # moveTo labelPos
+        labelDiagram = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPos
 
 cycleDirectionArrow :: Diagram B
 cycleDirectionArrow = arro
@@ -109,7 +111,7 @@ patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) event
 patternEventLabelLinear :: String -> Rational -> Diagram B
 patternEventLabelLinear labelString slabStartLoc = label
     where
-        label = text labelString # fontSize (local 0.03) # moveTo labelPoint
+        label = text labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + 0.02)) ^& 0
 
 patternDiagramLinear :: T.ControlPattern -> Diagram B
