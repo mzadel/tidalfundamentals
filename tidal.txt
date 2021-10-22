@@ -502,8 +502,6 @@ So it looks like it takes the first pattern and divides the cycle by the number
 of elements it has, and then uses that length for each element of the second
 pattern.
 
---------------------------------------------------
-
 Contrast with doing it in the other order:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "{d e , a b c}"
