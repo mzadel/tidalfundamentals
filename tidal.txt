@@ -607,3 +607,19 @@ Use brackets to create a Euclidean rhythm:
 ![](euclideanrhythm.svg)
 
 
+## Standard library functions
+
+What we've seen above is the pattern "mini-language".  There are also a lot of pattern functions in the standard libarary.
+
+There is documentation online starting at <https://tidalcycles.org/docs/patternlib/tour/concatenation>.  (See "Small Reference" at the left.)
+
+I'll start to play with some of the basic ones here to understand what they're doing.
+
+
+
+
+
+
+
+
+
