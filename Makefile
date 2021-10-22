@@ -20,7 +20,8 @@ diagrams=\
     polymetricdividebyeight \
     polymetricdividebyseven \
     anglebrackets \
-    euclideanrhythm
+    euclideanrhythm \
+    slowfunction
 
 all: $(document).html
 

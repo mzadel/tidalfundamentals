@@ -615,9 +615,19 @@ There is documentation online starting at <https://tidalcycles.org/docs/patternl
 
 I'll start to play with some of the basic ones here to understand what they're doing.
 
+--------------------------------------------------
 
+`slow` seems to slow down a pattern
 
+    Prelude Sound.Tidal.Context> s $ slow 2 $ parseBP_E "a a b c"
+    (0>½)|s: "a"
+    (½>1)|s: "a"
+    Prelude Sound.Tidal.Context> drawLine $ slow 2 $ parseBP_E "a a b c"
 
+    [26 cycles]
+    |aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc
+
+![](slowfunction.svg)
 
 
 
