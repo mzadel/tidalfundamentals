@@ -110,21 +110,21 @@ patternDiagram tidalPattern numTicks colourTable =
         patterneventlabels = [patternEventLabel label start (colourTable ! label) | (label,start,_) <- events]
         tickLocList = tickMarkLocations numTicks
 
-patternEventLinear :: Rational -> Rational -> Diagram B
-patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+patternEventLinear :: Rational -> Rational -> Int -> Diagram B
+patternEventLinear startLoc endLoc eventColour = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # fc (d3Colors2 Dark eventColour) # lw none # moveTo ((fromRational $ startLoc) ^& 0)
 
-patternEventLabelLinear :: String -> Rational -> Diagram B
-patternEventLabelLinear labelString slabStartLoc = label
+patternEventLabelLinear :: String -> Rational -> Int -> Diagram B
+patternEventLabelLinear labelString slabStartLoc eventColour = label
     where
-        label = text labelString # fontSize eventLabelSize # moveTo labelPoint
+        label = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
-patternDiagramLinear :: T.ControlPattern -> Diagram B
-patternDiagramLinear tidalPattern =
+patternDiagramLinear :: T.ControlPattern -> Map String Int -> Diagram B
+patternDiagramLinear tidalPattern colourTable =
         mconcat patterneventlabels
         <> mconcat patternevents
     where
         events = tidalPatternToEventList tidalPattern
-        patternevents = [patternEventLinear start end | (label,start,end) <- events]
-        patterneventlabels = [patternEventLabelLinear label start | (label,start,_) <- events]
+        patternevents = [patternEventLinear start end (colourTable ! label) | (label,start,end) <- events]
+        patterneventlabels = [patternEventLabelLinear label start (colourTable ! label) | (label,start,_) <- events]
 
