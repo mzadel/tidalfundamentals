@@ -1,4 +1,8 @@
-
+---
+title: 'Learning Tidal'
+author: 'Mark Zadel'
+date: 'October 2021'
+---
 
 ## See also
 

@@ -30,7 +30,7 @@ $(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
 	./$< -S $(basename $@) -o $@
 
 $(document).html: $(document).txt $(addsuffix .svg,$(diagrams))
-	pandoc --metadata title="tidal" -f markdown -t html -s < $< > $@
+	pandoc -f markdown -t html -s < $< > $@
 
 watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
