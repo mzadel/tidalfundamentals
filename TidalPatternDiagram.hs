@@ -36,8 +36,9 @@ tickMark tickLoc = mark
         mark = hrule tickMarkSize # moveTo startPoint # rotateBy rotAmount # transform overallTransform
 
 ratioToString :: Rational -> String
-ratioToString 0 = "0"
-ratioToString r = (show $ numerator r) ++ "/" ++ (show $ denominator r)
+ratioToString r = case (denominator r) of
+    1 -> show $ numerator r
+    _ -> (show $ numerator r) ++ "/" ++ (show $ denominator r)
 
 tickMarkLabelSize = local 0.015
 
