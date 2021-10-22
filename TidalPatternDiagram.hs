@@ -48,14 +48,15 @@ tickMarkLabel extraRadius tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize (local 0.015) # moveTo labelPoint
 
+eventWidth = 0.035
+
 patternEvent :: Rational -> Rational -> Int -> Diagram B
 patternEvent startLoc endLoc eventColour = transformedWedge
     where
         angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
-        wedgeWidth = 0.035
-        innerRadius = theRadius - (wedgeWidth/2)
-        outerRadius = theRadius + (wedgeWidth/2)
+        innerRadius = theRadius - (eventWidth/2)
+        outerRadius = theRadius + (eventWidth/2)
         theWedge = annularWedge outerRadius innerRadius startDir angle # fc (d3Colors2 Dark eventColour) # lw none
         transformedWedge = theWedge # transform overallTransform
 
@@ -103,7 +104,7 @@ patternDiagram tidalPattern numTicks colourTable =
         tickLocList = tickMarkLocations numTicks
 
 patternEventLinear :: Rational -> Rational -> Diagram B
-patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) 0.035 # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+patternEventLinear startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
 patternEventLabelLinear :: String -> Rational -> Diagram B
 patternEventLabelLinear labelString slabStartLoc = label
