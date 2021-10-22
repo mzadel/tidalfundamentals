@@ -527,9 +527,9 @@ The vertical bar in the text output seems to show a one-cycle duration.
 
 --------------------------------------------------
 
-You can set the length of the polymetric sequence with %  . The first pair of
-expressions divide the cycle into eight, and the second pair divide the cycle
-into seven.
+You can set the length of the polymetric sequence with `%`.
+
+This expression divides the cycle into eight
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%8"
     (0>⅛)|s: "a"
@@ -546,6 +546,8 @@ into seven.
     |abcdeabc|deabcdea|bcdeabcd|eabcdeab|cdeabcde|abcdeabc|deabcdea|bcdeabcd
 
 ![](polymetricdividebyeight.svg)
+
+This expression divides the cycle into seven.
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%7"
       (0>⅐)|s: "a"
