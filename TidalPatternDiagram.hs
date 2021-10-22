@@ -77,8 +77,8 @@ cycleDirectionArrow = arro
         shaft = arc' (theRadius * 1.45) xDir (0.08 @@ turn) # transform overallTransform
         arro = arrowFromLocatedTrail shaft
 
-tickMarkLocations :: Integer -> [Rational]
-tickMarkLocations numTicks = map (% numTicks) [0..(numTicks-1)]
+tickMarkLocations :: Rational -> Rational -> [Rational]
+tickMarkLocations tickDivision endTickLoc = [0,tickDivision..endTickLoc]
 
 stripFirstAndLast :: String -> String
 stripFirstAndLast = init . tail
@@ -108,7 +108,7 @@ patternDiagram tidalPattern numTicks colourTable =
         events = tidalPatternToEventList tidalPattern
         patternevents = [patternEvent start end (colourTable ! label) | (label,start,end) <- events]
         patterneventlabels = [patternEventLabel label start (colourTable ! label) | (label,start,_) <- events]
-        tickLocList = tickMarkLocations numTicks
+        tickLocList = init $ tickMarkLocations (1%numTicks) 1
 
 patternEventLinear :: Rational -> Rational -> Int -> Diagram B
 patternEventLinear startLoc endLoc eventColour = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # fc (d3Colors2 Dark eventColour) # lw none # moveTo ((fromRational $ startLoc) ^& 0)
