@@ -2,6 +2,15 @@
 title: 'Learning Tidal'
 author: 'Mark Zadel'
 date: 'October 2021'
+
+fontsize: 12pt
+monobackgroundcolor: 'LightGrey'
+header-includes: |
+  <style>
+  body {
+    max-width: 60em;
+  }
+  </style>
 ---
 
 ## See also
