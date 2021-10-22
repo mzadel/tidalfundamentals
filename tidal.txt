@@ -475,7 +475,7 @@ Use a comma to play two patterns in parallel.  Apparently you need the square br
 
 I'm officially feeling this.
 
-The first expression's output orders the events by onset time.
+The first expression's output orders the interleaved events by onset time.
 
 ![](commaforparallel.svg)
 
