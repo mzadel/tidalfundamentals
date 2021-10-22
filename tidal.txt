@@ -528,6 +528,9 @@ into seven.
 
     [8 cycles]
     |abcdeabc|deabcdea|bcdeabcd|eabcdeab|cdeabcde|abcdeabc|deabcdea|bcdeabcd
+
+![](polymetricdividebyeight.svg)
+
     Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%7"
       (0>⅐)|s: "a"
      (⅐>²₇)|s: "b"
@@ -540,6 +543,10 @@ into seven.
 
     [9 cycles]
     |abcdeab|cdeabcd|eabcdea|bcdeabc|deabcde|abcdeab|cdeabcd|eabcdea|bcdeabc
+
+![](polymetricdividebyseven.svg)
+
+--------------------------------------------------
 
 Use angle brackets to alternate between the events
 
