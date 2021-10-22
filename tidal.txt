@@ -478,6 +478,8 @@ Contrast with doing it in the other order:
     |de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de
     |ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca
 
+![](polymetricbracesotherorder.svg)
+
 It doesn't show the c in the first expression since I guess it only queries it
 over one cycle.
 

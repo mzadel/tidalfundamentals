@@ -26,6 +26,14 @@ laneTable = fromList [
     ,("d", 1)
     ,("e", 1)]
 
+laneTable2 :: Map String Int
+laneTable2 = fromList [
+     ("a", 1)
+    ,("b", 1)
+    ,("c", 1)
+    ,("d", 0)
+    ,("e", 0)]
+
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
     ("basicpattern", ("a b c", 3))
@@ -49,6 +57,8 @@ diagramTableLinear = [
     ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbraces"
     ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{a b c , d e}") 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,("polymetricbracesotherorder"
+    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{d e , a b c}") 3 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
