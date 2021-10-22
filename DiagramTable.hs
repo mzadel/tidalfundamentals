@@ -16,6 +16,7 @@ colourTable = fromList [
     ,("c", 1)
     ,("d", 7)
     ,("e", 3)
+    ,("f", 4)
     ,("bd", 0)]
 
 laneTable :: Map String Int
@@ -63,6 +64,8 @@ diagramTableLinear = [
     ,(patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
     ,(patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,("anglebrackets"
+    ,(patternDiagramLinear (T.s $ T.parseBP_E "<a b c> d <e f>") 3 4 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

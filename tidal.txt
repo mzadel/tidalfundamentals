@@ -559,6 +559,10 @@ Use angle brackets to alternate between the events
     [19 cycles]
     |ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade
 
+![](anglebrackets.svg)
+
+--------------------------------------------------
+
 Use brackets to create a Euclidean rhythm:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a(3,7)"
