@@ -39,6 +39,8 @@ ratioToString :: Rational -> String
 ratioToString 0 = "0"
 ratioToString r = (show $ numerator r) ++ "/" ++ (show $ denominator r)
 
+tickMarkLabelSize = local 0.015
+
 tickMarkLabel :: Double -> Rational -> Diagram B
 tickMarkLabel extraRadius tickLoc = label
     where
@@ -46,7 +48,7 @@ tickMarkLabel extraRadius tickLoc = label
         rotAmount = fromRational tickLoc
         labelPoint = labelStartPoint # rotateBy rotAmount # transform overallTransform
         labelText = ratioToString tickLoc
-        label = text labelText # fontSize (local 0.015) # moveTo labelPoint
+        label = text labelText # fontSize tickMarkLabelSize # moveTo labelPoint
 
 eventWidth = 0.035
 
