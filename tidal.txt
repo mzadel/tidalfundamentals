@@ -22,14 +22,14 @@ tidal: Pattern language for improvised music<br/>
 
 ## Installing the tidal haskell libraries
 
-MacOS | Tidal Cycles
-https://tidalcycles.org/docs/getting-started/macos_install
+MacOS | Tidal Cycles<br/>
+<https://tidalcycles.org/docs/getting-started/macos_install>
 
  - I used stack to make a locally-contained install
-     - Stack (Haskell) - Wikipedia https://en.wikipedia.org/wiki/Stack_(Haskell)
+     - Stack (Haskell) - Wikipedia <https://en.wikipedia.org/wiki/Stack_(Haskell)>
  - Install using the instructions here:
-     - https://haskellstack.org
-     - https://docs.haskellstack.org/en/stable/install_and_upgrade/
+     - <https://haskellstack.org>
+     - <https://docs.haskellstack.org/en/stable/install_and_upgrade/>
  - Can blow away `~/.stack` to reset your install
  - Run `stack setup`
      - Will download the latest LTS version of GHC
@@ -148,7 +148,7 @@ You can turn on the implict string handling with {-# language OverloadedStrings 
     (⅓>⅔)|s: "bd"
     (⅔>1)|s: "bd"
 
-OverloadedStrings is described at https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html .
+OverloadedStrings is described at <https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html> .
 I'd prefer not to use it right now since I'm explicitly trying to figure out the types and to understand the core definitions.
 
 
@@ -332,7 +332,7 @@ You can use the output as above, or drawLine:
 
 ![](basicpattern.svg)
 
-See https://tidalcycles.org/docs/patternlib/tutorials/mini_notation for notes
+See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for notes
 on the syntax of the following examples.
 
 --------------------------------------------------
