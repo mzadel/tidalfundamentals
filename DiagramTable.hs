@@ -66,6 +66,8 @@ diagramTableLinear = [
     ,(patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("anglebrackets"
     ,(patternDiagramLinear (T.s $ T.parseBP_E "<a b c> d <e f>") 3 4 colourTable) # frame 0.05 # scale outputScaling)
+    ,("euclideanrhythm"
+    ,(patternDiagramLinear (T.s $ T.parseBP_E "a(3,7)") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

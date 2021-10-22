@@ -574,5 +574,6 @@ Use brackets to create a Euclidean rhythm:
     [9 cycles]
     |a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..
 
+![](euclideanrhythm.svg)
 
 
