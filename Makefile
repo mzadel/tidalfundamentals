@@ -1,7 +1,7 @@
 
 MK=/usr/bin/make
 
-output=diagram
+diagramexecutable=diagram
 modules=TidalPatternDiagram DiagramTable
 diagrams=\
     basicpattern \
@@ -21,10 +21,10 @@ diagrams=\
 
 all: basicpattern.svg
 
-$(output): $(output).hs $(addsuffix .hs,$(modules))
+$(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
 	ghc --make $<
 
-%.svg: $(output)
+%.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
 tidal.html: tidal.txt $(addsuffix .svg,$(diagrams))
@@ -34,7 +34,7 @@ watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
 
 clean:
-	git clean -f $(wildcard $(output)*)
+	git clean -f $(wildcard $(diagramexecutable)*)
 	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
 	git clean -f *.svg
 	git clean -f *.html
