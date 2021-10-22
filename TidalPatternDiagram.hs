@@ -110,6 +110,20 @@ patternDiagram tidalPattern numTicks colourTable =
         patterneventlabels = [patternEventLabel label start (colourTable ! label) | (label,start,_) <- events]
         tickLocList = init $ tickMarkLocations (1%numTicks) 1
 
+tickMarkLinear :: Rational -> Diagram B
+tickMarkLinear tickLoc = mark
+    where
+        tickMarkSize = 0.1 * theRadius
+        point = p2 (fromRational tickLoc, 0)
+        mark = vrule tickMarkSize # moveTo point
+
+tickMarkLabelLinear :: Rational -> Diagram B
+tickMarkLabelLinear tickLoc = label
+    where
+        labelPoint = p2 (fromRational tickLoc, 0)
+        labelText = ratioToString tickLoc
+        label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
+
 patternEventLinear :: Rational -> Rational -> Int -> Diagram B
 patternEventLinear startLoc endLoc eventColour = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # fc (d3Colors2 Dark eventColour) # lw none # moveTo ((fromRational $ startLoc) ^& 0)
 
@@ -119,12 +133,18 @@ patternEventLabelLinear labelString slabStartLoc eventColour = label
         label = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
-patternDiagramLinear :: T.ControlPattern -> Map String Int -> Diagram B
-patternDiagramLinear tidalPattern colourTable =
-        mconcat patterneventlabels
-        <> mconcat patternevents
+linearDiagramVerticalPadding = 0.01
+
+patternDiagramLinear :: T.ControlPattern -> Integer -> Map String Int -> Diagram B
+patternDiagramLinear tidalPattern numTicks colourTable =
+        vsep linearDiagramVerticalPadding [
+            mconcat (map tickMarkLabelLinear tickLocList)
+            ,mconcat (map tickMarkLinear tickLocList)
+            ,(mconcat patterneventlabels <> mconcat patternevents)
+            ]
     where
         events = tidalPatternToEventList tidalPattern
         patternevents = [patternEventLinear start end (colourTable ! label) | (label,start,end) <- events]
         patterneventlabels = [patternEventLabelLinear label start (colourTable ! label) | (label,start,_) <- events]
+        tickLocList = tickMarkLocations (1%numTicks) 1
 
