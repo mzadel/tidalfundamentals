@@ -10,6 +10,9 @@ header-includes: |
   body {
     max-width: 60em;
   }
+  img {
+    max-width: none;
+  }
   </style>
 ---
 
