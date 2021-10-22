@@ -3,6 +3,8 @@ MK=/usr/bin/make
 
 diagramexecutable=diagram
 modules=TidalPatternDiagram DiagramTable
+
+document=tidal
 diagrams=\
     basicpattern \
     tildeisarest \
@@ -27,7 +29,7 @@ $(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
-tidal.html: tidal.txt $(addsuffix .svg,$(diagrams))
+$(document).html: $(document).txt $(addsuffix .svg,$(diagrams))
 	pandoc --metadata title="tidal" -f markdown -t html -s < $< > $@
 
 watch:
