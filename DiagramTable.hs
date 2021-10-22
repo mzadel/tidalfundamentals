@@ -59,7 +59,7 @@ diagramTableLinear = [
     ,("polymetricbraces"
     ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{a b c , d e}") 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbracesotherorder"
-    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{d e , a b c}") 3 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{d e , a b c}") 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyeight"
     ,(patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
