@@ -363,7 +363,7 @@ Tilde is a rest:
     [11 cycles]
     |bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.
 
-So the dot in the drawLine output is the rest.
+So the dot in the `drawLine` output is the rest.
 
 ![](tildeisarest.svg)
 
