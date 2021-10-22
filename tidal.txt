@@ -131,14 +131,14 @@ This seems to work in the examples but not in ghci:
           In the expression: s $ "bd bd bd"
           In an equation for ‘it’: it = s $ "bd bd bd"
 
-It needs parseBP_E, which is automatically, silently added when running from the text editor.  In a normal ghci:
+It needs `parseBP_E`, which is automatically, silently added when running from the text editor.  In a normal `ghci`:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "bd bd bd"
     (0>⅓)|s: "bd"
     (⅓>⅔)|s: "bd"
     (⅔>1)|s: "bd"
 
-You can turn on the implict string handling with {-# language OverloadedStrings #-}, or the equivalent :set -XOverloadedStrings in ghci (see waldmann article above).
+You can turn on the implict string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see waldmann article above).
 
     $ stack ghci
     ...
@@ -152,7 +152,7 @@ You can turn on the implict string handling with {-# language OverloadedStrings 
     (⅓>⅔)|s: "bd"
     (⅔>1)|s: "bd"
 
-OverloadedStrings is described at <https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html> .
+`OverloadedStrings` is described at <https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html> .
 I'd prefer not to use it right now since I'm explicitly trying to figure out the types and to understand the core definitions.
 
 
@@ -167,12 +167,12 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
     Prelude Sound.Tidal.Context> :t a
     a :: ControlPattern
 
-m n o is arbitrary here.  There's a mini pattern language that's used in the string literal that's parsed by parseBP_E.
+m n o is arbitrary here.  There's a mini pattern language that's used in the string literal that's parsed by `parseBP_E`.
 
 "m n o" takes one bar (ie one cycle) and divides it into three, and each one is
 an event.
 
-Pattern is defined in Sound/Tidal/Pattern.hs .
+`Pattern` is defined in `Sound/Tidal/Pattern.hs`.
 
     -- | A datatype representing events taking place over time
     data Pattern a = Pattern {query :: State -> [Event a]}
@@ -184,7 +184,7 @@ The idea is that a pattern divides a cycle evenly into event windows with data
 attached to each one.  You can query a time range of the pattern to see which
 event windows it overlaps.
 
-An arc goes from one time to another.  Time is expressed as a rational (i.e., a fraction)  (defined in Sound/Tidal/Time.hs)
+An arc goes from one time to another.  Time is expressed as a rational (i.e., a fraction)  (defined in `Sound/Tidal/Time.hs`)
 
     -- | Time is rational
     type Time = Rational
@@ -218,7 +218,7 @@ A smaller window that overlaps only the first event:
     Prelude Sound.Tidal.Context Map> :t query a (State (Arc 0 1/6) Map.empty)
     query a (State (Arc 0 1/6) Map.empty) :: [Event ValueMap]
 
-So we're getting a list of events from the query.  Each event contains a ValueMap.
+So we're getting a list of events from the query.  Each event contains a `ValueMap`.
 
 ## Event type
 
@@ -227,7 +227,7 @@ If we just take the first event:
     Prelude Sound.Tidal.Context Map> head $ query a $ State (Arc 0 1/6) Map.empty
     [((1,1),(2,1))](0>⅙)-⅓|s: "m"
 
-Let's pull the event apart.  The event has this type (see Sound/Tidal/Pattern.hs):
+Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.hs`):
 
     -- | An event is a value that's active during a timespan. If a whole
     -- is present, the part should be equal to or fit inside it.
@@ -253,7 +253,7 @@ so
     Prelude Sound.Tidal.Context Map> context firstevent
     [((1,1),(2,1))]
 
-The value is from the string we passed into the initial string expression (s $ parseBP_E "m n o")
+The value is from the string we passed into the initial string expression (`s $ parseBP_E "m n o"`)
 
 The whole is the entire span of the event that our little window overlaps.
 (The whole event goes from 0 to one third, our window goes from zero to one
@@ -284,7 +284,7 @@ So it looks like the way to interpret (⅓>½)-⅔ is
     ⅓ to ⅔ is the whole event window
     and (⅓>½)-⅔ is a representation that combines both the partial window from the query and the whole event window
 
-And then s: "n" is the key-value pair from the ValueMap .
+And then s: "n" is the key-value pair from the `ValueMap`.
 
 There are some functions to query the window start / ends:
 
@@ -304,7 +304,7 @@ I'm not sure if these functions are typically used.  They're probably internal.
 
 ## You don't need the s function to examine the internals
 
-You can omit the s function, which is an alias for sound (see Params.hs).
+You can omit the s function, which is an alias for sound (see `Params.hs`).
 But is seems to only accept certain letters then:
 
     Prelude Sound.Tidal.Context> parseBP_E "t r s"
@@ -314,7 +314,7 @@ But is seems to only accept certain letters then:
     unexpected 't'
     expecting white space, "-", "+", number, "c", "d", "e", "f", "g", "a", "b", "'", rest, "[", "{", "<", "^", ".", "?" or end of input
 
-I guess s somehow makes the string mini-language accept more tokens.  But anyway, this works:
+I guess `s` somehow makes the string mini-language accept more tokens.  But anyway, this works:
 
     Prelude Sound.Tidal.Context> parseBP_E "a e g"
     (0>⅓)|9
@@ -323,7 +323,7 @@ I guess s somehow makes the string mini-language accept more tokens.  But anyway
 
 ## Defining and showing patterns
 
-You can use the output as above, or drawLine:
+You can use the output as above, or `drawLine`:
 
     Prelude Sound.Tidal.Context> parseBP_E "a b c"
     (0>⅓)|9
