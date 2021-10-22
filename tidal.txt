@@ -335,6 +335,8 @@ You can use the output as above, or drawLine:
 See https://tidalcycles.org/docs/patternlib/tutorials/mini_notation for notes
 on the syntax of the following examples.
 
+--------------------------------------------------
+
 Tilde is a rest:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "bd ~ bd ~"
@@ -349,6 +351,8 @@ So the dot in the drawLine output is the rest.
 
 ![](tildeisarest.svg)
 
+--------------------------------------------------
+
 Underscore elongates a note:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a _ c"
@@ -362,6 +366,8 @@ Underscore elongates a note:
 The hyphen means that the a note is held for an extra division.
 
 ![](underscoreelongates.svg)
+
+--------------------------------------------------
 
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 
@@ -378,6 +384,8 @@ So instead of getting the cycle divided into three, it's divided into four.
 
 ![](repeateventasterisk.svg)
 
+--------------------------------------------------
+
 Use ! to repeat an event.  Contrast this with * .
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a!2 c"
@@ -390,6 +398,8 @@ Use ! to repeat an event.  Contrast this with * .
     |aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac
 
 ![](repeateventbang.svg)
+
+--------------------------------------------------
 
 Use square brackets for grouping.
 
@@ -409,6 +419,8 @@ three and the second half into two.
 
 ![](squarebrackets.svg)
 
+--------------------------------------------------
+
 You can do the same with a dot:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a b c . d e"
@@ -423,6 +435,8 @@ You can do the same with a dot:
     |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
 
 ![](thedot.svg)
+
+--------------------------------------------------
 
 So this is where I think it starts to get interesting.
 Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
@@ -440,6 +454,9 @@ Use a comma to play two patterns in parallel.  Apparently you need the square br
     |d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--
 
 I'm officially feeling this.
+
+--------------------------------------------------
+
 The first expression's output orders the events by onset time.
 
 ![](commaforparallel.svg)
@@ -465,6 +482,8 @@ So it looks like it takes the first pattern and divides the cycle by the number
 of elements it has, and then uses that length for each element of the second
 pattern.
 
+--------------------------------------------------
+
 Contrast with doing it in the other order:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "{d e , a b c}"
@@ -486,6 +505,7 @@ repeats every 1.5 cycles.
 
 The vertical bar in the text output seems to show a one-cycle duration.
 
+--------------------------------------------------
 
 You can set the length of the polymetric sequence with %  . The first pair of
 expressions divide the cycle in to eight, and the second pair divide the cycle
