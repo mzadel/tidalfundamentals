@@ -676,3 +676,21 @@ So query windows seem to be split at cycle boundaries.
 I'm going to chalk this up to an implementation detail and not worry about it
 too much right now.  (That'll teach me - use round numbers!)
 
+I just found `showAll`, which gives the same info
+
+    Prelude Sound.Tidal.Context> import Sound.Tidal.Show
+    Prelude Sound.Tidal.Context Sound.Tidal.Show> putStrLn $ showAll (Arc 0 3) $ s $ slow 1.5 $ parseBP_E "a a b c"
+    [((1,1),(2,1))](0>⅜)|s: "a"
+    [((3,1),(4,1))](⅜>¾)|s: "a"
+    [((5,1),(6,1))](¾>1)-1⅛|s: "b"
+    [((5,1),(6,1))]¾-(1>1⅛)|s: "b"
+    [((7,1),(8,1))](1⅛>1½)|s: "c"
+    [((1,1),(2,1))](1½>1⅞)|s: "a"
+    [((3,1),(4,1))](1⅞>2)-2¼|s: "a"
+    [((3,1),(4,1))]1⅞-(2>2¼)|s: "a"
+    [((5,1),(6,1))](2¼>2⅝)|s: "b"
+    [((7,1),(8,1))](2⅝>3)|s: "c"
+
+Meh, I should just drop it.
+
+
