@@ -9,6 +9,7 @@ diagrams=\
     basicpattern \
     tildeisarest \
     underscoreelongates \
+    atelongates \
     repeateventasterisk \
     repeateventbang \
     squarebrackets \

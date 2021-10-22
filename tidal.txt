@@ -385,6 +385,20 @@ The hyphen means that the a note is held for an extra division.
 
 --------------------------------------------------
 
+`@` elongates a pattern by some number of counts:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a@3 b"
+    (0>¾)|s: "a"
+    (¾>1)|s: "b"
+    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a@3 b"
+
+    [15 cycles]
+    |a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b
+
+![](atelongates.svg)
+
+--------------------------------------------------
+
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a*2 c"
