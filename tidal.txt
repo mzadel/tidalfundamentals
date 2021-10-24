@@ -215,6 +215,8 @@ So we can create an arc of time:
 
 And then query our pattern:
 
+    Prelude Sound.Tidal.Context> a = s $ parseBP_E "m n o"
+    Prelude Sound.Tidal.Context> arcoftime = Arc 0.5 1.2
     Prelude Sound.Tidal.Context> import qualified Data.Map.Strict as Map
     Prelude Sound.Tidal.Context Map> query a (State arcoftime Map.empty)
     [[((1,1),(2,1))](1>1⅕)-1⅓|s: "m",[((3,1),(4,1))]⅓-(½>⅔)|s: "n",[((5,1),(6,1))](⅔>1)|s: "o"]
