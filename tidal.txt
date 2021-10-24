@@ -945,11 +945,17 @@ natural way.
 
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
-parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
-parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
-parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
+      (0>⅓)|21.0
+    (⅓>½)-⅔|22.0
+    ⅓-(½>⅔)|42.0
+      (⅔>1)|43.0
 
 ![](leftPlusExample1.svg)
+
+(In the text output, notice that the "22" and the "42" entries correspond to
+the same whole event.  I'm taking this to mean that the value changes midway
+though the event, but the onset still happens at the "22" in this case.)
 
 
 
