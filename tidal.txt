@@ -150,11 +150,9 @@ It needs `parseBP_E`, which is automatically, silently added when running from t
 
 You can turn on the implict string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see waldmann article above).
 
-    $ stack ghci
-    ...
-    Configuring GHCi with the following packages:
+    $ ghci
     GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
-    Loaded GHCi configuration from /private/var/folders/ny/rrw1ccy54sxdp2rv844cxx0rqv33h5/T/haskell-stack-ghci/2a3bbd58/ghci-script
+    Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
     Prelude> import Sound.Tidal.Context
     Prelude Sound.Tidal.Context> :set -XOverloadedStrings
     Prelude Sound.Tidal.Context> s $ "bd bd bd"
