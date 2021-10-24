@@ -2,7 +2,7 @@
 MK=/usr/bin/make
 
 diagramexecutable=diagram
-modules=TidalPatternDiagram DiagramTable
+modules=TidalPatternDiagram DiagramTable PatternAlgebraDiagrams
 
 document=tidal
 diagrams=\
@@ -30,7 +30,8 @@ diagrams=\
     compressfunction \
     zoomfunction \
     revfunctioninput \
-    revfunctionoutput
+    revfunctionoutput \
+    testPatternAlgebraDiagram
 
 all: $(document).html
 

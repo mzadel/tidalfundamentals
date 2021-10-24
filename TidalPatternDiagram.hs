@@ -172,3 +172,29 @@ patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colo
         patterneventlabels = [patternEventLabelLinearWithLane label start (laneTable ! label) (colourTable ! label) | (label,start,_) <- events]
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
 
+patternEventLinearBW :: Rational -> Rational -> Diagram B
+patternEventLinearBW startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+
+patternEventLabelLinearBW :: String -> Rational -> Diagram B
+patternEventLabelLinearBW labelString slabStartLoc = label
+    where
+        label = text labelString # fontSize eventLabelSize # moveTo labelPoint
+        labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
+
+eventToTripleForDouble :: T.Event Double -> (Double,Rational,Rational)
+eventToTripleForDouble (T.Event _ _ (T.Arc start end) doublevalue) = (doublevalue, start, end)
+
+tidalPatternToDoubleEventList :: T.Pattern Double -> Rational -> [(Double,Rational,Rational)]
+tidalPatternToDoubleEventList pat queryEnd = eventList
+    where
+        queryResult = T.queryArc pat (T.Arc 0 queryEnd)
+        eventList = map eventToTripleForDouble queryResult
+
+patternDiagramLinearWithDoubles :: T.Pattern Double -> Rational -> Diagram B
+patternDiagramLinearWithDoubles tidalPattern queryEnd =
+    mconcat patterneventlabels <> mconcat patternevents
+    where
+        events = tidalPatternToDoubleEventList tidalPattern queryEnd
+        patternevents = [patternEventLinearBW start end | (_,start,end) <- events]
+        patterneventlabels = [patternEventLabelLinearBW (show value) start | (value,start,_) <- events]
+

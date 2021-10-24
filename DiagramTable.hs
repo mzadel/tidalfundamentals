@@ -6,6 +6,7 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Data.Map (Map,fromList,toList)
 import qualified Sound.Tidal.Context as T
+import qualified PatternAlgebraDiagrams as PA
 
 outputScaling = 600 :: Double
 
@@ -93,6 +94,11 @@ diagramTableLinear = [
     ,(patternDiagramLinear (T.s $ T.rev $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
+diagramTablePatternAlgebra :: [(String, Diagram B)]
+diagramTablePatternAlgebra = [
+    ("testPatternAlgebraDiagram", PA.testPatternAlgebraDiagram # frame 0.05 # scale outputScaling)
+    ]
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear
+diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
 

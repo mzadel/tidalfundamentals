@@ -937,5 +937,19 @@ here are two ways to do the set the note number for each event:
 
 It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
 
+## Pattern algebra
+
+There's an "algebra" of patterns where you can combine them with various
+operations, and it'll combine the individual events in some appropriate and
+natural way.
+
+The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
+
+parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
+parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
+parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
+
+![](testPatternAlgebraDiagram.svg)
+
 
 
