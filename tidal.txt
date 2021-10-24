@@ -927,6 +927,7 @@ them.  It is defined in `src/Sound/Tidal/Pattern.hs`
 
 So `sound` contains a string "s" parameter and a float "n" parameter.
 I believe it's the sound name and the note/sample number.
+(So for e.g. bass drum samples, there are several bass drums to choose from.)
 
     Prelude Sound.Tidal.Context> :t sound
     sound :: Pattern String -> ControlPattern
