@@ -96,7 +96,7 @@ diagramTableLinear = [
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]
 diagramTablePatternAlgebra = [
-    ("testPatternAlgebraDiagram", PA.testPatternAlgebraDiagram # frame 0.05 # scale outputScaling)
+    ("leftPlusExample1", PA.leftPlusExample1 # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

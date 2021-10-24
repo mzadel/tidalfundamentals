@@ -949,7 +949,7 @@ parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
 parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
 parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
 
-![](testPatternAlgebraDiagram.svg)
+![](leftPlusExample1.svg)
 
 
 

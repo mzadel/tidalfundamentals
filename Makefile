@@ -31,7 +31,7 @@ diagrams=\
     zoomfunction \
     revfunctioninput \
     revfunctionoutput \
-    testPatternAlgebraDiagram
+    leftPlusExample1
 
 all: $(document).html
 

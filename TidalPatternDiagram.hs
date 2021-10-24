@@ -11,6 +11,7 @@ import Data.Colour.Palette.ColorSet
 import Data.Ratio
 import Data.Map (Map, (!), toList)
 import qualified Sound.Tidal.Context as T
+import Data.Maybe (catMaybes)
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -181,14 +182,19 @@ patternEventLabelLinearBW labelString slabStartLoc = label
         label = text labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
-eventToTripleForDouble :: T.Event Double -> (Double,Rational,Rational)
-eventToTripleForDouble (T.Event _ _ (T.Arc start end) doublevalue) = (doublevalue, start, end)
+eventToTripleForDouble :: T.Event Double -> Maybe (Double,Rational,Rational)
+eventToTripleForDouble e =
+    case (T.eventHasOnset e) of
+        True -> Just (doublevalue, wholestart, wholeend)
+        False -> Nothing
+    where
+        (T.Event _ (Just (T.Arc wholestart wholeend)) _ doublevalue) = e
 
 tidalPatternToDoubleEventList :: T.Pattern Double -> Rational -> [(Double,Rational,Rational)]
 tidalPatternToDoubleEventList pat queryEnd = eventList
     where
         queryResult = T.queryArc pat (T.Arc 0 queryEnd)
-        eventList = map eventToTripleForDouble queryResult
+        eventList = catMaybes $ map eventToTripleForDouble queryResult
 
 patternDiagramLinearWithDoubles :: T.Pattern Double -> Rational -> Diagram B
 patternDiagramLinearWithDoubles tidalPattern queryEnd =
