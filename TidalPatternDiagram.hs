@@ -176,11 +176,13 @@ patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colo
 patternEventLinearBW :: Rational -> Rational -> Diagram B
 patternEventLinearBW startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
+bwEventLabelInset = 0.05
+
 patternEventLabelLinearBW :: String -> Rational -> Diagram B
 patternEventLabelLinearBW labelString slabStartLoc = label
     where
         label = text labelString # fontSize eventLabelSize # moveTo labelPoint
-        labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
+        labelPoint = (fromRational (slabStartLoc + bwEventLabelInset)) ^& 0
 
 eventToTripleForDouble :: T.Event Double -> Maybe (Double,Rational,Rational)
 eventToTripleForDouble e =
