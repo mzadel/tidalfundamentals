@@ -841,6 +841,68 @@ giving the expression the concrete type:
     Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Int
     parseBP_E "1 2 3" :: Pattern Int :: Pattern Int
 
+## Pattern algebra
+
+There's an "algebra" of patterns where you can combine them with various
+operations, and it'll combine the individual events in some appropriate and
+natural way.
+
+The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
+
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
+      (0>⅓)|21.0
+    (⅓>½)-⅔|22.0
+    ⅓-(½>⅔)|42.0
+      (⅔>1)|43.0
+
+![](leftPlusExample1.svg)
+
+(In the text output, notice that the "22" and the "42" entries correspond to
+the same whole event.  I'm taking this to mean that the value changes midway
+though the event, but the onset still happens at the "22" in this case.)
+
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
+    (0>⅓)|21.0
+    (⅓>⅔)|42.0
+    (⅔>1)|63.0
+
+![](leftPlusExample2.svg)
+
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
+    (0>¼)-⅓|21.0
+    0-(¼>⅓)|41.0
+    (⅓>½)-⅔|42.0
+    ⅓-(½>⅔)|62.0
+    (⅔>¾)-1|63.0
+    ⅔-(¾>1)|83.0
+
+![](leftPlusExample3.svg)
+
+--------------------------------------------------
+
+The `+|` operator does addition, but takes the events from the right argument:
+
+![](rightPlusExample1.svg)
+![](rightPlusExample2.svg)
+![](rightPlusExample3.svg)
+
+--------------------------------------------------
+
+The `|+|` operator does addition, but takes the events from both arguments:
+
+![](bothPlusExample1.svg)
+![](bothPlusExample2.svg)
+![](bothPlusExample3.svg)
+
+--------------------------------------------------
+
+If you use `+`, it's like `|+|`:
+
+![](justPlusExample1.svg)
+
+
+## More pattern types
+
 The `s` that we have been using is an alias for `sound`, which I guess selects
 a sound sample from the set of named samples.  It's defined in
 `src/Sound/Tidal/Params.hs`.
@@ -936,63 +998,4 @@ here are two ways to do the set the note number for each event:
       :: Pattern ValueMap
 
 It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
-
-## Pattern algebra
-
-There's an "algebra" of patterns where you can combine them with various
-operations, and it'll combine the individual events in some appropriate and
-natural way.
-
-The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
-
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
-      (0>⅓)|21.0
-    (⅓>½)-⅔|22.0
-    ⅓-(½>⅔)|42.0
-      (⅔>1)|43.0
-
-![](leftPlusExample1.svg)
-
-(In the text output, notice that the "22" and the "42" entries correspond to
-the same whole event.  I'm taking this to mean that the value changes midway
-though the event, but the onset still happens at the "22" in this case.)
-
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
-    (0>⅓)|21.0
-    (⅓>⅔)|42.0
-    (⅔>1)|63.0
-
-![](leftPlusExample2.svg)
-
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
-    (0>¼)-⅓|21.0
-    0-(¼>⅓)|41.0
-    (⅓>½)-⅔|42.0
-    ⅓-(½>⅔)|62.0
-    (⅔>¾)-1|63.0
-    ⅔-(¾>1)|83.0
-
-![](leftPlusExample3.svg)
-
---------------------------------------------------
-
-The `+|` operator does addition, but takes the events from the right argument:
-
-![](rightPlusExample1.svg)
-![](rightPlusExample2.svg)
-![](rightPlusExample3.svg)
-
---------------------------------------------------
-
-The `|+|` operator does addition, but takes the events from both arguments:
-
-![](bothPlusExample1.svg)
-![](bothPlusExample2.svg)
-![](bothPlusExample3.svg)
-
---------------------------------------------------
-
-If you use `+`, it's like `|+|`:
-
-![](justPlusExample1.svg)
 
