@@ -184,6 +184,8 @@ m n o is arbitrary here.  There's a mini pattern language that's used in the str
 "m n o" takes one bar (ie one cycle) and divides it into three, and each one is
 an event.
 
+![](mnocycle.svg)
+
 `Pattern` is defined in `Sound/Tidal/Pattern.hs`.
 
     -- | A datatype representing events taking place over time

@@ -17,6 +17,9 @@ colourTable = fromList [
     ,("d", 7)
     ,("e", 3)
     ,("f", 4)
+    ,("m", 0)
+    ,("n", 2)
+    ,("o", 1)
     ,("bd", 0)]
 
 laneTable :: Map String Int
@@ -37,7 +40,8 @@ laneTable2 = fromList [
 
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
-    ("basicpattern", ("a b c", 3))
+    ("mnocycle", ("m n o", 3))
+    ,("basicpattern", ("a b c", 3))
     ,("tildeisarest", ("bd ~ bd ~", 4))
     ,("underscoreelongates", ("a _ c", 3))
     ,("atelongates", ("a@3 b", 4))

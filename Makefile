@@ -6,6 +6,7 @@ modules=TidalPatternDiagram DiagramTable
 
 document=tidal
 diagrams=\
+    mnocycle \
     basicpattern \
     tildeisarest \
     underscoreelongates \
