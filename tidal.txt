@@ -134,7 +134,7 @@ detail, though.)
 
 ## Starting to look at some expressions
 
-This seems to work in the examples but not in ghci:
+This seems to work in the online examples but not in ghci:
 
     Prelude Sound.Tidal.Context> s $ "bd bd bd"
 
