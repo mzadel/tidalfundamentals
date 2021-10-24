@@ -16,6 +16,10 @@ header-includes: |
   </style>
 ---
 
+These are the notes I made when trying to first understand tidal's data model.
+This isn't about making sound!  It's about trying to fundamentally understand
+the expressions and values to have a good basis going forward.
+
 ## See also
 
 Live code with Tidal Cycles | Tidal Cycles<br/>
