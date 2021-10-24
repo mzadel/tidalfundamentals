@@ -974,3 +974,13 @@ though the event, but the onset still happens at the "22" in this case.)
 
 ![](leftPlusExample3.svg)
 
+--------------------------------------------------
+
+The `+|` operator does addition, but takes the events from the right argument:
+
+![](rightPlusExample1.svg)
+![](rightPlusExample2.svg)
+![](rightPlusExample3.svg)
+
+
+

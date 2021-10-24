@@ -26,3 +26,10 @@ leftPlusExample2 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.pa
 leftPlusExample3 :: Diagram B
 leftPlusExample3 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
 
+rightPlusExample1 :: Diagram B
+rightPlusExample1 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")
+rightPlusExample2 :: Diagram B
+rightPlusExample2 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60")
+rightPlusExample3 :: Diagram B
+rightPlusExample3 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
+

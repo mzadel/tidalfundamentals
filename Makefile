@@ -33,7 +33,10 @@ diagrams=\
     revfunctionoutput \
     leftPlusExample1 \
     leftPlusExample2 \
-    leftPlusExample3
+    leftPlusExample3 \
+    rightPlusExample1 \
+    rightPlusExample2 \
+    rightPlusExample3
 
 all: $(document).html
 
