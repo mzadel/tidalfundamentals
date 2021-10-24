@@ -35,71 +35,87 @@ tidal: Pattern language for improvised music<br/>
 
 
 
-
-## Installing the tidal haskell libraries
+## Installing the tidal library in haskell
 
 MacOS | Tidal Cycles<br/>
 <https://tidalcycles.org/docs/getting-started/macos_install>
 
- - I used stack to make a locally-contained install
-     - Stack (Haskell) - Wikipedia <https://en.wikipedia.org/wiki/Stack_(Haskell)>
- - Install using the instructions here:
-     - <https://haskellstack.org>
-     - <https://docs.haskellstack.org/en/stable/install_and_upgrade/>
- - Can blow away `~/.stack` to reset your install
- - Run `stack setup`
-     - Will download the latest LTS version of GHC
-     - Can be checked in `~/.stack/global-project/stack.yaml`: `resolver: lts-18.13`
-     - Go to stackage and click on LTS at the top to check the most recent stable version
-     - Ends up in `~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc`
-         - See `stack path`
-     - Invoke as `stack ghc` or `stack ghci`
- - Then install tidal haskell library with `stack install tidal`
-     - Not enough to make sound, but enough to play with the types
-     - Sound needs supercollider, the superdirt supercollider plugin, text editor support (Atom, Emacs, Vim...)
+### Install via cabal
 
+I tried installing a few different times in a few different ways, and
+the method I preferred was the following:
 
-second try:
-
- - stack lts didn't work with diagrams
- - tried installing tidal and diagrams with stack nightly
-     - tidal worked, but diagrams couldn't be imported for some reason
- - deleted `.stack`
- - tried `ghcup`
+ - used `ghcup` (<https://www.haskell.org/ghcup/>)
      - installed `ghc` with `ghcup`
+     - added `$HOME/.ghcup/bin:$HOME/.ghcup/ghc/8.10.7/bin` to `$PATH` in `.bashrc`
      - installed `cabal` with `ghcup`
      - `cabal update`
      - `cabal install tidal --lib`
-     - had trouble with diagrams again...
-         - `cabal install diagrams` # didn't work!!  couldn't load library, it was hidden or something
-         - `cabal install diagrams --lib`  # didn't work!!
-         - `cabal install diagrams-rasterific`  # didn't work!!
-     - this did work though
-         - `cabal install diagrams-core --lib`
-         - `cabal install diagrams-lib --lib`
-         - `cabal install diagrams-svg --lib`
- - worked
-     - diagrams still doesn't compile with `ghc --make`
-         - seems like it's a linker error due to homebrew?
-     - but `runhaskell` works for me
-         - `runhaskell DiagramsTutorial.hs -o circle.svg -w 400`
 
-third try:
+NB: THIS IS NOT SUFFICIENT TO MAKE SOUND!!  I'm only interested in
+executing expressions and inspecting types at this stage.  Look at
+the installation instructions on <tidalcycles.org> for installing
+SuperCollider, SuperDirt and a compatible text editor, which are all
+required for a typical install.
 
- - deleted `~/.stack/snapshots`
- - `stack install --no-library-stripping diagrams-core`
- - `stack install --no-library-stripping diagrams-lib`
- - `stack install --no-library-stripping diagrams-svg`
- - this also worked.
-     - diagrams still doesn't compile with `ghc --make`
-         - I din't feel like uninstalling homebrew right now so I'll try it later
-     - `runghc` works, `runhaskell` works
+I initially had linker errors when compiling haskell code.  What I
+had to do was uninstall ghc and cabal, uninstall all of my homebrew
+programs, reinstall ghc and cabal, and then it worked.  (It was fine
+to reinstall homebrew for me since there was a lot of cruft left
+around that I'd just kept upgrading over several years and OS
+versions.)
+
+Even with the linker errors, I could still use `runhaskell` to run
+the code.
+
+The `--lib` part is important.  That makes it possible to run `import
+Sound.Tidal.Context` in `ghci`.
+
+You can delete `.ghc`, `.ghcup` and `.cabal` to start over from
+scratch if you're trying to debug install problems.
+
+### Alternative: install via stack
+
+You can also use stack:
+
+ - Run `stack setup`
+     - Will download the latest LTS version of GHC
+     - The LTS resolver version can be checked in `~/.stack/global-project/stack.yaml`: `resolver: lts-18.13`
+     - Go to <https://www.stackage.org> and click on LTS at the top to check the most recent stable version
+     - Ends up in `~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc`
+         - See `stack path`
+     - Invoke as `stack ghc` or `stack ghci`
+ - `stack install --no-library-stripping tidal`
+
+You can blow away `~/.stack` to reset your install for
+fixing installation problems.
+
+`--no-library-stripping` is important, since it's needed to import
+tidal inside a `ghci` sessoin.
+
+### Installing diagrams (optional, not needed for tidal)
+
+I also installed `diagrams` for making the diagrams.  (You don't need
+to do this.)
+
+ - with cabal
+     - `cabal install diagrams-core --lib`
+     - `cabal install diagrams-lib --lib`
+     - `cabal install diagrams-svg --lib`
+     - `cabal install palette --lib`
+ - with stack
+     - change your stack install to a nightly instead of LTS.  The
+       LTS one doesn't include diagrams for some reason.
+     - `stack install --no-library-stripping diagrams-core`
+     - `stack install --no-library-stripping diagrams-lib`
+     - `stack install --no-library-stripping diagrams-svg`
+     - `stack install --no-library-stripping palette`
+
+I couldn't install the top-level `diagrams` library since I don't
+think it worked with the `--lib` flag.  (I might have to confirm that
+detail, though.)
 
 
-later:
-
-Eventually also did
-    `cabal install palette --lib`
 
 
 ## Sanity checking the basic tidal install
