@@ -753,3 +753,24 @@ Meh, I should just drop it.
 
 ![](compressfunction.svg)
 
+--------------------------------------------------
+
+`zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
+duration of the input pattern.
+
+    Prelude Sound.Tidal.Context> s $ zoom (1/4,3/4) $ parseBP_E "a b c"
+    -1½-(0>⅙)|s: "a"
+        (⅙>⅚)|s: "b"
+     (⅚>1)-1½|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ zoom (1/4,3/4) $ parseBP_E "a b c"
+
+    [11 cycles]
+
+    |a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c
+
+
+![](zoomfunction.svg)
+
+(I don't know why the "b" event isn't shown in the `drawLine` output above.)
+
+
