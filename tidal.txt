@@ -900,6 +900,11 @@ If you use `+`, it's like `|+|`:
 
 ![](justPlusExample1.svg)
 
+--------------------------------------------------
+
+There are a bunch of operators that work in the same way documented
+at <https://tidalcycles.org/docs/patternlib/tutorials/pattern_structure>.
+
 
 ## More pattern types
 
