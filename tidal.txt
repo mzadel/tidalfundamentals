@@ -794,5 +794,148 @@ Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
 
 
 
+## Pattern types
+
+`Pattern` has a type parameter that specifies the kind of data contained in
+each event:
+
+    Prelude Sound.Tidal.Context> :k Pattern
+    Pattern :: * -> *
+
+    -- | A datatype representing events taking place over time
+    data Pattern a = Pattern {query :: State -> [Event a]}
+
+The basic `parseBP_E` function goes from a string to a pattern without a
+concrete type variable:
+
+    Prelude Sound.Tidal.Context> :t parseBP_E
+    parseBP_E :: (Enumerable a, Parseable a) => String -> Pattern a
+    Prelude Sound.Tidal.Context> parseBP_E "a b c d"
+    (0>¼)|9
+    (¼>½)|11
+    (½>¾)|0
+    (¾>1)|2
+    Prelude Sound.Tidal.Context> :t parseBP_E "a b c d"
+    parseBP_E "a b c d" :: (Enumerable a, Parseable a) => Pattern a
+
+
+You can define a pattern containing events which contain various basic types by
+giving the expression the concrete type:
+
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Double
+    (0>⅓)|1.0
+    (⅓>⅔)|2.0
+    (⅔>1)|3.0
+    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Double
+    parseBP_E "1 2 3" :: Pattern Double :: Pattern Double
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Char
+    (0>⅓)|'1'
+    (⅓>⅔)|'2'
+    (⅔>1)|'3'
+    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Char
+    parseBP_E "1 2 3" :: Pattern Char :: Pattern Char
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Int
+    (0>⅓)|1
+    (⅓>⅔)|2
+    (⅔>1)|3
+    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Int
+    parseBP_E "1 2 3" :: Pattern Int :: Pattern Int
+
+The `s` that we have been using is an alias for `sound`, which I guess selects
+a sound sample from the set of named samples.  It's defined in
+`src/Sound/Tidal/Params.hs`.
+
+    sound :: Pattern String -> ControlPattern
+    sound = grp [mS "s", mF "n"]
+
+    s :: Pattern String -> ControlPattern
+    s = sound
+
+A `ControlPattern` is a pattern that contains events with a map of values in
+them.  It is defined in `src/Sound/Tidal/Pattern.hs`
+
+    type ControlPattern = Pattern ValueMap
+
+    type ValueMap = Map.Map String Value
+
+So `sound` contains a string "s" parameter and a float "n" parameter.
+I believe it's the sound name and the note/sample number.
+
+    Prelude Sound.Tidal.Context> :t sound
+    sound :: Pattern String -> ControlPattern
+    Prelude Sound.Tidal.Context> :t s
+    s :: Pattern String -> ControlPattern
+
+    Prelude Sound.Tidal.Context> :t sound . parseBP_E
+    sound . parseBP_E :: String -> ControlPattern
+    Prelude Sound.Tidal.Context> sound $ parseBP_E "a b c d"
+    (0>¼)|s: "a"
+    (¼>½)|s: "b"
+    (½>¾)|s: "c"
+    (¾>1)|s: "d"
+    Prelude Sound.Tidal.Context> :t sound $ parseBP_E "a b c d"
+    sound $ parseBP_E "a b c d" :: ControlPattern
+
+There's also `n` (`src/Sound/Tidal/Params.hs`):
+
+    -- | The note or sample number to choose for a synth or sampleset
+    n :: Pattern Note -> ControlPattern
+    n = pN "n"
+
+(I started to chase these functions around but it got kind of hairy for my
+level of understanding.  I'll have to live with trying to understand things
+from the code comments.)
+
+    Prelude Sound.Tidal.Context> :t n . parseBP_E
+    n . parseBP_E :: String -> ControlPattern
+    Prelude Sound.Tidal.Context> n $ parseBP_E "1 2 3 4"
+    (0>¼)|n: Note {unNote = 1.0}n
+    (¼>½)|n: Note {unNote = 2.0}n
+    (½>¾)|n: Note {unNote = 3.0}n
+    (¾>1)|n: Note {unNote = 4.0}n
+    Prelude Sound.Tidal.Context> :t n $ parseBP_E "1 2 3 4"
+    n $ parseBP_E "1 2 3 4" :: ControlPattern
+
+(I think `unNote` is the field name that you would call to expract the float
+value from a note.)
+
+So I think what you can do is combine `sound` and `n` patterns into one
+`ControlPattern`.  So starting with these expressions:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a b c d"
+    (0>¼)|s: "a"
+    (¼>½)|s: "b"
+    (½>¾)|s: "c"
+    (¾>1)|s: "d"
+    Prelude Sound.Tidal.Context> :t s $ parseBP_E "a b c d"
+    s $ parseBP_E "a b c d" :: ControlPattern
+    Prelude Sound.Tidal.Context> n $ parseBP_E "1 2 3 4"
+    (0>¼)|n: Note {unNote = 1.0}n
+    (¼>½)|n: Note {unNote = 2.0}n
+    (½>¾)|n: Note {unNote = 3.0}n
+    (¾>1)|n: Note {unNote = 4.0}n
+    Prelude Sound.Tidal.Context> :t n $ parseBP_E "1 2 3 4"
+    n $ parseBP_E "1 2 3 4" :: ControlPattern
+
+here are two ways to do the set the note number for each event:
+
+    Prelude Sound.Tidal.Context> s $ parseBP_E "a:1 b:2 c:3 d:4"
+    (0>¼)|n: 1.0f, s: "a"
+    (¼>½)|n: 2.0f, s: "b"
+    (½>¾)|n: 3.0f, s: "c"
+    (¾>1)|n: 4.0f, s: "d"
+    Prelude Sound.Tidal.Context> :t s $ parseBP_E "a:1 b:2 c:3 d:4"
+    s $ parseBP_E "a:1 b:2 c:3 d:4" :: ControlPattern
+    Prelude Sound.Tidal.Context> (s $ parseBP_E "a b c d") |> (n $ parseBP_E "1 2 3 4")
+    (0>¼)|n: Note {unNote = 1.0}n, s: "a"
+    (¼>½)|n: Note {unNote = 2.0}n, s: "b"
+    (½>¾)|n: Note {unNote = 3.0}n, s: "c"
+    (¾>1)|n: Note {unNote = 4.0}n, s: "d"
+    Prelude Sound.Tidal.Context> :t (s $ parseBP_E "a b c d") |> (n $ parseBP_E "1 2 3 4")
+    (s $ parseBP_E "a b c d") |> (n $ parseBP_E "1 2 3 4")
+      :: Pattern ValueMap
+
+It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
+
 
 
