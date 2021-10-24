@@ -982,5 +982,12 @@ The `+|` operator does addition, but takes the events from the right argument:
 ![](rightPlusExample2.svg)
 ![](rightPlusExample3.svg)
 
+--------------------------------------------------
+
+The `|+|` operator does addition, but takes the events from both arguments:
+
+![](bothPlusExample1.svg)
+![](bothPlusExample2.svg)
+![](bothPlusExample3.svg)
 
 

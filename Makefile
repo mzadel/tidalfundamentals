@@ -36,7 +36,10 @@ diagrams=\
     leftPlusExample3 \
     rightPlusExample1 \
     rightPlusExample2 \
-    rightPlusExample3
+    rightPlusExample3 \
+    bothPlusExample1 \
+    bothPlusExample2 \
+    bothPlusExample3
 
 all: $(document).html
 

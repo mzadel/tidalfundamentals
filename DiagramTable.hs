@@ -102,6 +102,9 @@ diagramTablePatternAlgebra = [
     ,("rightPlusExample1", PA.rightPlusExample1 # frame 0.05 # scale outputScaling)
     ,("rightPlusExample2", PA.rightPlusExample2 # frame 0.05 # scale outputScaling)
     ,("rightPlusExample3", PA.rightPlusExample3 # frame 0.05 # scale outputScaling)
+    ,("bothPlusExample1", PA.bothPlusExample1 # frame 0.05 # scale outputScaling)
+    ,("bothPlusExample2", PA.bothPlusExample2 # frame 0.05 # scale outputScaling)
+    ,("bothPlusExample3", PA.bothPlusExample3 # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
