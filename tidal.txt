@@ -896,7 +896,7 @@ from the code comments.)
     Prelude Sound.Tidal.Context> :t n $ parseBP_E "1 2 3 4"
     n $ parseBP_E "1 2 3 4" :: ControlPattern
 
-(I think `unNote` is the field name that you would call to expract the float
+(I think `unNote` is the field name that you would call to extract the float
 value from a note.)
 
 So I think what you can do is combine `sound` and `n` patterns into one
