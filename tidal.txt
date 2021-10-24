@@ -738,3 +738,18 @@ Meh, I should just drop it.
 
 ![](fastgapfunction.svg)
 
+--------------------------------------------------
+
+`compress` squeezes a pattern into a given arc of time
+
+    Prelude Sound.Tidal.Context> s $ compress (1/4,1/2) $ parseBP_E "a b c"
+       (¼>⅓)|s: "a"
+    (⅓>5/12)|s: "b"
+    (5/12>½)|s: "c"
+    Prelude Sound.Tidal.Context> drawLine $ compress (1/4,1/2) $ parseBP_E "a b c"
+
+    [6 cycles]
+    |...abc......|...abc......|...abc......|...abc......|...abc......|...abc......
+
+![](compressfunction.svg)
+

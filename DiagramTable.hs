@@ -83,6 +83,8 @@ diagramTableLinear = [
     ,(patternDiagramLinear (T.s $ T.fast 3 $ T.parseBP_E "a b c") 9 1 colourTable) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
     ,(patternDiagramLinear (T.s $ T.fastGap 3 $ T.parseBP_E "a b c") 3 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,("compressfunction"
+    ,(patternDiagramLinear (T.s $ T.compress (1/4,1/2) $ T.parseBP_E "a b c") 4 3 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

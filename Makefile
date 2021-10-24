@@ -26,7 +26,8 @@ diagrams=\
     slowoneandahalf \
     slowoneandahalfoneeighthticks \
     fastfunction \
-    fastgapfunction
+    fastgapfunction \
+    compressfunction
 
 all: $(document).html
 
