@@ -774,3 +774,25 @@ duration of the input pattern.
 (I don't know why the "b" event isn't shown in the `drawLine` output above.)
 
 
+--------------------------------------------------
+
+`rev` reverses each cycle of a pattern
+
+    Prelude Sound.Tidal.Context> s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"
+    (0>⅓)|s: "b"
+    (⅔>1)|s: "a"
+    Prelude Sound.Tidal.Context> drawLine $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"
+
+    [19 cycles]
+    |b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a
+
+Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+![](revfunctioninput.svg)
+Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+![](revfunctionoutput.svg)
+
+
+
+
+
+

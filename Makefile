@@ -28,7 +28,9 @@ diagrams=\
     fastfunction \
     fastgapfunction \
     compressfunction \
-    zoomfunction
+    zoomfunction \
+    revfunctioninput \
+    revfunctionoutput
 
 all: $(document).html
 
