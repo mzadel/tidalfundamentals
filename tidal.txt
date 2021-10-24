@@ -621,7 +621,7 @@ I'll start to play with some of the basic ones here to understand what they're d
 
 --------------------------------------------------
 
-`slow` seems to slow down a pattern
+`slow` elongates (i.e., slows down) a pattern
 
     Prelude Sound.Tidal.Context> s $ slow 2 $ parseBP_E "a a b c"
     (0>½)|s: "a"
