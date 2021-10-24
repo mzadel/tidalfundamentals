@@ -21,4 +21,6 @@ patternAlgebraDiagram operator operatorString pat1 pat2 =
 
 leftPlusExample1 :: Diagram B
 leftPlusExample1 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")
+leftPlusExample2 :: Diagram B
+leftPlusExample2 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60")
 

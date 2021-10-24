@@ -31,7 +31,8 @@ diagrams=\
     zoomfunction \
     revfunctioninput \
     revfunctionoutput \
-    leftPlusExample1
+    leftPlusExample1 \
+    leftPlusExample2
 
 all: $(document).html
 
