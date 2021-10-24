@@ -32,7 +32,8 @@ diagrams=\
     revfunctioninput \
     revfunctionoutput \
     leftPlusExample1 \
-    leftPlusExample2
+    leftPlusExample2 \
+    leftPlusExample3
 
 all: $(document).html
 

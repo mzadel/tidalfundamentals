@@ -964,3 +964,13 @@ though the event, but the onset still happens at the "22" in this case.)
 
 ![](leftPlusExample2.svg)
 
+    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
+    (0>¼)-⅓|21.0
+    0-(¼>⅓)|41.0
+    (⅓>½)-⅔|42.0
+    ⅓-(½>⅔)|62.0
+    (⅔>¾)-1|63.0
+    ⅔-(¾>1)|83.0
+
+![](leftPlusExample3.svg)
+
