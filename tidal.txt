@@ -1014,7 +1014,7 @@ So I think what you can do is combine `sound` and `n` patterns into one
     Prelude Sound.Tidal.Context> :t n $ parseBP_E "1 2 3 4"
     n $ parseBP_E "1 2 3 4" :: ControlPattern
 
-here are two ways to do the set the note number for each event:
+here are two ways to do the set the sample number for each event:
 
     Prelude Sound.Tidal.Context> s $ parseBP_E "a:1 b:2 c:3 d:4"
     (0>¼)|n: 1.0f, s: "a"
