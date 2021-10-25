@@ -1138,13 +1138,8 @@ Tidal also has continuous patterns, like `sine`:
     []~1½>1½~|pan: 0.5000000000000002f
     tidal> putStrLn $ showAll (Arc 1.75 1.75) $ pan sine
     []~1¾>1¾~|pan: 0.0f
+
 So it varies continuously, and it's sampled at the event's onset.
-
-When you query over an arc, it apparently gives back the whole arc as the
-event.
-
-    tidal> queryArc (pan sine) (Arc 0.5 2)
-    [[]~½>2~|pan: 1.0f]
 
 `sine` is defined in `src/Sound/Tidal/Core.hs`
 
@@ -1153,11 +1148,16 @@ These continuous patterns are implemented via `sig` in `Core.hs`
     -- | Takes a function from time to values, and turns it into a 'Pattern'.
     sig :: (Time -> a) -> Pattern a
 
-NB: `sig` evaluates the continuous in the *middle* of the query arc!
+When you query over an arc, it apparently gives back the whole arc as the
+event extents.
+
+    tidal> queryArc (pan sine) (Arc 0.5 2)
+    [[]~½>2~|pan: 1.0f]
+
+NB: `sig` evaluates the continuous function in the *middle* of the query arc!
 
     tidal> queryArc (pan sine) (Arc 0.125 0.125)
     [[]~⅛>⅛~|pan: 0.8535533905932737f]
     tidal> queryArc (pan sine) (Arc 0 0.25)
     [[]~0>¼~|pan: 0.8535533905932737f]
-
 
