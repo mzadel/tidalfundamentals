@@ -1033,6 +1033,13 @@ here are two ways to do the set the note number for each event:
       :: Pattern ValueMap
 
 It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
+I verified that they are equivalent looking at the OSC messages that get sent
+out---they're the same in both cases.
+
+    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.000000 "delta" 0.444444 "n" 1.000000 "orbit" 0 "s" "a"
+    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.250000 "delta" 0.444445 "n" 2.000000 "orbit" 0 "s" "b"
+    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.500000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "c"
+    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.750000 "delta" 0.444444 "n" 4.000000 "orbit" 0 "s" "d"
 
 ## Booting Tidal from ghci
 
