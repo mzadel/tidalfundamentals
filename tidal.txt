@@ -1151,3 +1151,11 @@ These continuous patterns are implemented via `sig` in `Core.hs`
     -- | Takes a function from time to values, and turns it into a 'Pattern'.
     sig :: (Time -> a) -> Pattern a
 
+NB: `sig` evaluates the continuous in the *middle* of the query arc!
+
+    tidal> queryArc (pan sine) (Arc 0.125 0.125)
+    [[]~⅛>⅛~|pan: 0.8535533905932737f]
+    tidal> queryArc (pan sine) (Arc 0 0.25)
+    [[]~0>¼~|pan: 0.8535533905932737f]
+
+
