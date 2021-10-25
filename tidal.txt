@@ -1121,8 +1121,6 @@ Tidal also has continuous patterns, like `sine`:
     []~0>2~|pan: 0.4999999999999999f
     tidal> putStrLn $ showAll (Arc 0.1 2) $ pan sine
     []~⅒>2~|pan: 0.6545084971874736f
-    tidal> putStrLn $ showAll (Arc 0.1 2) $ pan sine
-    []~⅒>2~|pan: 0.6545084971874736f
     tidal> putStrLn $ showAll (Arc 0.2 2) $ pan sine
     []~⅕>2~|pan: 0.7938926261462369f
     tidal> putStrLn $ showAll (Arc 0.5 2) $ pan sine
