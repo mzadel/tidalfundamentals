@@ -1117,25 +1117,27 @@ Use this to prevent the handshake messages from showing up:
 
 Tidal also has continuous patterns, like `sine`:
 
-    tidal> putStrLn $ showAll (Arc 0 2) $ pan sine
-    []~0>2~|pan: 0.4999999999999999f
-    tidal> putStrLn $ showAll (Arc 0.1 2) $ pan sine
-    []~⅒>2~|pan: 0.6545084971874736f
-    tidal> putStrLn $ showAll (Arc 0.2 2) $ pan sine
-    []~⅕>2~|pan: 0.7938926261462369f
-    tidal> putStrLn $ showAll (Arc 0.5 2) $ pan sine
-    []~½>2~|pan: 1.0f
-    tidal> putStrLn $ showAll (Arc 0.75 2) $ pan sine
-    []~¾>2~|pan: 0.8535533905932742f
-    tidal> putStrLn $ showAll (Arc 1.0 2) $ pan sine
-    []~1>2~|pan: 0.5000000000000002f
-    tidal> putStrLn $ showAll (Arc 1.25 2) $ pan sine
-    []~1¼>2~|pan: 0.14644660940672605f
-    tidal> putStrLn $ showAll (Arc 1.5 2) $ pan sine
-    []~1½>2~|pan: 0.0f
-    tidal> putStrLn $ showAll (Arc 1.75 2) $ pan sine
-    []~1¾>2~|pan: 0.14644660940672577f
 
+    tidal> putStrLn $ showAll (Arc 0 0) $ pan sine
+    []~0>0~|pan: 0.5f
+    tidal> putStrLn $ showAll (Arc 0.1 0.1) $ pan sine
+    []~⅒>⅒~|pan: 0.7938926261462366f
+    tidal> putStrLn $ showAll (Arc 0.2 0.2) $ pan sine
+    []~⅕>⅕~|pan: 0.9755282581475768f
+    tidal> putStrLn $ showAll (Arc 0.25 0.25) $ pan sine
+    []~¼>¼~|pan: 1.0f
+    tidal> putStrLn $ showAll (Arc 0.5 0.5) $ pan sine
+    []~½>½~|pan: 0.5000000000000001f
+    tidal> putStrLn $ showAll (Arc 0.75 0.75) $ pan sine
+    []~¾>¾~|pan: 0.0f
+    tidal> putStrLn $ showAll (Arc 1.0 1.0) $ pan sine
+    []~1>1~|pan: 0.4999999999999999f
+    tidal> putStrLn $ showAll (Arc 1.25 1.25) $ pan sine
+    []~1¼>1¼~|pan: 1.0f
+    tidal> putStrLn $ showAll (Arc 1.5 1.5) $ pan sine
+    []~1½>1½~|pan: 0.5000000000000002f
+    tidal> putStrLn $ showAll (Arc 1.75 1.75) $ pan sine
+    []~1¾>1¾~|pan: 0.0f
 So it varies continuously, and it's sampled at the event's onset.
 
 When you query over an arc, it apparently gives back the whole arc as the
