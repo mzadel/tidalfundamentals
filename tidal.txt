@@ -701,6 +701,11 @@ I just found `showAll`, which gives the same info
 
 Meh, I should just drop it.
 
+(Actually, I confirmed using using a tidal repl (BootTidal.hs) and `oscdump`
+that using `speed 1.5` sends the OSC messages that you'd expect.  So the
+scheduler is doing the right thing when it's sending the messages out even
+thought they look surprising in the event list.)
+
 ### Back to our regularly scheduled program
 
 `fast` speeds things up
