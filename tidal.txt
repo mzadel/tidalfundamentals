@@ -1073,3 +1073,7 @@ Another example:
 So this would be a good way to understand how patterns are played and what's
 the result of combining patterns.
 
+Use this to prevent the handshake messages from showing up:
+
+    ./oscdump -L 57120 | grep -v dirt.handshake
+
