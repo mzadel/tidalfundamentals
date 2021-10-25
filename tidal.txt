@@ -1146,3 +1146,10 @@ event.
     tidal> queryArc (pan sine) (Arc 0.5 2)
     [[]~½>2~|pan: 1.0f]
 
+`sine` is defined in `src/Sound/Tidal/Core.hs`
+
+These continuous patterns are implemented via `sig` in `Core.hs`
+
+    -- | Takes a function from time to values, and turns it into a 'Pattern'.
+    sig :: (Time -> a) -> Pattern a
+
