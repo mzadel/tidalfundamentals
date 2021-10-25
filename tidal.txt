@@ -914,6 +914,27 @@ There are a bunch of operators that work in the same way documented
 at <https://tidalcycles.org/docs/patternlib/tutorials/pattern_structure>.
 
 
+## Layering parameter patterns to build up an event stream
+
+So one reason this is interesting is that you can create individual patterns
+for several parameters and then combine them into one stream of events.
+
+    tidal> putStrLn $ showAll (Arc 0 3) ((s $ "bd sd hh") |+ (pan $ slow 3 $ "0.2 0.5 0.7"))
+    [...](0>⅓)|pan: 0.2f, s: "bd"
+    [...](⅓>⅔)|pan: 0.2f, s: "sd"
+    [...](⅔>1)|pan: 0.2f, s: "hh"
+    [...](1>1⅓)|pan: 0.5f, s: "bd"
+    [...](1⅓>1⅔)|pan: 0.5f, s: "sd"
+    [...](1⅔>2)|pan: 0.5f, s: "hh"
+    [...](2>2⅓)|pan: 0.7f, s: "bd"
+    [...](2⅓>2⅔)|pan: 0.7f, s: "sd"
+    [...](2⅔>3)|pan: 0.7f, s: "hh"
+
+(I manually edited out the context in the square brackets for legibility.  The
+`tidal` prompt comes from running `ghci` with `BootTidal.hs`---see below.)
+
+![](valueAlgebraMapDiagram.svg)
+
 ## More pattern types
 
 The `s` that we have been using is an alias for `sound`, which I guess selects

@@ -40,7 +40,8 @@ diagrams=\
     bothPlusExample1 \
     bothPlusExample2 \
     bothPlusExample3 \
-    justPlusExample1
+    justPlusExample1 \
+    valueAlgebraMapDiagram
 
 all: $(document).html
 

@@ -206,3 +206,31 @@ patternDiagramLinearWithDoubles tidalPattern queryEnd =
         patternevents = [patternEventLinearBW start end | (_,start,end) <- events]
         patterneventlabels = [patternEventLabelLinearBW (show value) start | (value,start,_) <- events]
 
+eventToTripleForValueMap :: T.Event T.ValueMap -> Maybe (T.ValueMap,Rational,Rational)
+eventToTripleForValueMap e =
+    case (T.eventHasOnset e) of
+        True -> Just (valmap, wholestart, wholeend)
+        False -> Nothing
+    where
+        (T.Event _ (Just (T.Arc wholestart wholeend)) _ valmap) = e
+
+tidalPatternToValueMapEventList :: T.Pattern T.ValueMap -> Rational -> [(T.ValueMap,Rational,Rational)]
+tidalPatternToValueMapEventList pat queryEnd = eventList
+    where
+        queryResult = T.queryArc pat (T.Arc 0 queryEnd)
+        eventList = catMaybes $ map eventToTripleForValueMap queryResult
+
+prettyPrintValueMap :: T.ValueMap -> String
+prettyPrintValueMap vmap = finalstring
+    where
+        pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (toList vmap)
+        finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
+
+patternDiagramLinearWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram B
+patternDiagramLinearWithValueMaps tidalPattern queryEnd =
+    mconcat patterneventlabels <> mconcat patternevents
+    where
+        events = tidalPatternToValueMapEventList tidalPattern queryEnd
+        patternevents = [patternEventLinearBW start end | (_,start,end) <- events]
+        patterneventlabels = [patternEventLabelLinearBW (prettyPrintValueMap valuemap) start | (valuemap,start,_) <- events]
+

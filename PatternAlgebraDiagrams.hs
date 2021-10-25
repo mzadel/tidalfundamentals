@@ -42,3 +42,13 @@ bothPlusExample3 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.
 
 justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
 
+valueAlgebraMapDiagram :: Diagram B
+valueAlgebraMapDiagram =
+    vsep linearDiagramVerticalPadding [
+        patternDiagramLinearWithValueMaps (T.s $ T.parseBP_E "bd sd hh") 3
+        ,lineOfText "|+"
+        ,patternDiagramLinearWithValueMaps (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
+        ,lineOfText "=="
+        ,patternDiagramLinearWithValueMaps ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
+        ]
+
