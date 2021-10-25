@@ -1005,3 +1005,71 @@ here are two ways to do the set the note number for each event:
 
 It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
 
+## Booting Tidal from ghci
+
+You can actually boot a live tidal from ghci and get a prompt:
+
+    $ ghci
+    GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+    Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+    Prelude> :script BootTidal.hs
+    [TidalCycles version 1.7.8]
+    Installed in /.../.cabal/store/ghc-8.10.7/tdl-1.7.8-5d5b197d/share
+    Listening for external controls on 127.0.0.1:6010
+    tidal> Waiting for SuperDirt (v.1.7.2 or higher)..
+
+    tidal>
+    tidal> s "a b c"
+    (0>⅓)|s: "a"
+    (⅓>⅔)|s: "b"
+    (⅔>1)|s: "c"
+
+Either run `ghci` and then `:script BootTidal.hs`, or run
+`ghci -ghci-script BootTidal.hs`.
+
+
+# Inspecting OSC
+
+You can use `oscdump` from `liblo` to see what messages are coming in:
+
+    $ ./oscdump 57120
+
+Then in the tidal repl:
+
+    $ ghci -ghci-script BootTidal.hs
+    GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+    Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+    [TidalCycles version 1.7.8]
+    Installed in /.../.cabal/store/ghc-8.10.7/tdl-1.7.8-5d5b197d/share
+    Listening for external controls on 127.0.0.1:6010
+    Loaded GHCi configuration from BootTidal.hs
+    tidal> Waiting for SuperDirt (v.1.7.2 or higher)..
+
+    tidal>
+    tidal> d1 $ s "bd"
+
+You see in the running `oscdump`:
+
+    e520f7d6.950bd000 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 47.000000 "delta" 1.777778 "orbit" 0 "s" "bd"
+    e520f7d6.faaf9a8b /dirt/handshake
+    e520f7d8.5c284800 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 48.000000 "delta" 1.777778 "orbit" 0 "s" "bd"
+    e520f7d8.fae3e6c3 /dirt/handshake
+
+
+Another example:
+
+    tidal> d1 $ s "bd" + (n "1 2 3")
+
+    in oscdump:
+    e520f856.950bd000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 119.000000 "delta" 0.592593 "n" 1.000000 "orbit" 0 "s" "bd"
+    e520f857.26c8a372 /dirt/handshake
+    e520f857.2cbff800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 119.333336 "delta" 0.592593 "n" 2.000000 "orbit" 0 "s" "bd"
+    e520f857.c4742000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 119.666664 "delta" 0.592593 "n" 3.000000 "orbit" 0 "s" "bd"
+    e520f858.5c284800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 120.000000 "delta" 0.592592 "n" 1.000000 "orbit" 0 "s" "bd"
+    e520f858.f3dc6800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 120.333336 "delta" 0.592593 "n" 2.000000 "orbit" 0 "s" "bd"
+    e520f859.2854de7e /dirt/handshake
+    e520f859.8b909000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 120.666664 "delta" 0.592593 "n" 3.000000 "orbit" 0 "s" "bd"
+
+So this would be a good way to understand how patterns are played and what's
+the result of combining patterns.
+
