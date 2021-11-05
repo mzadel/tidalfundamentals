@@ -1,5 +1,4 @@
 
-import TidalPatternDiagram
 import DiagramTable
 import Diagrams.Backend.SVG.CmdLine
 
