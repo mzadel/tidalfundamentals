@@ -1,5 +1,5 @@
 
-module DiagramTable where
+module DiagramTable (diagramListForMainWith) where
 
 import TidalPatternDiagram
 import Diagrams.Prelude

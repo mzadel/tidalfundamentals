@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE TypeFamilies              #-}
 
-module TidalPatternDiagram where
+module TidalPatternDiagram (patternDiagram,patternDiagramLinear,patternDiagramLinearWithLanes,patternDiagramLinearWithDoubles,patternDiagramLinearWithValueMaps,linearDiagramVerticalPadding,eventLabelSize) where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
