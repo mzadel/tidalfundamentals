@@ -46,7 +46,7 @@ diagrams=\
 all: $(document).html
 
 $(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
-	ghc --make $<
+	ghc --make -W $<
 
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
