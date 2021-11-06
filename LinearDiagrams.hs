@@ -25,7 +25,7 @@ tickMarkLabelLinear tickLoc = label
         label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
 
 boxGeometry :: Rational -> Rational -> Diagram B
-boxGeometry startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+boxGeometry startLoc stopLoc = rect (fromRational $ stopLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
 labelGeometry :: String -> Rational -> Diagram B
 labelGeometry labelString boxStartLoc = label
