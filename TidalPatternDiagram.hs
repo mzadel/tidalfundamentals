@@ -11,7 +11,6 @@ import Data.Colour.Palette.ColorSet
 import Data.Ratio
 import Data.Map (Map, (!), toList)
 import qualified Sound.Tidal.Context as T
-import Data.Maybe (catMaybes)
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
@@ -218,17 +217,6 @@ patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colo
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLaneX <$> lanes
 
-patternEventLinearBW :: Rational -> Rational -> Diagram B
-patternEventLinearBW startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
-
-bwEventLabelInset = 0.02
-
-patternEventLabelLinearBW :: String -> Rational -> Diagram B
-patternEventLabelLinearBW labelString slabStartLoc = label
-    where
-        label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
-        labelPoint = (fromRational (slabStartLoc + bwEventLabelInset)) ^& 0
-
 patternDiagramLinearWithDoubles :: T.Pattern Double -> Rational -> Diagram B
 patternDiagramLinearWithDoubles tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
@@ -251,20 +239,6 @@ patternDiagramLinearWithDoubles tidalPattern queryEnd =
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = patternEventLabelLinearX <$> labels <*> starts
 
-eventToTripleForValueMap :: T.Event T.ValueMap -> Maybe (T.ValueMap,Rational,Rational)
-eventToTripleForValueMap e =
-    case (T.eventHasOnset e) of
-        True -> Just (valmap, wholestart, wholeend)
-        False -> Nothing
-    where
-        (T.Event _ (Just (T.Arc wholestart wholeend)) _ valmap) = e
-
-tidalPatternToValueMapEventList :: T.Pattern T.ValueMap -> Rational -> [(T.ValueMap,Rational,Rational)]
-tidalPatternToValueMapEventList pat queryEnd = eventList
-    where
-        queryResult = T.queryArc pat (T.Arc 0 queryEnd)
-        eventList = catMaybes $ map eventToTripleForValueMap queryResult
-
 prettyPrintValueMap :: T.ValueMap -> String
 prettyPrintValueMap vmap = finalstring
     where
@@ -275,7 +249,21 @@ patternDiagramLinearWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram
 patternDiagramLinearWithValueMaps tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
-        events = tidalPatternToValueMapEventList tidalPattern queryEnd
-        patternevents = [patternEventLinearBW start end | (_,start,end) <- events]
-        patterneventlabels = [patternEventLabelLinearBW (prettyPrintValueMap valuemap) start | (valuemap,start,_) <- events]
+        events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
+        eventswithonsets = ZipList $ filter T.eventHasOnset events
+        --
+        patternevents = getZipList $ boxgeometries
+        patterneventlabels = getZipList $ labelgeometries
+        --
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel = prettyPrintValueMap . T.eventValue
+        --
+        labels = getLabel <$> eventswithonsets
+        starts = T.wholeStart <$> eventswithonsets
+        stops = T.wholeStop <$> eventswithonsets
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = patternEventLinearX <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
 
