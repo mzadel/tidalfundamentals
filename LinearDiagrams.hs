@@ -1,5 +1,6 @@
+{-# LANGUAGE FlexibleInstances         #-}
 
-module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramWithDoubles,diagramWithValueMaps) where
+module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes) where
 
 import Shared
 import Diagrams.Prelude
@@ -81,8 +82,20 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLane <$> lanes
 
-diagramWithDoubles :: T.Pattern Double -> Rational -> Diagram B
-diagramWithDoubles tidalPattern queryEnd =
+class Labelable l where
+    toLabel :: l -> String
+
+instance Labelable Double where
+    toLabel d = show d
+
+instance Labelable T.ValueMap where
+    toLabel vmap = finalstring
+        where
+            pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (M.toList vmap)
+            finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
+
+diagramFromWholes :: (Labelable a) => T.Pattern a -> Rational -> Diagram B
+diagramFromWholes tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
         events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
@@ -91,36 +104,8 @@ diagramWithDoubles tidalPattern queryEnd =
         patternevents = getZipList $ boxgeometries
         patterneventlabels = getZipList $ labelgeometries
         --
-        getLabel :: T.Event Double -> String
-        getLabel = show . T.eventValue
-        --
-        labels = getLabel <$> eventswithonsets
-        starts = T.wholeStart <$> eventswithonsets
-        stops = T.wholeStop <$> eventswithonsets
-        --
-        boxgeometries :: ZipList (Diagram B)
-        boxgeometries = boxGeometry <$> starts <*> stops
-        labelgeometries :: ZipList (Diagram B)
-        labelgeometries = labelGeometry <$> labels <*> starts
-
-prettyPrintValueMap :: T.ValueMap -> String
-prettyPrintValueMap vmap = finalstring
-    where
-        pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (M.toList vmap)
-        finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
-
-diagramWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram B
-diagramWithValueMaps tidalPattern queryEnd =
-    mconcat patterneventlabels <> mconcat patternevents
-    where
-        events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
-        eventswithonsets = ZipList $ filter T.eventHasOnset events
-        --
-        patternevents = getZipList $ boxgeometries
-        patterneventlabels = getZipList $ labelgeometries
-        --
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel = prettyPrintValueMap . T.eventValue
+        getLabel :: (Labelable a) => T.Event a -> String
+        getLabel = toLabel . T.eventValue
         --
         labels = getLabel <$> eventswithonsets
         starts = T.wholeStart <$> eventswithonsets

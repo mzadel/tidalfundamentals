@@ -13,11 +13,11 @@ lineOfText texttoshow = (alignedText 0 0.5 texttoshow # fontSize eventLabelSize)
 patternAlgebraDiagram :: (T.Pattern Double -> T.Pattern Double -> T.Pattern Double) -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
 patternAlgebraDiagram operator operatorString pat1 pat2 =
     vsep linearDiagramVerticalPadding [
-        Lin.diagramWithDoubles (pat1) 1
+        Lin.diagramFromWholes (pat1) 1
         ,lineOfText operatorString
-        ,Lin.diagramWithDoubles (pat2) 1
+        ,Lin.diagramFromWholes (pat2) 1
         ,lineOfText "=="
-        ,Lin.diagramWithDoubles (operator pat1 pat2) 1
+        ,Lin.diagramFromWholes (operator pat1 pat2) 1
         ]
 
 leftPlusExample1 :: Diagram B
@@ -46,10 +46,10 @@ justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseB
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =
     vsep linearDiagramVerticalPadding [
-        Lin.diagramWithValueMaps (T.s $ T.parseBP_E "bd sd hh") 3
+        Lin.diagramFromWholes (T.s $ T.parseBP_E "bd sd hh") 3
         ,lineOfText "|+"
-        ,Lin.diagramWithValueMaps (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
+        ,Lin.diagramFromWholes (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
         ,lineOfText "=="
-        ,Lin.diagramWithValueMaps ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
+        ,Lin.diagramFromWholes ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
         ]
 
