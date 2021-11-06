@@ -56,7 +56,7 @@ patternTable = fromList [
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
 diagramEntry (label, (patString, numticks)) = (label, diagram)
     where
-        diagram = Cir.diagram pat numticks colourTable # frame 0.05 # scale outputScaling
+        diagram = Cir.diagramLabeledFromSValue pat numticks colourTable # frame 0.05 # scale outputScaling
         pat = T.s $ T.parseBP_E patString
 
 diagramTableLinear :: [(String, Diagram B)]
