@@ -34,7 +34,9 @@ labelGeometry labelString boxStartLoc = label
         labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd M.empty colourTable
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable
+    where
+        laneTable = M.empty
 
 -- lanes are numbered from zero, starting at the top
 moveToLane :: Int -> Diagram B -> Diagram B
