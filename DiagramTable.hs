@@ -62,37 +62,37 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [
     ("commaforparallel"
-    ,(Lin.patternDiagramLinearWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanes (T.s $ T.parseBP_E "[a b c, d e]") 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbraces"
-    ,(Lin.patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{a b c , d e}") 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanes (T.s $ T.parseBP_E "{a b c , d e}") 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbracesotherorder"
-    ,(Lin.patternDiagramLinearWithLanes (T.s $ T.parseBP_E "{d e , a b c}") 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanes (T.s $ T.parseBP_E "{d e , a b c}") 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyeight"
-    ,(Lin.patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
-    ,(Lin.patternDiagramLinear (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("anglebrackets"
-    ,(Lin.patternDiagramLinear (T.s $ T.parseBP_E "<a b c> d <e f>") 3 4 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.parseBP_E "<a b c> d <e f>") 3 4 colourTable) # frame 0.05 # scale outputScaling)
     ,("euclideanrhythm"
-    ,(Lin.patternDiagramLinear (T.s $ T.parseBP_E "a(3,7)") 7 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.parseBP_E "a(3,7)") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowfunction"
-    ,(Lin.patternDiagramLinear (T.s $ T.slow 2 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.slow 2 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
-    ,(Lin.patternDiagramLinear (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"
-    ,(Lin.patternDiagramLinear (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 8 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 8 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("fastfunction"
-    ,(Lin.patternDiagramLinear (T.s $ T.fast 3 $ T.parseBP_E "a b c") 9 1 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.fast 3 $ T.parseBP_E "a b c") 9 1 colourTable) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
-    ,(Lin.patternDiagramLinear (T.s $ T.fastGap 3 $ T.parseBP_E "a b c") 3 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.fastGap 3 $ T.parseBP_E "a b c") 3 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("compressfunction"
-    ,(Lin.patternDiagramLinear (T.s $ T.compress (1/4,1/2) $ T.parseBP_E "a b c") 4 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.compress (1/4,1/2) $ T.parseBP_E "a b c") 4 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("zoomfunction"
-    ,(Lin.patternDiagramLinear (T.s $ T.zoom (1/4,3/4) $ T.parseBP_E "a b c") 6 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.zoom (1/4,3/4) $ T.parseBP_E "a b c") 6 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
-    ,(Lin.patternDiagramLinear (T.s $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctionoutput"
-    ,(Lin.patternDiagramLinear (T.s $ T.rev $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagram (T.s $ T.rev $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]

@@ -1,5 +1,5 @@
 
-module LinearDiagrams (patternDiagramLinear,patternDiagramLinearWithLanes,patternDiagramLinearWithDoubles,patternDiagramLinearWithValueMaps) where
+module LinearDiagrams (diagram,diagramWithLanes,diagramWithDoubles,diagramWithValueMaps) where
 
 import Shared
 import Diagrams.Prelude
@@ -33,8 +33,8 @@ patternEventLabelLinearX labelString slabStartLoc = label
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
-patternDiagramLinear :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
-patternDiagramLinear tidalPattern ticksPerCycle queryEnd colourTable =
+diagram :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
+diagram tidalPattern ticksPerCycle queryEnd colourTable =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabelLinear tickLocList)
             ,mconcat (map tickMarkLinear tickLocList)
@@ -71,8 +71,8 @@ patternDiagramLinear tidalPattern ticksPerCycle queryEnd colourTable =
 moveToLaneX :: Int -> Diagram B -> Diagram B
 moveToLaneX lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
-patternDiagramLinearWithLanes :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
-patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colourTable =
+diagramWithLanes :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
+diagramWithLanes tidalPattern ticksPerCycle queryEnd laneTable colourTable =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabelLinear tickLocList)
             ,mconcat (map tickMarkLinear tickLocList)
@@ -110,8 +110,8 @@ patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colo
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLaneX <$> lanes
 
-patternDiagramLinearWithDoubles :: T.Pattern Double -> Rational -> Diagram B
-patternDiagramLinearWithDoubles tidalPattern queryEnd =
+diagramWithDoubles :: T.Pattern Double -> Rational -> Diagram B
+diagramWithDoubles tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
         events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
@@ -138,8 +138,8 @@ prettyPrintValueMap vmap = finalstring
         pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (toList vmap)
         finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
 
-patternDiagramLinearWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram B
-patternDiagramLinearWithValueMaps tidalPattern queryEnd =
+diagramWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram B
+diagramWithValueMaps tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
         events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
