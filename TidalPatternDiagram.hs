@@ -12,6 +12,7 @@ import Data.Ratio
 import Data.Map (Map, (!), toList)
 import qualified Sound.Tidal.Context as T
 import Data.Maybe (catMaybes)
+import Control.Applicative (ZipList(ZipList,getZipList))
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
@@ -72,6 +73,9 @@ patternEventLabel labelString wedgeStartLoc eventColour = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy ((fromRational wedgeStartLoc) + eventLabelInset) # transform overallTransform
         labelDiagram = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPos
+
+styleX :: Brightness -> Int -> Diagram B -> Diagram B
+styleX brightness colourindex = lw none $ fc $ d3Colors2 brightness colourindex
 
 cycleDirectionArrow :: Diagram B
 cycleDirectionArrow = arro
@@ -135,6 +139,15 @@ patternEventLabelLinear labelString slabStartLoc eventColour = label
         label = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
+patternEventLinearX :: Rational -> Rational -> Diagram B
+patternEventLinearX startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+
+patternEventLabelLinearX :: String -> Rational -> Diagram B
+patternEventLabelLinearX labelString slabStartLoc = label
+    where
+        label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
+        labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
+
 linearDiagramVerticalPadding = 0.01
 
 patternDiagramLinear :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
@@ -150,15 +163,9 @@ patternDiagramLinear tidalPattern ticksPerCycle queryEnd colourTable =
         patterneventlabels = [patternEventLabelLinear label start (colourTable ! label) | (label,start,_) <- events]
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
 
-laneYOffset :: Int -> Double
-laneYOffset lane = (fromIntegral $ -lane) * eventWidth
-
 -- lanes are numbered from zero, starting at the top
-patternEventLinearWithLane :: Rational -> Rational -> Int -> Int -> Diagram B
-patternEventLinearWithLane startLoc endLoc lane eventColour = (patternEventLinear startLoc endLoc eventColour) # translateY (laneYOffset lane)
-
-patternEventLabelLinearWithLane :: String -> Rational -> Int -> Int -> Diagram B
-patternEventLabelLinearWithLane labelString slabStartLoc lane eventColour = (patternEventLabelLinear labelString slabStartLoc eventColour) # translateY (laneYOffset lane)
+moveToLaneX :: Int -> Diagram B -> Diagram B
+moveToLaneX lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
 patternDiagramLinearWithLanes :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
 patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colourTable =
@@ -168,10 +175,36 @@ patternDiagramLinearWithLanes tidalPattern ticksPerCycle queryEnd laneTable colo
             ,(mconcat patterneventlabels <> mconcat patternevents)
             ]
     where
-        events = tidalPatternToEventList tidalPattern queryEnd
-        patternevents = [patternEventLinearWithLane start end (laneTable ! label) (colourTable ! label) | (label,start,end) <- events]
-        patterneventlabels = [patternEventLabelLinearWithLane label start (laneTable ! label) (colourTable ! label) | (label,start,_) <- events]
+        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 queryEnd)
+        --
+        patternevents = getZipList $ laneTranslations <*> (boxStyles <*> boxgeometries)
+        patterneventlabels = getZipList $ laneTranslations <*> (labelStyles <*> labelgeometries)
+        --
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
+        --
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel e = T.svalue $ T.eventValue e ! "s"
+        lookUpColour :: T.Event T.ValueMap -> Int
+        lookUpColour e = colourTable ! getLabel e
+        lookUpLane :: T.Event T.ValueMap -> Int
+        lookUpLane e = laneTable ! getLabel e
+        --
+        labels = getLabel <$> events
+        colours = lookUpColour <$> events
+        lanes = lookUpLane <$> events
+        starts = T.eventPartStart <$> events
+        stops = T.eventPartStop <$> events
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = patternEventLinearX <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        boxStyles :: ZipList (Diagram B -> Diagram B)
+        boxStyles = styleX Dark <$> colours
+        labelStyles :: ZipList (Diagram B -> Diagram B)
+        labelStyles = styleX Light <$> colours
+        laneTranslations :: ZipList (Diagram B -> Diagram B)
+        laneTranslations = moveToLaneX <$> lanes
 
 patternEventLinearBW :: Rational -> Rational -> Diagram B
 patternEventLinearBW startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
