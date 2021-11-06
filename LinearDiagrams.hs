@@ -28,10 +28,10 @@ boxGeometry :: Rational -> Rational -> Diagram B
 boxGeometry startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
 labelGeometry :: String -> Rational -> Diagram B
-labelGeometry labelString slabStartLoc = label
+labelGeometry labelString boxStartLoc = label
     where
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
-        labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
+        labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable =
