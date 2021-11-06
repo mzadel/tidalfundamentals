@@ -11,15 +11,15 @@ import Data.Ratio
 import qualified Data.Map as M (Map, (!), toList, findWithDefault, empty)
 import Control.Applicative (ZipList(ZipList,getZipList))
 
-tickMarkLinear :: Rational -> Diagram B
-tickMarkLinear tickLoc = mark
+tickMark :: Rational -> Diagram B
+tickMark tickLoc = mark
     where
         tickMarkSize = 0.016
         point = p2 (fromRational tickLoc, 0)
         mark = vrule tickMarkSize # moveTo point
 
-tickMarkLabelLinear :: Rational -> Diagram B
-tickMarkLabelLinear tickLoc = label
+tickMarkLabel :: Rational -> Diagram B
+tickMarkLabel tickLoc = label
     where
         labelPoint = p2 (fromRational tickLoc, 0)
         labelText = ratioToString tickLoc
@@ -46,8 +46,8 @@ moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
 diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> M.Map String Int -> Diagram B
 diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable =
         vsep linearDiagramVerticalPadding [
-            mconcat (map tickMarkLabelLinear tickLocList)
-            ,mconcat (map tickMarkLinear tickLocList)
+            mconcat (map tickMarkLabel tickLocList)
+            ,mconcat (map tickMark tickLocList)
             ,(mconcat patterneventlabels <> mconcat patternevents)
             ]
     where
