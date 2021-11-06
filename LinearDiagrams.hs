@@ -1,5 +1,5 @@
 
-module LinearDiagrams (diagram,diagramWithLanes,diagramWithDoubles,diagramWithValueMaps) where
+module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramWithDoubles,diagramWithValueMaps) where
 
 import Shared
 import Diagrams.Prelude
@@ -33,8 +33,8 @@ patternEventLabelLinearX labelString slabStartLoc = label
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
 
-diagram :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
-diagram tidalPattern ticksPerCycle queryEnd colourTable =
+diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabelLinear tickLocList)
             ,mconcat (map tickMarkLinear tickLocList)
@@ -71,8 +71,8 @@ diagram tidalPattern ticksPerCycle queryEnd colourTable =
 moveToLaneX :: Int -> Diagram B -> Diagram B
 moveToLaneX lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
-diagramWithLanes :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
-diagramWithLanes tidalPattern ticksPerCycle queryEnd laneTable colourTable =
+diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
+diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabelLinear tickLocList)
             ,mconcat (map tickMarkLinear tickLocList)
