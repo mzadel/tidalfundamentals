@@ -2,7 +2,7 @@
 MK=/usr/bin/make
 
 diagramexecutable=diagram
-modules=TidalPatternDiagram DiagramTable PatternAlgebraDiagrams
+modules=Shared LinearDiagrams PatternAlgebraDiagrams TidalPatternDiagram DiagramTable
 
 document=tidal
 diagrams=\

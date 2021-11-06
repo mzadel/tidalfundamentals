@@ -1,9 +1,10 @@
 
 module PatternAlgebraDiagrams where
 
-import TidalPatternDiagram
+import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
+import qualified LinearDiagrams as Lin
 import qualified Sound.Tidal.Context as T
 
 lineOfText :: String -> Diagram B
@@ -12,11 +13,11 @@ lineOfText texttoshow = (alignedText 0 0.5 texttoshow # fontSize eventLabelSize)
 patternAlgebraDiagram :: (T.Pattern Double -> T.Pattern Double -> T.Pattern Double) -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
 patternAlgebraDiagram operator operatorString pat1 pat2 =
     vsep linearDiagramVerticalPadding [
-        patternDiagramLinearWithDoubles (pat1) 1
+        Lin.patternDiagramLinearWithDoubles (pat1) 1
         ,lineOfText operatorString
-        ,patternDiagramLinearWithDoubles (pat2) 1
+        ,Lin.patternDiagramLinearWithDoubles (pat2) 1
         ,lineOfText "=="
-        ,patternDiagramLinearWithDoubles (operator pat1 pat2) 1
+        ,Lin.patternDiagramLinearWithDoubles (operator pat1 pat2) 1
         ]
 
 leftPlusExample1 :: Diagram B
@@ -45,10 +46,10 @@ justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseB
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =
     vsep linearDiagramVerticalPadding [
-        patternDiagramLinearWithValueMaps (T.s $ T.parseBP_E "bd sd hh") 3
+        Lin.patternDiagramLinearWithValueMaps (T.s $ T.parseBP_E "bd sd hh") 3
         ,lineOfText "|+"
-        ,patternDiagramLinearWithValueMaps (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
+        ,Lin.patternDiagramLinearWithValueMaps (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
         ,lineOfText "=="
-        ,patternDiagramLinearWithValueMaps ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
+        ,Lin.patternDiagramLinearWithValueMaps ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
         ]
 
