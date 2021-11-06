@@ -1,6 +1,3 @@
-{-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE FlexibleContexts          #-}
-{-# LANGUAGE TypeFamilies              #-}
 
 module TidalPatternDiagram (patternDiagram) where
 
@@ -9,8 +6,9 @@ import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
 import Data.Ratio
-import Data.Map (Map, (!), toList)
+import Data.Map (Map, (!))
 import qualified Sound.Tidal.Context as T
+import Control.Applicative (ZipList(ZipList,getZipList))
 import Shared
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
@@ -45,41 +43,27 @@ tickMarkLabel extraRadius tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize tickMarkLabelSize # moveTo labelPoint
 
-patternEvent :: Rational -> Rational -> Int -> Diagram B
-patternEvent startLoc endLoc eventColour = transformedWedge
+patternEvent :: Rational -> Rational -> Diagram B
+patternEvent startLoc endLoc = transformedWedge
     where
         angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
         innerRadius = theRadius - (eventWidth/2)
         outerRadius = theRadius + (eventWidth/2)
-        theWedge = annularWedge outerRadius innerRadius startDir angle # fc (d3Colors2 Dark eventColour) # lw none
+        theWedge = annularWedge outerRadius innerRadius startDir angle
         transformedWedge = theWedge # transform overallTransform
 
-patternEventLabel :: String -> Rational -> Int -> Diagram B
-patternEventLabel labelString wedgeStartLoc eventColour = labelDiagram
+patternEventLabel :: String -> Rational -> Diagram B
+patternEventLabel labelString wedgeStartLoc = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy (fromRational (wedgeStartLoc + eventLabelInset)) # transform overallTransform
-        labelDiagram = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPos
+        labelDiagram = text labelString # fontSize eventLabelSize # moveTo labelPos
 
 cycleDirectionArrow :: Diagram B
 cycleDirectionArrow = arro
     where
         shaft = arc' (theRadius * 1.45) xDir (0.08 @@ turn) # transform overallTransform
         arro = arrowFromLocatedTrail shaft
-
-stripFirstAndLast :: String -> String
-stripFirstAndLast = init . tail
-
-eventToTriple :: T.Event T.ValueMap -> (String,Rational,Rational)
-eventToTriple (T.Event _ _ (T.Arc start end) valueMap) = (stripFirstAndLast $ show value, start, end)
-    where
-        (_, value) = head $ toList valueMap
-
-tidalPatternToEventList :: T.ControlPattern -> Rational -> [(String,Rational,Rational)]
-tidalPatternToEventList pat queryEnd = eventList
-    where
-        queryResult = T.queryArc pat (T.Arc 0 queryEnd)
-        eventList = map eventToTriple queryResult
 
 tickMarkLabelOffset = 0.05
 
@@ -92,8 +76,29 @@ patternDiagram tidalPattern numTicks colourTable =
         <> mconcat (map (tickMarkLabel tickMarkLabelOffset) tickLocList)
         <> circle theRadius
     where
-        events = tidalPatternToEventList tidalPattern 1
-        patternevents = [patternEvent start end (colourTable ! label) | (label,start,end) <- events]
-        patterneventlabels = [patternEventLabel label start (colourTable ! label) | (label,start,_) <- events]
+        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 1)
+        --
+        patternevents = getZipList $ boxStyles <*> boxgeometries
+        patterneventlabels = getZipList $ labelStyles <*> labelgeometries
+        --
         tickLocList = init $ tickMarkLocations (1%numTicks) 1
+        --
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel e = T.svalue $ T.eventValue e ! "s"
+        lookUpColour :: T.Event T.ValueMap -> Int
+        lookUpColour e = colourTable ! getLabel e
+        --
+        labels = getLabel <$> events
+        colours = lookUpColour <$> events
+        starts = T.eventPartStart <$> events
+        stops = T.eventPartStop <$> events
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = patternEvent <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = patternEventLabel <$> labels <*> starts
+        boxStyles :: ZipList (Diagram B -> Diagram B)
+        boxStyles = styleX Dark <$> colours
+        labelStyles :: ZipList (Diagram B -> Diagram B)
+        labelStyles = styleX Light <$> colours
 
