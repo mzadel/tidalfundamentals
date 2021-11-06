@@ -7,7 +7,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import Data.Map (Map, (!), toList, findWithDefault, empty)
+import qualified Data.Map as M (Map, (!), toList, findWithDefault, empty)
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 tickMarkLinear :: Rational -> Diagram B
@@ -33,14 +33,14 @@ labelGeometry labelString boxStartLoc = label
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
 
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd empty colourTable
+diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> Diagram B
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd M.empty colourTable
 
 -- lanes are numbered from zero, starting at the top
 moveToLaneX :: Int -> Diagram B -> Diagram B
 moveToLaneX lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
-diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Map String Int -> Diagram B
+diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> M.Map String Int -> Diagram B
 diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabelLinear tickLocList)
@@ -56,11 +56,11 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
         --
         getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e ! "s"
+        getLabel e = T.svalue $ T.eventValue e M.! "s"
         lookUpColour :: T.Event T.ValueMap -> Int
-        lookUpColour e = colourTable ! getLabel e
+        lookUpColour e = colourTable M.! getLabel e
         lookUpLane :: T.Event T.ValueMap -> Int
-        lookUpLane e = findWithDefault 0 (getLabel e) laneTable
+        lookUpLane e = M.findWithDefault 0 (getLabel e) laneTable
         --
         labels = getLabel <$> events
         colours = lookUpColour <$> events
@@ -104,7 +104,7 @@ diagramWithDoubles tidalPattern queryEnd =
 prettyPrintValueMap :: T.ValueMap -> String
 prettyPrintValueMap vmap = finalstring
     where
-        pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (toList vmap)
+        pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (M.toList vmap)
         finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
 
 diagramWithValueMaps :: T.Pattern T.ValueMap -> Rational -> Diagram B

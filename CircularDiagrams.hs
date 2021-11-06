@@ -8,7 +8,7 @@ import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import Data.Map (Map, (!))
+import qualified Data.Map as M (Map, (!))
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
@@ -67,7 +67,7 @@ cycleDirectionArrow = arro
 
 tickMarkLabelOffset = 0.05
 
-diagram :: T.ControlPattern -> Integer -> Map String Int -> Diagram B
+diagram :: T.ControlPattern -> Integer -> M.Map String Int -> Diagram B
 diagram tidalPattern numTicks colourTable =
         mconcat patterneventlabels
         <> mconcat patternevents
@@ -84,9 +84,9 @@ diagram tidalPattern numTicks colourTable =
         tickLocList = init $ tickMarkLocations (1%numTicks) 1
         --
         getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e ! "s"
+        getLabel e = T.svalue $ T.eventValue e M.! "s"
         lookUpColour :: T.Event T.ValueMap -> Int
-        lookUpColour e = colourTable ! getLabel e
+        lookUpColour e = colourTable M.! getLabel e
         --
         labels = getLabel <$> events
         colours = lookUpColour <$> events
