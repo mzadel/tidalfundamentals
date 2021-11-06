@@ -7,7 +7,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import Data.Map (Map, (!), toList)
+import Data.Map (Map, (!), toList, findWithDefault, empty)
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 tickMarkLinear :: Rational -> Diagram B
@@ -34,38 +34,7 @@ labelGeometry labelString boxStartLoc = label
         labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> Map String Int -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable =
-        vsep linearDiagramVerticalPadding [
-            mconcat (map tickMarkLabelLinear tickLocList)
-            ,mconcat (map tickMarkLinear tickLocList)
-            ,(mconcat patterneventlabels <> mconcat patternevents)
-            ]
-    where
-        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 queryEnd)
-        --
-        patternevents = getZipList $ boxStyles <*> boxgeometries
-        patterneventlabels = getZipList $ labelStyles <*> labelgeometries
-        --
-        tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
-        --
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e ! "s"
-        lookUpColour :: T.Event T.ValueMap -> Int
-        lookUpColour e = colourTable ! getLabel e
-        --
-        labels = getLabel <$> events
-        colours = lookUpColour <$> events
-        starts = T.eventPartStart <$> events
-        stops = T.eventPartStop <$> events
-        --
-        boxgeometries :: ZipList (Diagram B)
-        boxgeometries = boxGeometry <$> starts <*> stops
-        labelgeometries :: ZipList (Diagram B)
-        labelgeometries = labelGeometry <$> labels <*> starts
-        labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = style Light <$> colours
-        boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = style Dark <$> colours
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd empty colourTable
 
 -- lanes are numbered from zero, starting at the top
 moveToLaneX :: Int -> Diagram B -> Diagram B
@@ -91,7 +60,7 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         lookUpColour :: T.Event T.ValueMap -> Int
         lookUpColour e = colourTable ! getLabel e
         lookUpLane :: T.Event T.ValueMap -> Int
-        lookUpLane e = laneTable ! getLabel e
+        lookUpLane e = findWithDefault 0 (getLabel e) laneTable
         --
         labels = getLabel <$> events
         colours = lookUpColour <$> events
