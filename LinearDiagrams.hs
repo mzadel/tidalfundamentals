@@ -24,11 +24,11 @@ tickMarkLabelLinear tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
 
-patternEventLinearX :: Rational -> Rational -> Diagram B
-patternEventLinearX startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+boxGeometry :: Rational -> Rational -> Diagram B
+boxGeometry startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
-patternEventLabelLinearX :: String -> Rational -> Diagram B
-patternEventLabelLinearX labelString slabStartLoc = label
+labelGeometry :: String -> Rational -> Diagram B
+labelGeometry labelString slabStartLoc = label
     where
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
@@ -59,9 +59,9 @@ diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable =
         stops = T.eventPartStop <$> events
         --
         boxgeometries :: ZipList (Diagram B)
-        boxgeometries = patternEventLinearX <$> starts <*> stops
+        boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        labelgeometries = labelGeometry <$> labels <*> starts
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = style Light <$> colours
         boxStyles :: ZipList (Diagram B -> Diagram B)
@@ -100,9 +100,9 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         stops = T.eventPartStop <$> events
         --
         boxgeometries :: ZipList (Diagram B)
-        boxgeometries = patternEventLinearX <$> starts <*> stops
+        boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        labelgeometries = labelGeometry <$> labels <*> starts
         boxStyles :: ZipList (Diagram B -> Diagram B)
         boxStyles = style Dark <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
@@ -128,9 +128,9 @@ diagramWithDoubles tidalPattern queryEnd =
         stops = T.wholeStop <$> eventswithonsets
         --
         boxgeometries :: ZipList (Diagram B)
-        boxgeometries = patternEventLinearX <$> starts <*> stops
+        boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        labelgeometries = labelGeometry <$> labels <*> starts
 
 prettyPrintValueMap :: T.ValueMap -> String
 prettyPrintValueMap vmap = finalstring
@@ -156,7 +156,7 @@ diagramWithValueMaps tidalPattern queryEnd =
         stops = T.wholeStop <$> eventswithonsets
         --
         boxgeometries :: ZipList (Diagram B)
-        boxgeometries = patternEventLinearX <$> starts <*> stops
+        boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        labelgeometries = labelGeometry <$> labels <*> starts
 
