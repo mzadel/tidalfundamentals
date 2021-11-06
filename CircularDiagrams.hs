@@ -1,5 +1,5 @@
 
-module CircularDiagrams (patternDiagram) where
+module CircularDiagrams (diagram) where
 
 import Shared
 import Diagrams.Prelude
@@ -67,8 +67,8 @@ cycleDirectionArrow = arro
 
 tickMarkLabelOffset = 0.05
 
-patternDiagram :: T.ControlPattern -> Integer -> Map String Int -> Diagram B
-patternDiagram tidalPattern numTicks colourTable =
+diagram :: T.ControlPattern -> Integer -> Map String Int -> Diagram B
+diagram tidalPattern numTicks colourTable =
         mconcat patterneventlabels
         <> mconcat patternevents
         <> cycleDirectionArrow
