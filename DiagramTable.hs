@@ -3,11 +3,11 @@ module DiagramTable (diagramListForMainWith) where
 
 import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams as Lin
+import qualified PatternAlgebraDiagrams as PA
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Map (Map,fromList,toList)
 import qualified Sound.Tidal.Context as T
-import qualified PatternAlgebraDiagrams as PA
+import Data.Map (Map,fromList,toList)
 
 outputScaling = 600 :: Double
 

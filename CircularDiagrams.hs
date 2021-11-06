@@ -1,15 +1,15 @@
 
 module CircularDiagrams (patternDiagram) where
 
+import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow
 import Data.Colour.Palette.ColorSet
+import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import Data.Map (Map, (!))
-import qualified Sound.Tidal.Context as T
 import Control.Applicative (ZipList(ZipList,getZipList))
-import Shared
 
 radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
 theRadius = radiusOfUnitCircumfrenceCircle

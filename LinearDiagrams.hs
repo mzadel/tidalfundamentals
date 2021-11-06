@@ -1,14 +1,14 @@
 
 module LinearDiagrams (patternDiagramLinear,patternDiagramLinearWithLanes,patternDiagramLinearWithDoubles,patternDiagramLinearWithValueMaps) where
 
+import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet
+import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import Data.Map (Map, (!), toList)
-import qualified Sound.Tidal.Context as T
 import Control.Applicative (ZipList(ZipList,getZipList))
-import Shared
 
 tickMarkLinear :: Rational -> Diagram B
 tickMarkLinear tickLoc = mark
