@@ -4,7 +4,7 @@ module CircularDiagrams (diagramLabeledFromSValue) where
 import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Diagrams.TwoD.Arrow
+import Diagrams.TwoD.Arrow (arrowFromLocatedTrail)
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
