@@ -47,9 +47,9 @@ tickMarkLabel extraRadius tickLoc = label
         label = text labelText # fontSize tickMarkLabelSize # moveTo labelPoint
 
 wedgeGeometry :: Rational -> Rational -> Diagram B
-wedgeGeometry startLoc endLoc = transformedWedge
+wedgeGeometry startLoc stopLoc = transformedWedge
     where
-        angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
+        angle = (fromRational (stopLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
         innerRadius = theRadius - (eventWidth/2)
         outerRadius = theRadius + (eventWidth/2)
