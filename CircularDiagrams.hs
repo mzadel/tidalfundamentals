@@ -43,8 +43,8 @@ tickMarkLabel extraRadius tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize tickMarkLabelSize # moveTo labelPoint
 
-patternEvent :: Rational -> Rational -> Diagram B
-patternEvent startLoc endLoc = transformedWedge
+wedgeGeometry :: Rational -> Rational -> Diagram B
+wedgeGeometry startLoc endLoc = transformedWedge
     where
         angle = (fromRational (endLoc - startLoc - 0.003)) @@ turn
         startDir = xDir # rotateBy (fromRational startLoc)
@@ -53,8 +53,8 @@ patternEvent startLoc endLoc = transformedWedge
         theWedge = annularWedge outerRadius innerRadius startDir angle
         transformedWedge = theWedge # transform overallTransform
 
-patternEventLabel :: String -> Rational -> Diagram B
-patternEventLabel labelString wedgeStartLoc = labelDiagram
+labelGeometry :: String -> Rational -> Diagram B
+labelGeometry labelString wedgeStartLoc = labelDiagram
     where
         labelPos = p2 (theRadius, 0) # rotateBy (fromRational (wedgeStartLoc + eventLabelInset)) # transform overallTransform
         labelDiagram = text labelString # fontSize eventLabelSize # moveTo labelPos
@@ -78,7 +78,7 @@ patternDiagram tidalPattern numTicks colourTable =
     where
         events = ZipList $ T.queryArc tidalPattern (T.Arc 0 1)
         --
-        patternevents = getZipList $ boxStyles <*> boxgeometries
+        patternevents = getZipList $ wedgeStyles <*> wedgegeometries
         patterneventlabels = getZipList $ labelStyles <*> labelgeometries
         --
         tickLocList = init $ tickMarkLocations (1%numTicks) 1
@@ -93,12 +93,12 @@ patternDiagram tidalPattern numTicks colourTable =
         starts = T.eventPartStart <$> events
         stops = T.eventPartStop <$> events
         --
-        boxgeometries :: ZipList (Diagram B)
-        boxgeometries = patternEvent <$> starts <*> stops
+        wedgegeometries :: ZipList (Diagram B)
+        wedgegeometries = wedgeGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = patternEventLabel <$> labels <*> starts
-        boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = styleX Dark <$> colours
+        labelgeometries = labelGeometry <$> labels <*> starts
+        wedgeStyles :: ZipList (Diagram B -> Diagram B)
+        wedgeStyles = styleX Dark <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = styleX Light <$> colours
 
