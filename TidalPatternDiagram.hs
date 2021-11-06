@@ -130,15 +130,6 @@ tickMarkLabelLinear tickLoc = label
         labelText = ratioToString tickLoc
         label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
 
-patternEventLinear :: Rational -> Rational -> Int -> Diagram B
-patternEventLinear startLoc endLoc eventColour = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # fc (d3Colors2 Dark eventColour) # lw none # moveTo ((fromRational $ startLoc) ^& 0)
-
-patternEventLabelLinear :: String -> Rational -> Int -> Diagram B
-patternEventLabelLinear labelString slabStartLoc eventColour = label
-    where
-        label = text labelString # fontSize eventLabelSize # fc (d3Colors2 Light eventColour) # moveTo labelPoint
-        labelPoint = (fromRational (slabStartLoc + eventLabelInset)) ^& 0
-
 patternEventLinearX :: Rational -> Rational -> Diagram B
 patternEventLinearX startLoc endLoc = rect (fromRational $ endLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
 
@@ -158,10 +149,31 @@ patternDiagramLinear tidalPattern ticksPerCycle queryEnd colourTable =
             ,(mconcat patterneventlabels <> mconcat patternevents)
             ]
     where
-        events = tidalPatternToEventList tidalPattern queryEnd
-        patternevents = [patternEventLinear start end (colourTable ! label) | (label,start,end) <- events]
-        patterneventlabels = [patternEventLabelLinear label start (colourTable ! label) | (label,start,_) <- events]
+        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 queryEnd)
+        --
+        patternevents = getZipList $ boxStyles <*> boxgeometries
+        patterneventlabels = getZipList $ labelStyles <*> labelgeometries
+        --
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
+        --
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel e = T.svalue $ T.eventValue e ! "s"
+        lookUpColour :: T.Event T.ValueMap -> Int
+        lookUpColour e = colourTable ! getLabel e
+        --
+        labels = getLabel <$> events
+        colours = lookUpColour <$> events
+        starts = T.eventPartStart <$> events
+        stops = T.eventPartStop <$> events
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = patternEventLinearX <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
+        labelStyles :: ZipList (Diagram B -> Diagram B)
+        labelStyles = styleX Light <$> colours
+        boxStyles :: ZipList (Diagram B -> Diagram B)
+        boxStyles = styleX Dark <$> colours
 
 -- lanes are numbered from zero, starting at the top
 moveToLaneX :: Int -> Diagram B -> Diagram B
