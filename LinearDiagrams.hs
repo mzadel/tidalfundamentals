@@ -37,8 +37,8 @@ diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map Str
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd M.empty colourTable
 
 -- lanes are numbered from zero, starting at the top
-moveToLaneX :: Int -> Diagram B -> Diagram B
-moveToLaneX lane = translateY ((fromIntegral $ -lane) * eventWidth)
+moveToLane :: Int -> Diagram B -> Diagram B
+moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
 diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> M.Map String Int -> Diagram B
 diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable =
@@ -77,7 +77,7 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = style Light <$> colours
         laneTranslations :: ZipList (Diagram B -> Diagram B)
-        laneTranslations = moveToLaneX <$> lanes
+        laneTranslations = moveToLane <$> lanes
 
 diagramWithDoubles :: T.Pattern Double -> Rational -> Diagram B
 diagramWithDoubles tidalPattern queryEnd =
