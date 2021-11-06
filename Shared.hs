@@ -3,7 +3,7 @@ module Shared where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet
+import Data.Colour.Palette.ColorSet (Brightness,d3Colors2)
 import Data.Ratio
 
 ratioToString :: Rational -> String

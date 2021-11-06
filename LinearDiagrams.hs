@@ -5,7 +5,7 @@ module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValu
 import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet
+import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M (Map, (!), toList, findWithDefault, empty)
