@@ -63,9 +63,9 @@ diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable =
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = patternEventLabelLinearX <$> labels <*> starts
         labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = styleX Light <$> colours
+        labelStyles = style Light <$> colours
         boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = styleX Dark <$> colours
+        boxStyles = style Dark <$> colours
 
 -- lanes are numbered from zero, starting at the top
 moveToLaneX :: Int -> Diagram B -> Diagram B
@@ -104,9 +104,9 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = patternEventLabelLinearX <$> labels <*> starts
         boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = styleX Dark <$> colours
+        boxStyles = style Dark <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = styleX Light <$> colours
+        labelStyles = style Light <$> colours
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLaneX <$> lanes
 

@@ -98,7 +98,7 @@ diagram tidalPattern numTicks colourTable =
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
         wedgeStyles :: ZipList (Diagram B -> Diagram B)
-        wedgeStyles = styleX Dark <$> colours
+        wedgeStyles = style Dark <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = styleX Light <$> colours
+        labelStyles = style Light <$> colours
 

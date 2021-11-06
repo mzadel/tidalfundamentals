@@ -22,6 +22,6 @@ linearDiagramVerticalPadding = 0.01
 tickMarkLocations :: Rational -> Rational -> [Rational]
 tickMarkLocations tickDivision endTickLoc = [0,tickDivision..endTickLoc]
 
-styleX :: Brightness -> Int -> Diagram B -> Diagram B
-styleX brightness colourindex = lw none $ fc $ d3Colors2 brightness colourindex
+style :: Brightness -> Int -> Diagram B -> Diagram B
+style brightness colourindex = lw none $ fc $ d3Colors2 brightness colourindex
 
