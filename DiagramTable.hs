@@ -1,7 +1,7 @@
 
 module DiagramTable (diagramListForMainWith) where
 
-import TidalPatternDiagram
+import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams as Lin
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
@@ -56,7 +56,7 @@ patternTable = fromList [
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
 diagramEntry (label, (patString, numticks)) = (label, diagram)
     where
-        diagram = patternDiagram pat numticks colourTable # frame 0.05 # scale outputScaling
+        diagram = Cir.patternDiagram pat numticks colourTable # frame 0.05 # scale outputScaling
         pat = T.s $ T.parseBP_E patString
 
 diagramTableLinear :: [(String, Diagram B)]

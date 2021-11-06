@@ -1,5 +1,5 @@
 
-module TidalPatternDiagram (patternDiagram) where
+module CircularDiagrams (patternDiagram) where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
