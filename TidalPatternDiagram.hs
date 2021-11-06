@@ -229,27 +229,27 @@ patternEventLabelLinearBW labelString slabStartLoc = label
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (slabStartLoc + bwEventLabelInset)) ^& 0
 
-eventToTripleForDouble :: T.Event Double -> Maybe (Double,Rational,Rational)
-eventToTripleForDouble e =
-    case (T.eventHasOnset e) of
-        True -> Just (doublevalue, wholestart, wholeend)
-        False -> Nothing
-    where
-        (T.Event _ (Just (T.Arc wholestart wholeend)) _ doublevalue) = e
-
-tidalPatternToDoubleEventList :: T.Pattern Double -> Rational -> [(Double,Rational,Rational)]
-tidalPatternToDoubleEventList pat queryEnd = eventList
-    where
-        queryResult = T.queryArc pat (T.Arc 0 queryEnd)
-        eventList = catMaybes $ map eventToTripleForDouble queryResult
-
 patternDiagramLinearWithDoubles :: T.Pattern Double -> Rational -> Diagram B
 patternDiagramLinearWithDoubles tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
-        events = tidalPatternToDoubleEventList tidalPattern queryEnd
-        patternevents = [patternEventLinearBW start end | (_,start,end) <- events]
-        patterneventlabels = [patternEventLabelLinearBW (show value) start | (value,start,_) <- events]
+        events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
+        eventswithonsets = ZipList $ filter T.eventHasOnset events
+        --
+        patternevents = getZipList $ boxgeometries
+        patterneventlabels = getZipList $ labelgeometries
+        --
+        getLabel :: T.Event Double -> String
+        getLabel = show . T.eventValue
+        --
+        labels = getLabel <$> eventswithonsets
+        starts = T.wholeStart <$> eventswithonsets
+        stops = T.wholeStop <$> eventswithonsets
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = patternEventLinearX <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = patternEventLabelLinearX <$> labels <*> starts
 
 eventToTripleForValueMap :: T.Event T.ValueMap -> Maybe (T.ValueMap,Rational,Rational)
 eventToTripleForValueMap e =
