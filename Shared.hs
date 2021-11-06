@@ -11,12 +11,19 @@ ratioToString r = case (denominator r) of
     1 -> show $ numerator r
     _ -> (show $ numerator r) ++ "/" ++ (show $ denominator r)
 
+tickMarkLabelSize :: Measure Double
 tickMarkLabelSize = local 0.02
 
+eventWidth :: Double
 eventWidth = 0.035
-eventLabelSize = local 0.03
-eventLabelInset = 0.02 :: Rational
 
+eventLabelSize :: Measure Double
+eventLabelSize = local 0.03
+
+eventLabelInset :: Rational
+eventLabelInset = 0.02
+
+linearDiagramVerticalPadding :: Double
 linearDiagramVerticalPadding = 0.01
 
 tickMarkLocations :: Rational -> Rational -> [Rational]

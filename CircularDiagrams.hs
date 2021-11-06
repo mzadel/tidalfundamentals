@@ -11,7 +11,10 @@ import Data.Ratio
 import qualified Data.Map as M (Map, (!))
 import Control.Applicative (ZipList(ZipList,getZipList))
 
-radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi) :: Double
+radiusOfUnitCircumfrenceCircle :: Double
+radiusOfUnitCircumfrenceCircle = 1.0 / (2.0 * pi)
+
+theRadius :: Double
 theRadius = radiusOfUnitCircumfrenceCircle
 
 {--
@@ -65,6 +68,7 @@ cycleDirectionArrow = arro
         shaft = arc' (theRadius * 1.45) xDir (0.08 @@ turn) # transform overallTransform
         arro = arrowFromLocatedTrail shaft
 
+tickMarkLabelOffset :: Double
 tickMarkLabelOffset = 0.05
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> M.Map String Int -> Diagram B

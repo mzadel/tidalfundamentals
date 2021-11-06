@@ -41,6 +41,7 @@ bothPlusExample2 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.
 bothPlusExample3 :: Diagram B
 bothPlusExample3 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
 
+justPlusExample1 :: Diagram B
 justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
 
 valueAlgebraMapDiagram :: Diagram B
