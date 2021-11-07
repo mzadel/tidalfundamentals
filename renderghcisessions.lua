@@ -32,7 +32,13 @@ end
 function CodeBlock(block)
     if block.classes[1] == "ghcisession" then
 
-        writetoFile(block.text .. "\n")
+        ghciscript = block.text
+
+        if block.attributes["tidalexpression"] ~= nil then
+            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", block.attributes["tidalexpression"])
+        end
+
+        writetoFile(ghciscript .. "\n")
         runGHCI()
         local ghcioutput = readGHCiOutput()
         local codeblocktext = trimExample(convertCarriageReturnsToNewlines(ghcioutput))

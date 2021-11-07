@@ -167,13 +167,12 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
 
 ## Pattern type
 
-    Prelude Sound.Tidal.Context> a = s $ parseBP_E "m n o"
-    Prelude Sound.Tidal.Context> a
-    (0>⅓)|s: "m"
-    (⅓>⅔)|s: "n"
-    (⅔>1)|s: "o"
-    Prelude Sound.Tidal.Context> :t a
-    a :: ControlPattern
+~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"'}
+import Sound.Tidal.Context
+a = {{tidalexpression}}
+a
+:t a
+~~~
 
 m n o is arbitrary here.  There's a mini pattern language that's used in the string literal that's parsed by `parseBP_E`.
 
