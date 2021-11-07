@@ -2,28 +2,28 @@
 local ghciinputfilename="ghci.input"
 local ghcioutputfilename="ghci.output"
 
-function writetoFile(contents)
+local function writetoFile(contents)
     local fileptr = io.output(ghciinputfilename)
     io.write(contents)
     io.close(fileptr)
 end
 
-function runGHCI()
+local function runGHCI()
     os.execute("TERM=dumb script -q ghci.output ghci < ghci.input > /dev/null")
 end
 
-function readGHCiOutput()
+local function readGHCiOutput()
     local fileptr = io.input(ghcioutputfilename)
     local contents = io.read("*all")
     io.close(fileptr)
     return contents
 end
 
-function convertCarriageReturnsToNewlines(text)
+local function convertCarriageReturnsToNewlines(text)
     return string.gsub(text, "\r+\n", "\n")
 end
 
-function trimExample(text)
+local function trimExample(text)
     local startposition, trimfrom = string.find(text, "Prelude> import Sound.Tidal.Context\n")
     local trimto, endposition = string.find(text, "Prelude Sound.Tidal.Context> \nLeaving GHCi.")
     return string.sub(text,trimfrom+1,trimto-1)
