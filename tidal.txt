@@ -152,15 +152,11 @@ s $ parseBP_E "bd bd bd"
 
 You can turn on the implict string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see waldmann article above).
 
-    $ ghci
-    GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
-    Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
-    Prelude> import Sound.Tidal.Context
-    Prelude Sound.Tidal.Context> :set -XOverloadedStrings
-    Prelude Sound.Tidal.Context> s $ "bd bd bd"
-    (0>⅓)|s: "bd"
-    (⅓>⅔)|s: "bd"
-    (⅔>1)|s: "bd"
+~~~{.ghcisession}
+import Sound.Tidal.Context
+:set -XOverloadedStrings
+s $ "bd bd bd"
+~~~
 
 `OverloadedStrings` is described at <https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html> .
 I'd prefer not to use it right now since I'm explicitly trying to figure out the types and to understand the core definitions.
