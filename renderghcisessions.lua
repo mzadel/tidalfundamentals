@@ -57,7 +57,7 @@ function CodeBlock(block)
         ghciscript = block.text
 
         if block.attributes["tidalexpression"] ~= nil then
-            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", block.attributes["tidalexpression"])
+            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", block.attributes["tidalexpression"], nil, true)
         end
 
         writetoFile(ghciscript .. "\n")
