@@ -136,14 +136,10 @@ detail, though.)
 
 This seems to work in the online examples but not in ghci:
 
-    Prelude Sound.Tidal.Context> s $ "bd bd bd"
-
-    <interactive>:14:5: error:
-        • Couldn't match expected type ‘Pattern String’
-                      with actual type ‘[Char]’
-        • In the second argument of ‘($)’, namely ‘"bd bd bd"’
-          In the expression: s $ "bd bd bd"
-          In an equation for ‘it’: it = s $ "bd bd bd"
+~~~{.ghcisession}
+import Sound.Tidal.Context
+s $ "bd bd bd"
+~~~
 
 It needs `parseBP_E`, which is automatically, silently added when running from the text editor.  In a normal `ghci`:
 
