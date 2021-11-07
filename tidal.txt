@@ -138,6 +138,7 @@ This seems to work in the online examples but not in ghci:
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
+--cut>>
 s $ "bd bd bd"
 ~~~
 
@@ -145,6 +146,7 @@ It needs `parseBP_E`, which is automatically, silently added when running from t
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
+--cut>>
 s $ parseBP_E "bd bd bd"
 ~~~
 
@@ -169,6 +171,7 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
 
 ~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"'}
 import Sound.Tidal.Context
+--cut>>
 a = {{tidalexpression}}
 a
 :t a
@@ -210,24 +213,33 @@ The reason it's called an arc is that a cycle is imagined to lie on a circle.  A
 
 So we can create an arc of time:
 
-    Prelude Sound.Tidal.Context> arcoftime = Arc 0.5 1.2
-    Prelude Sound.Tidal.Context> arcoftime
-    Arc {start = 0.5, stop = 1.2}
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+arcoftime = Arc 0.5 1.2
+arcoftime
+~~~
 
 And then query our pattern:
 
-    Prelude Sound.Tidal.Context> a = s $ parseBP_E "m n o"
-    Prelude Sound.Tidal.Context> arcoftime = Arc 0.5 1.2
-    Prelude Sound.Tidal.Context> import qualified Data.Map.Strict as Map
-    Prelude Sound.Tidal.Context Map> query a (State arcoftime Map.empty)
-    [[((1,1),(2,1))](1>1⅕)-1⅓|s: "m",[((3,1),(4,1))]⅓-(½>⅔)|s: "n",[((5,1),(6,1))](⅔>1)|s: "o"]
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+a = s $ parseBP_E "m n o"
+arcoftime = Arc 0.5 1.2
+import qualified Data.Map.Strict as Map
+query a (State arcoftime Map.empty)
+~~~
 
 A smaller window that overlaps only the first event:
 
-    Prelude Sound.Tidal.Context Map> query a (State (Arc 0 1/6) Map.empty)
-    [[((1,1),(2,1))](0>⅙)-⅓|s: "m"]
-    Prelude Sound.Tidal.Context Map> :t query a (State (Arc 0 1/6) Map.empty)
-    query a (State (Arc 0 1/6) Map.empty) :: [Event ValueMap]
+~~~{.ghcisession}
+import Sound.Tidal.Context
+a = s $ parseBP_E "m n o"
+--cut>>
+query a (State (Arc 0 1/6) Map.empty)
+:t query a (State (Arc 0 1/6) Map.empty)
+~~~
 
 So we're getting a list of events from the query.  Each event contains a `ValueMap`.
 

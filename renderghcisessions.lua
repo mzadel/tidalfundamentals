@@ -23,10 +23,32 @@ local function convertCarriageReturnsToNewlines(text)
     return string.gsub(text, "\r+\n", "\n")
 end
 
+local function getTrimStart(text)
+    -- find an explicit cut start
+    local blah, trimStart = string.find(text, '> --cut>>\n', nil, true)
+    if trimStart ~= nil then return trimStart+1 end
+
+    -- if there's no cut present, start with the GHCi starting verbiage
+    trimStart, _ = string.find(text, 'GHCi, version 8', nil, true)
+    if trimStart ~= nil then return trimStart end
+
+    -- if that's not present, fall back to outputting all the characters
+    return 0
+end
+
+local function getTrimEnd(text)
+    local trimEnd, _ = string.find(text, '\nLeaving GHCi.', nil, true)
+    -- Walk backwards and find the beginning of the previous line
+    -- It's always a blank line like "Prelude Sound.Tidal.Context> "
+    trimEnd = trimEnd - 1
+    while string.sub(text,trimEnd,trimEnd) ~= "\n" do
+        trimEnd = trimEnd - 1
+    end
+    return trimEnd
+end
+
 local function trimExample(text)
-    local startposition, trimfrom = string.find(text, "Prelude> import Sound.Tidal.Context\n")
-    local trimto, endposition = string.find(text, "Prelude Sound.Tidal.Context> \nLeaving GHCi.")
-    return string.sub(text,trimfrom+1,trimto-1)
+    return string.sub(text,getTrimStart(text),getTrimEnd(text))
 end
 
 function CodeBlock(block)
