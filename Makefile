@@ -52,7 +52,7 @@ $(diagramexecutable): $(diagramexecutable).hs $(addsuffix .hs,$(modules))
 	./$< -S $(basename $@) -o $@
 
 $(document).html: $(document).txt $(addsuffix .svg,$(diagrams))
-	pandoc -f markdown -t html -s < $< > $@
+	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
 
 watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
@@ -62,4 +62,5 @@ clean:
 	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
 	git clean -f *.svg
 	git clean -f *.html
+	git clean -f ghci.input ghci.output
 

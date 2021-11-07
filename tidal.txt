@@ -147,10 +147,10 @@ This seems to work in the online examples but not in ghci:
 
 It needs `parseBP_E`, which is automatically, silently added when running from the text editor.  In a normal `ghci`:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "bd bd bd"
-    (0>⅓)|s: "bd"
-    (⅓>⅔)|s: "bd"
-    (⅔>1)|s: "bd"
+~~~{.ghcisession}
+import Sound.Tidal.Context
+s $ parseBP_E "bd bd bd"
+~~~
 
 You can turn on the implict string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see waldmann article above).
 
