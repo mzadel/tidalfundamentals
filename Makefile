@@ -9,9 +9,6 @@ modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTab
 document=tidal
 diagrams=\
     basicpattern \
-    commaforparallel \
-    polymetricbraces \
-    polymetricbracesotherorder \
     polymetricdividebyeight \
     polymetricdividebyseven \
     anglebrackets \

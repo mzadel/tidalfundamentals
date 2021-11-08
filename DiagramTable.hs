@@ -73,11 +73,11 @@ diagramEntry (label, (patString, numticks)) = (label, diagram)
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [
     ("commaforparallel"
-    ,(Lin.diagramWithLanesLabeledFromSValue (T.s $ T.parseBP_E "[a b c, d e]") 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesLabeledFromSValue PE.commaforparallelExpr 4 1 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbraces"
-    ,(Lin.diagramWithLanesLabeledFromSValue (T.s $ T.parseBP_E "{a b c , d e}") 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesLabeledFromSValue PE.polymetricbracesExpr 3 3 laneTable colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricbracesotherorder"
-    ,(Lin.diagramWithLanesLabeledFromSValue (T.s $ T.parseBP_E "{d e , a b c}") 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesLabeledFromSValue PE.polymetricbracesotherorderExpr 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyeight"
     ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"

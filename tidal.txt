@@ -464,17 +464,12 @@ drawLine $ {{tidalexpressionnoSmoney}}
 So this is where I think it starts to get interesting.
 Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "[a b c , d e]"
-    (0>⅓)|s: "a"
-    (0>½)|s: "d"
-    (⅓>⅔)|s: "b"
-    (½>1)|s: "e"
-    (⅔>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "[a b c , d e]"
-
-    [11 cycles]
-    |a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-
-    |d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--
+~~~{.ghcisession #commaforparallel tidalexpression='s $ parseBP_E "[a b c , d e]"' .diagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 I'm officially feeling this.
 
@@ -486,20 +481,12 @@ The first expression's output orders the interleaved events by onset time.
 
 You can create polymetric sequences with braces:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c , d e}"
-    (0>⅓)|s: "a"
-    (0>⅓)|s: "d"
-    (⅓>⅔)|s: "b"
-    (⅓>⅔)|s: "e"
-    (⅔>1)|s: "c"
-    (⅔>1)|s: "d"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c , d e}"
-
-    [19 cycles]
-    |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
-    |ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded
-
-![](polymetricbraces.svg)
+~~~{.ghcisession #polymetricbraces tidalexpression='s $ parseBP_E "{a b c , d e}"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 So it looks like it takes the first pattern and divides the cycle by the number
 of elements it has, and then uses that length for each element of the second
@@ -507,18 +494,12 @@ pattern.
 
 Contrast with doing it in the other order:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "{d e , a b c}"
-    (0>½)|s: "d"
-    (0>½)|s: "a"
-    (½>1)|s: "e"
-    (½>1)|s: "b"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{d e , a b c}"
-
-    [26 cycles]
-    |de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de
-    |ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca
-
-![](polymetricbracesotherorder.svg)
+~~~{.ghcisession #polymetricbracesotherorder tidalexpression='s $ parseBP_E "{d e , a b c}"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 So in this second version, the 'a b c' events have a longer duration:
 putting the "d e" first divides the cycle in two, and so the "a b c" pattern
