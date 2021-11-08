@@ -382,13 +382,12 @@ So the dot in the `drawLine` output is the rest.
 
 Underscore elongates a note:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a _ c"
-    (0>⅔)|s: "a"
-    (⅔>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a _ c"
-
-    [19 cycles]
-    |a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c
+~~~{.ghcisession #underscoreelongates tidalexpression='s $ parseBP_E "a _ c"' .diagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 The hyphen means that the a note is held for an extra division.
 
@@ -398,30 +397,23 @@ The hyphen means that the a note is held for an extra division.
 
 `@` elongates a pattern by some number of counts:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a@3 b"
-    (0>¾)|s: "a"
-    (¾>1)|s: "b"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a@3 b"
-
-    [15 cycles]
-    |a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b
-
-![](atelongates.svg)
+~~~{.ghcisession #atelongates tidalexpression='s $ parseBP_E "a@3 b"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a*2 c"
-    (0>¼)|s: "a"
-    (¼>½)|s: "a"
-    (½>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a*2 c"
-
-    [15 cycles]
-    |aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-
-
-![](repeateventasterisk.svg)
+~~~{.ghcisession #repeateventasterisk tidalexpression='s $ parseBP_E "a*2 c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 So instead of getting the cycle divided into three, it's divided into four.
 
@@ -431,16 +423,12 @@ The 'a' events have duration 1/4.
 
 Use ! to repeat an event.  Contrast this with * .
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a!2 c"
-    (0>⅓)|s: "a"
-    (⅓>⅔)|s: "a"
-    (⅔>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a!2 c"
-
-    [19 cycles]
-    |aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac
-
-![](repeateventbang.svg)
+~~~{.ghcisession #repeateventbang tidalexpression='s $ parseBP_E "a!2 c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 The 'a' events have duration 1/3 here.
 
@@ -448,16 +436,12 @@ The 'a' events have duration 1/3 here.
 
 Use square brackets for grouping.
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "[a b c] [d e]"
-    (0>⅙)|s: "a"
-    (⅙>⅓)|s: "b"
-    (⅓>½)|s: "c"
-    (½>¾)|s: "d"
-    (¾>1)|s: "e"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "[a b c] [d e]"
-
-    [6 cycles]
-    |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
+~~~{.ghcisession #squarebrackets tidalexpression='s $ parseBP_E "[a b c] [d e]"' .diagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 So it divided the pattern into two halves, and then divided the first half into
 three and the second half into two.
@@ -468,18 +452,12 @@ three and the second half into two.
 
 You can do the same with a dot:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a b c . d e"
-    (0>⅙)|s: "a"
-    (⅙>⅓)|s: "b"
-    (⅓>½)|s: "c"
-    (½>¾)|s: "d"
-    (¾>1)|s: "e"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a b c . d e"
-
-    [6 cycles]
-    |a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
-
-![](thedot.svg)
+~~~{.ghcisession #thedot tidalexpression='s $ parseBP_E "a b c . d e"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 

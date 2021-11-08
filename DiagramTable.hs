@@ -46,17 +46,17 @@ patternTableX :: [(String, (T.Pattern T.ValueMap, Integer))]
 patternTableX = [
     ("mnocycle", (PE.mnocycleExpr, 3))
     ,("tildeisarest", (PE.tildeisarestExpr, 4))
+    ,("underscoreelongates", (PE.underscoreelongatesExpr, 3))
+    ,("atelongates", (PE.atelongatesExpr, 4))
+    ,("repeateventasterisk", (PE.repeateventasteriskExpr, 4))
+    ,("repeateventbang", (PE.repeateventbangExpr, 3))
+    ,("squarebrackets", (PE.squarebracketsExpr, 4))
+    ,("thedot", (PE.thedotExpr, 4))
     ]
 
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
     ("basicpattern", ("a b c", 3))
-    ,("underscoreelongates", ("a _ c", 3))
-    ,("atelongates", ("a@3 b", 4))
-    ,("repeateventasterisk", ("a*2 c", 4))
-    ,("repeateventbang", ("a!2 c", 3))
-    ,("squarebrackets", ("[a b c] [d e]", 4))
-    ,("thedot", ("a b c . d e", 4))
     ]
 
 diagramEntryX :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)

@@ -9,12 +9,6 @@ modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTab
 document=tidal
 diagrams=\
     basicpattern \
-    underscoreelongates \
-    atelongates \
-    repeateventasterisk \
-    repeateventbang \
-    squarebrackets \
-    thedot \
     commaforparallel \
     polymetricbraces \
     polymetricbracesotherorder \
