@@ -261,15 +261,17 @@ Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.h
 
 so
 
-    Prelude Sound.Tidal.Context Map> firstevent = head $ query a $ State (Arc 0 1/6) Map.empty
-    Prelude Sound.Tidal.Context Map> value firstevent
-    s: "m"
-    Prelude Sound.Tidal.Context Map> whole firstevent
-    Just 0>⅓
-    Prelude Sound.Tidal.Context Map> part firstevent
-    0>⅙
-    Prelude Sound.Tidal.Context Map> context firstevent
-    [((1,1),(2,1))]
+~~~{.ghcisession}
+import Sound.Tidal.Context
+import qualified Data.Map.Strict as Map
+a = s $ parseBP_E "m n o"
+--cut>>
+firstevent = head $ query a $ State (Arc 0 1/6) Map.empty
+value firstevent
+whole firstevent
+part firstevent
+context firstevent
+~~~
 
 The value is from the string we passed into the initial string expression (`s $ parseBP_E "m n o"`)
 

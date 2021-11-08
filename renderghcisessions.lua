@@ -9,7 +9,7 @@ local function writetoFile(contents)
 end
 
 local function runGHCI()
-    os.execute("TERM=dumb script -q ghci.output ghci < ghci.input > /dev/null")
+    os.execute("TERM=xterm script -q ghci.output ghci < ghci.input > /dev/null")
 end
 
 local function readGHCiOutput()
@@ -17,6 +17,14 @@ local function readGHCiOutput()
     local contents = io.read("*all")
     io.close(fileptr)
     return contents
+end
+
+local function stripEscapeSequences(text)
+    text = string.gsub(text, "[\27]%[%?1h", "")
+    text = string.gsub(text, "[\27]%[%?1l", "")
+    text = string.gsub(text, "[\27]>", "")
+    text = string.gsub(text, "[\27]=", "")
+    return text
 end
 
 local function convertCarriageReturnsToNewlines(text)
@@ -63,7 +71,7 @@ function CodeBlock(block)
         writetoFile(ghciscript .. "\n")
         runGHCI()
         local ghcioutput = readGHCiOutput()
-        local codeblocktext = trimExample(convertCarriageReturnsToNewlines(ghcioutput))
+        local codeblocktext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
 
         return pandoc.CodeBlock(codeblocktext)
     end
