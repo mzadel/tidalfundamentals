@@ -256,7 +256,6 @@ Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.h
       , part :: a
       , value :: b
       } deriving (Eq, Ord, Functor, Generic)
-    instance (NFData a, NFData b) => NFData (EventF a b)
 
     type Event a = EventF (ArcF Time) a
 
