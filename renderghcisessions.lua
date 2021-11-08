@@ -2,6 +2,16 @@
 local ghciinputfilename="ghci.input"
 local ghcioutputfilename="ghci.output"
 
+local function codeBlockClassesContain(block, classname)
+    for index, value in ipairs(block.classes) do
+        if value == classname then
+            return true
+        end
+    end
+
+    return false
+end
+
 local function writetoFile(contents)
     local fileptr = io.output(ghciinputfilename)
     io.write(contents)
@@ -60,7 +70,7 @@ local function trimExample(text)
 end
 
 function CodeBlock(block)
-    if block.classes[1] == "ghcisession" then
+    if codeBlockClassesContain(block, "ghcisession") then
 
         ghciscript = block.text
 
@@ -73,7 +83,12 @@ function CodeBlock(block)
         local ghcioutput = readGHCiOutput()
         local codeblocktext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
 
-        return pandoc.CodeBlock(codeblocktext)
+        if codeBlockClassesContain(block,"insertdiagram") then
+            return {pandoc.CodeBlock(codeblocktext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
+        else
+            return pandoc.CodeBlock(codeblocktext)
+        end
+
     end
 end
 

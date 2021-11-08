@@ -354,13 +354,12 @@ parseBP_E "a e g"
 
 You can use the output as above, or `drawLine`:
 
-~~~{.ghcisession #basicpattern tidalexpression='parseBP_E "a b c"'}
+~~~{.ghcisession #basicpattern tidalexpression='parseBP_E "a b c"' .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
-![](basicpattern.svg)
 
 See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for notes
 on the syntax of the following examples.
