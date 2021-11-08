@@ -231,6 +231,7 @@ A smaller window that overlaps only the first event:
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
+import qualified Data.Map.Strict as Map
 a = s $ parseBP_E "m n o"
 --cut>>
 query a (State (Arc 0 1/6) Map.empty)
