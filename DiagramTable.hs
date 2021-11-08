@@ -45,12 +45,12 @@ laneTable2 = fromList [
 patternTableX :: [(String, (T.Pattern T.ValueMap, Integer))]
 patternTableX = [
     ("mnocycle", (PE.mnocycleExpr, 3))
+    ,("tildeisarest", (PE.tildeisarestExpr, 4))
     ]
 
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
     ("basicpattern", ("a b c", 3))
-    ,("tildeisarest", ("bd ~ bd ~", 4))
     ,("underscoreelongates", ("a _ c", 3))
     ,("atelongates", ("a@3 b", 4))
     ,("repeateventasterisk", ("a*2 c", 4))

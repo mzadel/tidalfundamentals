@@ -367,13 +367,12 @@ on the syntax of the following examples.
 
 Tilde is a rest:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "bd ~ bd ~"
-    (0>¼)|s: "bd"
-    (½>¾)|s: "bd"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "bd ~ bd ~"
-
-    [11 cycles]
-    |bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.|bd.bd.
+~~~{.ghcisession #tildeisarest tidalexpression='s $ parseBP_E "bd ~ bd ~"' .diagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 So the dot in the `drawLine` output is the rest.
 
