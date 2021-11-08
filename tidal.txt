@@ -244,8 +244,14 @@ So we're getting a list of events from the query.  Each event contains a `ValueM
 
 If we just take the first event:
 
-    Prelude Sound.Tidal.Context Map> head $ query a $ State (Arc 0 1/6) Map.empty
-    [((1,1),(2,1))](0>⅙)-⅓|s: "m"
+~~~{.ghcisession}
+import Sound.Tidal.Context
+import qualified Data.Map.Strict as Map
+a = s $ parseBP_E "m n o"
+--cut>>
+head $ query a $ State (Arc 0 1/6) Map.empty
+:quit
+~~~
 
 Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.hs`):
 
@@ -285,19 +291,19 @@ interpreting expressions in a live coding context.
 
 So if we overlap the first two events and get the second event:
 
-    Prelude Sound.Tidal.Context Map> firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
-    Prelude Sound.Tidal.Context Map> firstevent
-    [((1,1),(2,1))]0-(⅙>⅓)|s: "m"
-    Prelude Sound.Tidal.Context Map> whole firstevent
-    Just 0>⅓
-    Prelude Sound.Tidal.Context Map> part firstevent
-    ⅙>⅓
-    Prelude Sound.Tidal.Context Map> secondevent
-    [((3,1),(4,1))](⅓>½)-⅔|s: "n"
-    Prelude Sound.Tidal.Context Map> whole secondevent
-    Just ⅓>⅔
-    Prelude Sound.Tidal.Context Map> part secondevent
-    ⅓>½
+~~~{.ghcisession}
+import Sound.Tidal.Context
+import qualified Data.Map.Strict as Map
+a = s $ parseBP_E "m n o"
+--cut>>
+firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
+firstevent
+whole firstevent
+part firstevent
+secondevent
+whole secondevent
+part secondevent
+~~~
 
 So it looks like the way to interpret (⅓>½)-⅔ is
 
@@ -309,16 +315,18 @@ And then s: "n" is the key-value pair from the `ValueMap`.
 
 There are some functions to query the window start / ends:
 
-    Prelude Sound.Tidal.Context Map> wholeStart firstevent
-    0 % 1
-    Prelude Sound.Tidal.Context Map> wholeStop firstevent
-    1 % 3
-    Prelude Sound.Tidal.Context Map> eventPartStart firstevent
-    1 % 6
-    Prelude Sound.Tidal.Context Map> eventPartStop firstevent
-    1 % 3
-    Prelude Sound.Tidal.Context Map> eventValue firstevent
-    s: "m"
+~~~{.ghcisession}
+import Sound.Tidal.Context
+import qualified Data.Map.Strict as Map
+a = s $ parseBP_E "m n o"
+firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
+--cut>>
+wholeStart firstevent
+wholeStop firstevent
+eventPartStart firstevent
+eventPartStop firstevent
+eventValue firstevent
+~~~
 
 I'm not sure if these functions are typically used.  They're probably internal.
 
@@ -328,19 +336,19 @@ I'm not sure if these functions are typically used.  They're probably internal.
 You can omit the s function, which is an alias for sound (see `Params.hs`).
 But is seems to only accept certain letters then:
 
-    Prelude Sound.Tidal.Context> parseBP_E "t r s"
-    *** Exception: Syntax error in sequence:
-      "t r s"
-       ^
-    unexpected 't'
-    expecting white space, "-", "+", number, "c", "d", "e", "f", "g", "a", "b", "'", rest, "[", "{", "<", "^", ".", "?" or end of input
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+parseBP_E "t r s"
+~~~
 
 I guess `s` somehow makes the string mini-language accept more tokens.  But anyway, this works:
 
-    Prelude Sound.Tidal.Context> parseBP_E "a e g"
-    (0>⅓)|9
-    (⅓>⅔)|4
-    (⅔>1)|7
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+parseBP_E "a e g"
+~~~
 
 ## Defining and showing patterns
 
