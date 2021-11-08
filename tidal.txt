@@ -354,15 +354,12 @@ parseBP_E "a e g"
 
 You can use the output as above, or `drawLine`:
 
-    Prelude Sound.Tidal.Context> parseBP_E "a b c"
-    (0>⅓)|9
-    (⅓>⅔)|11
-    (⅔>1)|0
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a b c"
-
-    [19 cycles]
-    |abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
-
+~~~{.ghcisession #basicpattern tidalexpression='parseBP_E "a b c"'}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
 ![](basicpattern.svg)
 
 See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for notes
