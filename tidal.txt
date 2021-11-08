@@ -165,7 +165,7 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
 
 ## Pattern type
 
-~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"'}
+~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}
 import Sound.Tidal.Context
 --cut>>
 a = {{tidalexpression}}

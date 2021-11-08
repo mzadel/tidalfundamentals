@@ -1,6 +1,7 @@
 
 module DiagramTable (diagramListForMainWith) where
 
+import qualified PatternExpressions as PE
 import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams as Lin
 import qualified PatternAlgebraDiagrams as PA
@@ -41,10 +42,14 @@ laneTable2 = fromList [
     ,("d", 0)
     ,("e", 0)]
 
+patternTableX :: [(String, (T.Pattern T.ValueMap, Integer))]
+patternTableX = [
+    ("mnocycle", (PE.mnocycleExpr, 3))
+    ]
+
 patternTable :: Map String (String, Integer)
 patternTable = fromList [
-    ("mnocycle", ("m n o", 3))
-    ,("basicpattern", ("a b c", 3))
+    ("basicpattern", ("a b c", 3))
     ,("tildeisarest", ("bd ~ bd ~", 4))
     ,("underscoreelongates", ("a _ c", 3))
     ,("atelongates", ("a@3 b", 4))
@@ -53,6 +58,11 @@ patternTable = fromList [
     ,("squarebrackets", ("[a b c] [d e]", 4))
     ,("thedot", ("a b c . d e", 4))
     ]
+
+diagramEntryX :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
+diagramEntryX (label, (pat, numticks)) = (label, diagram)
+    where
+        diagram = Cir.diagramLabeledFromSValue pat numticks colourTable # frame 0.05 # scale outputScaling
 
 diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
 diagramEntry (label, (patString, numticks)) = (label, diagram)
@@ -112,5 +122,5 @@ diagramTablePatternAlgebra = [
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntry $ toList patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
+diagramListForMainWith = (map diagramEntryX patternTableX) ++ (map diagramEntry $ toList patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
 
