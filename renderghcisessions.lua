@@ -25,7 +25,7 @@ end
 
 local function getTrimStart(text)
     -- find an explicit cut start
-    local blah, trimStart = string.find(text, '> --cut>>\n', nil, true)
+    local _, trimStart = string.find(text, '> --cut>>\n', nil, true)
     if trimStart ~= nil then return trimStart+1 end
 
     -- if there's no cut present, start with the GHCi starting verbiage
