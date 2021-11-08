@@ -250,7 +250,6 @@ import qualified Data.Map.Strict as Map
 a = s $ parseBP_E "m n o"
 --cut>>
 head $ query a $ State (Arc 0 1/6) Map.empty
-:quit
 ~~~
 
 Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.hs`):
