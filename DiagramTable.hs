@@ -8,7 +8,7 @@ import qualified PatternAlgebraDiagrams as PA
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T
-import Data.Map (Map,fromList,toList)
+import Data.Map (Map,fromList)
 
 outputScaling :: Double
 outputScaling = 600
@@ -45,6 +45,7 @@ laneTable2 = fromList [
 patternTableX :: [(String, (T.Pattern T.ValueMap, Integer))]
 patternTableX = [
     ("mnocycle", (PE.mnocycleExpr, 3))
+    ,("basicpattern", (T.s $ T.parseBP_E PE.basicpatternExpr, 3))
     ,("tildeisarest", (PE.tildeisarestExpr, 4))
     ,("underscoreelongates", (PE.underscoreelongatesExpr, 3))
     ,("atelongates", (PE.atelongatesExpr, 4))
@@ -54,21 +55,10 @@ patternTableX = [
     ,("thedot", (PE.thedotExpr, 4))
     ]
 
-patternTable :: Map String (String, Integer)
-patternTable = fromList [
-    ("basicpattern", ("a b c", 3))
-    ]
-
 diagramEntryX :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
 diagramEntryX (label, (pat, numticks)) = (label, diagram)
     where
         diagram = Cir.diagramLabeledFromSValue pat numticks colourTable # frame 0.05 # scale outputScaling
-
-diagramEntry :: (String, (String, Integer)) -> (String, Diagram B)
-diagramEntry (label, (patString, numticks)) = (label, diagram)
-    where
-        diagram = Cir.diagramLabeledFromSValue pat numticks colourTable # frame 0.05 # scale outputScaling
-        pat = T.s $ T.parseBP_E patString
 
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [
@@ -122,5 +112,5 @@ diagramTablePatternAlgebra = [
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntryX patternTableX) ++ (map diagramEntry $ toList patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
+diagramListForMainWith = (map diagramEntryX patternTableX) ++ diagramTableLinear ++ diagramTablePatternAlgebra
 
