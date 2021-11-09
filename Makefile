@@ -8,7 +8,6 @@ modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTab
 
 document=tidal
 diagrams=\
-    polymetricdividebyeight \
     polymetricdividebyseven \
     anglebrackets \
     euclideanrhythm \

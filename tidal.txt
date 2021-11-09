@@ -513,21 +513,12 @@ You can set the length of the polymetric sequence with `%`.
 
 This expression divides the cycle into eight
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%8"
-    (0>⅛)|s: "a"
-    (⅛>¼)|s: "b"
-    (¼>⅜)|s: "c"
-    (⅜>½)|s: "d"
-    (½>⅝)|s: "e"
-    (⅝>¾)|s: "a"
-    (¾>⅞)|s: "b"
-    (⅞>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c d e}%8"
-
-    [8 cycles]
-    |abcdeabc|deabcdea|bcdeabcd|eabcdeab|cdeabcde|abcdeabc|deabcdea|bcdeabcd
-
-![](polymetricdividebyeight.svg)
+~~~{.ghcisession #polymetricdividebyeight tidalexpression='s $ parseBP_E "{a b c d e}%8"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 This expression divides the cycle into seven.
 

@@ -69,7 +69,7 @@ diagramTableLinear = [
     ,("polymetricbracesotherorder"
     ,(Lin.diagramWithLanesLabeledFromSValue PE.polymetricbracesotherorderExpr 2 3 laneTable2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyeight"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "{a b c d e}%8") 8 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.polymetricdividebyeightExpr 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
     ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("anglebrackets"

@@ -75,9 +75,12 @@ function CodeBlock(block)
         ghciscript = block.text
 
         if block.attributes["tidalexpression"] ~= nil then
-            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", block.attributes["tidalexpression"], nil, true)
+            tidalexpression = block.attributes["tidalexpression"]
+            tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
 
-            expressionwithoutSmoney = string.gsub(block.attributes["tidalexpression"], "s $ ", "", nil, true)
+            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", tidalexpression, nil, true)
+
+            expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
             ghciscript = string.gsub(ghciscript, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
         end
 
