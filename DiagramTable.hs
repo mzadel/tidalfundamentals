@@ -42,8 +42,8 @@ laneTable2 = fromList [
     ,("d", 0)
     ,("e", 0)]
 
-patternTableX :: [(String, (T.Pattern T.ValueMap, Integer))]
-patternTableX = [
+patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
+patternTable = [
     ("mnocycle", (PE.mnocycleExpr, 3))
     ,("basicpattern", (T.s $ T.parseBP_E PE.basicpatternExpr, 3))
     ,("tildeisarest", (PE.tildeisarestExpr, 4))
@@ -55,8 +55,8 @@ patternTableX = [
     ,("thedot", (PE.thedotExpr, 4))
     ]
 
-diagramEntryX :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
-diagramEntryX (label, (pat, numticks)) = (label, diagram)
+diagramEntry :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
+diagramEntry (label, (pat, numticks)) = (label, diagram)
     where
         diagram = Cir.diagramLabeledFromSValue pat numticks colourTable # frame 0.05 # scale outputScaling
 
@@ -112,5 +112,5 @@ diagramTablePatternAlgebra = [
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntryX patternTableX) ++ diagramTableLinear ++ diagramTablePatternAlgebra
+diagramListForMainWith = (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
 
