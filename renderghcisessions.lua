@@ -32,6 +32,9 @@ end
 local function stripEscapeSequences(text)
     text = string.gsub(text, "[\27]%[%?1h", "")
     text = string.gsub(text, "[\27]%[%?1l", "")
+    text = string.gsub(text, "[\27]%[;1m", "")
+    text = string.gsub(text, "[\27]%[31m", "")
+    text = string.gsub(text, "[\27]%[0m", "")
     text = string.gsub(text, "[\27]>", "")
     text = string.gsub(text, "[\27]=", "")
     return text
