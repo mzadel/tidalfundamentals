@@ -40,6 +40,13 @@ local function stripEscapeSequences(text)
     return text
 end
 
+local function stripBackspaces(text)
+    -- strip up to two backspaces in a row, consuming the preceding characters
+    text = string.gsub(text, "..[\8][\8]", "")
+    text = string.gsub(text, ".[\8]", "")
+    return text
+end
+
 local function convertCarriageReturnsToNewlines(text)
     return string.gsub(text, "\r+\n", "\n")
 end
@@ -90,7 +97,7 @@ function CodeBlock(block)
         writetoFile(thetext .. "\n")
         runGHCI()
         local ghcioutput = readGHCiOutput()
-        thetext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
+        thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end
 
     if codeBlockClassesContain(block,"insertdiagram") then
