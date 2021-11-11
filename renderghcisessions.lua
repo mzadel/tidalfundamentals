@@ -73,29 +73,31 @@ local function trimExample(text)
 end
 
 function CodeBlock(block)
+
+    local thetext = block.text
+
     if codeBlockClassesContain(block, "ghcisession") then
 
-        ghciscript = block.text
 
         if block.attributes["tidalexpression"] ~= nil then
             tidalexpression = block.attributes["tidalexpression"]
             tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
 
-            ghciscript = string.gsub(ghciscript, "{{tidalexpression}}", tidalexpression, nil, true)
+            thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
 
             expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
-            ghciscript = string.gsub(ghciscript, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
+            thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
         end
 
-        writetoFile(ghciscript .. "\n")
+        writetoFile(thetext .. "\n")
         runGHCI()
         local ghcioutput = readGHCiOutput()
-        local codeblocktext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
+        thetext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
 
         if codeBlockClassesContain(block,"insertdiagram") then
-            return {pandoc.CodeBlock(codeblocktext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
+            return {pandoc.CodeBlock(thetext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
         else
-            return pandoc.CodeBlock(codeblocktext)
+            return pandoc.CodeBlock(thetext)
         end
 
     end
