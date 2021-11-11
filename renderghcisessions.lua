@@ -76,31 +76,29 @@ function CodeBlock(block)
 
     local thetext = block.text
 
+    if block.attributes["tidalexpression"] ~= nil then
+        tidalexpression = block.attributes["tidalexpression"]
+        tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
+
+        thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
+
+        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
+        thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
+    end
+
     if codeBlockClassesContain(block, "ghcisession") then
-
-
-        if block.attributes["tidalexpression"] ~= nil then
-            tidalexpression = block.attributes["tidalexpression"]
-            tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
-
-            thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
-
-            expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
-            thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
-        end
-
         writetoFile(thetext .. "\n")
         runGHCI()
         local ghcioutput = readGHCiOutput()
         thetext = trimExample(convertCarriageReturnsToNewlines(stripEscapeSequences(ghcioutput)))
-
-        if codeBlockClassesContain(block,"insertdiagram") then
-            return {pandoc.CodeBlock(thetext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
-        else
-            return pandoc.CodeBlock(thetext)
-        end
-
     end
+
+    if codeBlockClassesContain(block,"insertdiagram") then
+        return {pandoc.CodeBlock(thetext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
+    else
+        return pandoc.CodeBlock(thetext)
+    end
+
 end
 
 -- vim:sw=4:ts=4:et:ai:

@@ -35,7 +35,7 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
-    if codeBlockClassesContain(block,"ghcisession") and codeBlockClassesContain(block,"diagram") then
+    if block.attributes["tidalexpression"] ~= nil and codeBlockClassesContain(block,"diagram") then
         table.insert(diagrams,block.identifier)
         diagrampatterns[block.identifier] = block.attributes["tidalexpression"]
     end
