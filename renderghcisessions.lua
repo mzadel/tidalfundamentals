@@ -3,7 +3,7 @@ local ghciinputfilename="ghci.input"
 local ghcioutputfilename="ghci.output"
 
 local function codeBlockClassesContain(block, classname)
-    for index, value in ipairs(block.classes) do
+    for _, value in ipairs(block.classes) do
         if value == classname then
             return true
         end
