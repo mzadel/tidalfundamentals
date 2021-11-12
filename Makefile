@@ -60,4 +60,5 @@ clean:
 	git clean -f *.html
 	git clean -f ghci.input ghci.output
 	git clean -f Makefile.diagrams
+	git clean -f whitelistexists
 

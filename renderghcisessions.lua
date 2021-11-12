@@ -2,6 +2,10 @@
 local ghciinputfilename="ghci.input"
 local ghcioutputfilename="ghci.output"
 
+local whitelistexists = false
+
+local skippedCodeBlockText = "SKIPPED"
+
 local function codeBlockClassesContain(block, classname)
     for _, value in ipairs(block.classes) do
         if value == classname then
@@ -9,6 +13,12 @@ local function codeBlockClassesContain(block, classname)
         end
     end
 
+    return false
+end
+
+function fileExists(name)
+    local f=io.open(name,"r")
+    if f ~= nil then io.close(f) return true end
     return false
 end
 
@@ -81,6 +91,10 @@ end
 
 function CodeBlock(block)
 
+    if whitelistexists and not codeBlockClassesContain(block, "whitelist") then
+        return pandoc.CodeBlock(skippedCodeBlockText)
+    end
+
     local thetext = block.text
 
     if block.attributes["tidalexpression"] ~= nil then
@@ -107,5 +121,16 @@ function CodeBlock(block)
     end
 
 end
+
+function Pandoc(pandoc)
+    if fileExists("whitelistexists") then
+        whitelistexists = true
+    end
+end
+
+return {
+    { Pandoc = Pandoc },
+    { CodeBlock = CodeBlock }
+}
 
 -- vim:sw=4:ts=4:et:ai:
