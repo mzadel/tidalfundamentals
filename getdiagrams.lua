@@ -2,9 +2,9 @@
 local diagrams = {}
 local diagrampatterns = {}
 
-local function codeBlockClassesContain(block, classname)
-    for index, value in ipairs(block.classes) do
-        if value == classname then
+local function arrayContains(arr, item)
+    for index, value in ipairs(arr) do
+        if value == item then
             return true
         end
     end
@@ -35,7 +35,7 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
-    if block.attributes["tidalexpression"] ~= nil and codeBlockClassesContain(block,"diagram") then
+    if block.attributes["tidalexpression"] ~= nil and arrayContains(block.classes,"diagram") then
         table.insert(diagrams,block.identifier)
         diagrampatterns[block.identifier] = block.attributes["tidalexpression"]
     end
