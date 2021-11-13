@@ -54,9 +54,11 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
-    if block.attributes["tidalexpression"] ~= nil and arrayContains(block.classes,"diagram") then
+    local tidalexpression = block.attributes["tidalexpression"]
+
+    if tidalexpression ~= nil and arrayContains(block.classes,"diagram") then
         table.insert(diagrams,block.identifier)
-        diagrampatterns[block.identifier] = block.attributes["tidalexpression"]
+        diagrampatterns[block.identifier] = tidalexpression
     end
 
     if arrayContains(block.classes,"whitelist") then
