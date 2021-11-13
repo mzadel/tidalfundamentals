@@ -47,7 +47,7 @@ function writeDiagramMakefile()
     io.write("diagramsX=\\\n")
     for _, diagramname in ipairs(diagrams) do
         if shouldRender(diagramname) then
-            io.write(string.format("%s\\\n", diagramname, diagrampatterns[diagramname]))
+            io.write(string.format("%s\\\n", diagramname))
         end
     end
     io.close(fileptr)
