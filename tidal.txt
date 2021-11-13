@@ -798,9 +798,14 @@ The `+|` operator does addition, but takes the events from the right argument:
 
 The `|+|` operator does addition, but takes the events from both arguments:
 
-![](bothPlusExample1.svg)
-![](bothPlusExample2.svg)
-![](bothPlusExample3.svg)
+~~~{.patternalgebraexample #bothPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
+~~~
+
+~~~{.patternalgebraexample #bothPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
+~~~
+
+~~~{.patternalgebraexample #bothPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~
 
 --------------------------------------------------
 

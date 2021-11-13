@@ -36,11 +36,11 @@ rightPlusExample3 :: Diagram B
 rightPlusExample3 = patternAlgebraDiagram PE.rightPlusExample3OperatorExpr PE.rightPlusExample3OperatorStringExpr PE.rightPlusExample3LeftExpr PE.rightPlusExample3RightExpr
 
 bothPlusExample1 :: Diagram B
-bothPlusExample1 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")
+bothPlusExample1 = patternAlgebraDiagram PE.bothPlusExample1OperatorExpr PE.bothPlusExample1OperatorStringExpr PE.bothPlusExample1LeftExpr PE.bothPlusExample1RightExpr
 bothPlusExample2 :: Diagram B
-bothPlusExample2 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60")
+bothPlusExample2 = patternAlgebraDiagram PE.bothPlusExample2OperatorExpr PE.bothPlusExample2OperatorStringExpr PE.bothPlusExample2LeftExpr PE.bothPlusExample2RightExpr
 bothPlusExample3 :: Diagram B
-bothPlusExample3 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
+bothPlusExample3 = patternAlgebraDiagram PE.bothPlusExample3OperatorExpr PE.bothPlusExample3OperatorStringExpr PE.bothPlusExample3LeftExpr PE.bothPlusExample3RightExpr
 
 justPlusExample1 :: Diagram B
 justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")

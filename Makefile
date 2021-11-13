@@ -13,9 +13,6 @@ diagrams=\
     leftPlusExample1 \
     leftPlusExample2 \
     leftPlusExample3 \
-    bothPlusExample1 \
-    bothPlusExample2 \
-    bothPlusExample3 \
     justPlusExample1 \
     valueAlgebraMapDiagram
 
