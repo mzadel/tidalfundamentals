@@ -97,13 +97,13 @@ function CodeBlock(block)
 
     local thetext = block.text
 
-    if block.attributes["tidalexpression"] ~= nil then
-        tidalexpression = block.attributes["tidalexpression"]
+    local tidalexpression = block.attributes["tidalexpression"]
+
+    if tidalexpression ~= nil then
         tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
+        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
 
         thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
-
-        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
         thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
     end
 
