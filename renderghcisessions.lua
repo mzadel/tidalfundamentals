@@ -114,12 +114,17 @@ function CodeBlock(block)
         thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end
 
-    if codeBlockClassesContain(block,"insertdiagram") then
-        return {pandoc.CodeBlock(thetext), pandoc.Para(pandoc.Image({}, block.identifier..".svg"))}
-    else
-        return pandoc.CodeBlock(thetext)
+    local returnvalues = {}
+
+    if string.len(thetext) > 0 then
+        table.insert(returnvalues, pandoc.CodeBlock(thetext))
     end
 
+    if codeBlockClassesContain(block,"insertdiagram") then
+        table.insert(returnvalues, pandoc.Para(pandoc.Image({}, block.identifier..".svg")))
+    end
+
+    return returnvalues
 end
 
 function Pandoc(pandoc)
