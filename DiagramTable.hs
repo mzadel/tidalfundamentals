@@ -71,25 +71,25 @@ diagramTableLinear = [
     ,("polymetricdividebyeight"
     ,(Lin.diagramLabeledFromSValue PE.polymetricdividebyeightExpr 8 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "{a b c d e}%7") 7 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.polymetricdividebysevenExpr 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("anglebrackets"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "<a b c> d <e f>") 3 4 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.anglebracketsExpr 3 4 colourTable) # frame 0.05 # scale outputScaling)
     ,("euclideanrhythm"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.parseBP_E "a(3,7)") 7 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.euclideanrhythmExpr 7 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowfunction"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.slow 2 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.slowfunctionExpr 2 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 2 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfExpr 2 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.slow 1.5 $ T.parseBP_E "a a b c") 8 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfoneeighthticksExpr 8 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("fastfunction"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.fast 3 $ T.parseBP_E "a b c") 9 1 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.fastfunctionExpr 9 1 colourTable) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.fastGap 3 $ T.parseBP_E "a b c") 3 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.fastgapfunctionExpr 3 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("compressfunction"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.compress (1/4,1/2) $ T.parseBP_E "a b c") 4 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.compressfunctionExpr 4 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("zoomfunction"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.zoom (1/4,3/4) $ T.parseBP_E "a b c") 6 2 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
     ,(Lin.diagramLabeledFromSValue (T.s $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctionoutput"

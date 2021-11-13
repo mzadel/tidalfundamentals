@@ -8,16 +8,6 @@ modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTab
 
 document=tidal
 diagrams=\
-    polymetricdividebyseven \
-    anglebrackets \
-    euclideanrhythm \
-    slowfunction \
-    slowoneandahalf \
-    slowoneandahalfoneeighthticks \
-    fastfunction \
-    fastgapfunction \
-    compressfunction \
-    zoomfunction \
     revfunctioninput \
     revfunctionoutput \
     leftPlusExample1 \

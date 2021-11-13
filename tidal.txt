@@ -522,51 +522,34 @@ drawLine $ {{tidalexpressionnoSmoney}}
 
 This expression divides the cycle into seven.
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "{a b c d e}%7"
-      (0>⅐)|s: "a"
-     (⅐>²₇)|s: "b"
-    (²₇>³₇)|s: "c"
-    (³₇>⁴₇)|s: "d"
-    (⁴₇>⁵₇)|s: "e"
-    (⁵₇>⁶₇)|s: "a"
-     (⁶₇>1)|s: "b"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "{a b c d e}%7"
-
-    [9 cycles]
-    |abcdeab|cdeabcd|eabcdea|bcdeabc|deabcde|abcdeab|cdeabcd|eabcdea|bcdeabc
-
-![](polymetricdividebyseven.svg)
+~~~{.ghcisession #polymetricdividebyseven tidalexpression='s $ parseBP_E "{a b c d e}%7"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 Use angle brackets to alternate between the events
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "<a b c> d <e f>"
-    (0>⅓)|s: "a"
-    (⅓>⅔)|s: "d"
-    (⅔>1)|s: "e"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "<a b c> d <e f>"
-
-    [19 cycles]
-    |ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade
-
-![](anglebrackets.svg)
+~~~{.ghcisession #anglebrackets tidalexpression='s $ parseBP_E "<a b c> d <e f>"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 Use brackets to create a Euclidean rhythm:
 
-    Prelude Sound.Tidal.Context> s $ parseBP_E "a(3,7)"
-      (0>⅐)|s: "a"
-    (²₇>³₇)|s: "a"
-    (⁴₇>⁵₇)|s: "a"
-    Prelude Sound.Tidal.Context> drawLine $ parseBP_E "a(3,7)"
-
-    [9 cycles]
-    |a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..
-
-![](euclideanrhythm.svg)
-
+~~~{.ghcisession #euclideanrhythm tidalexpression='s $ parseBP_E "a(3,7)"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 ## Standard library functions
 
@@ -580,37 +563,33 @@ I'll start to play with some of the basic ones here to understand what they're d
 
 `slow` elongates (i.e., slows down) a pattern
 
-    Prelude Sound.Tidal.Context> s $ slow 2 $ parseBP_E "a a b c"
-    (0>½)|s: "a"
-    (½>1)|s: "a"
-    Prelude Sound.Tidal.Context> drawLine $ slow 2 $ parseBP_E "a a b c"
-
-    [26 cycles]
-    |aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc
-
-![](slowfunction.svg)
+~~~{.ghcisession #slowfunction tidalexpression='s $ slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 ### Digression: querying across cycle boundaries
 
 Interestingly, `slow` seems to query results on cycle boundaries:
 
-    Prelude Sound.Tidal.Context> s $ slow 1.5 $ parseBP_E "a a b c"
-       (0>⅜)|s: "a"
-       (⅜>¾)|s: "a"
-    (¾>1)-1⅛|s: "b"
-    Prelude Sound.Tidal.Context> drawLine $ slow 1.5 $ parseBP_E "a a b c"
-
-    [8 cycles]
-    |a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a
-
-![](slowoneandahalf.svg)
+~~~{.ghcisession #slowoneandahalf tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 (I'm using `queryArc` and `part` to make the diagrams, so it shows up there as well.)
 
 Using `queryArc` to ask for the events:
 
-    Prelude Sound.Tidal.Context> queryArc (s $ slow 1.5 $ parseBP_E "a a b c") (Arc 0 3)
-    [[((1,1),(2,1))](0>⅜)|s: "a",[((3,1),(4,1))](⅜>¾)|s: "a",[((5,1),(6,1))](¾>1)-1⅛|s: "b",[((1,1),(2,1))](1½>1⅞)|s: "a",[((3,1),(4,1))](1⅞>2)-2¼|s: "a",[((5,1),(6,1))]¾-(1>1⅛)|s: "b",[((7,1),(8,1))](1⅛>1½)|s: "c",[((3,1),(4,1))]1⅞-(2>2¼)|s: "a",[((5,1),(6,1))](2¼>2⅝)|s: "b",[((7,1),(8,1))](2⅝>3)|s: "c"]
+~~~{.ghcisession #slowoneandahalfoneeighthticks tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"' .diagram}
+import Sound.Tidal.Context
+--cut>>
+queryArc ({{tidalexpression}}) (Arc 0 3)
+~~~
 
 Pulling this apart (manually) and sorting (manually) we get
 
@@ -643,18 +622,12 @@ too much right now.  (That'll teach me - use round numbers!)
 
 I just found `showAll`, which gives the same info
 
-    Prelude Sound.Tidal.Context> import Sound.Tidal.Show
-    Prelude Sound.Tidal.Context Sound.Tidal.Show> putStrLn $ showAll (Arc 0 3) $ s $ slow 1.5 $ parseBP_E "a a b c"
-    [((1,1),(2,1))](0>⅜)|s: "a"
-    [((3,1),(4,1))](⅜>¾)|s: "a"
-    [((5,1),(6,1))](¾>1)-1⅛|s: "b"
-    [((5,1),(6,1))]¾-(1>1⅛)|s: "b"
-    [((7,1),(8,1))](1⅛>1½)|s: "c"
-    [((1,1),(2,1))](1½>1⅞)|s: "a"
-    [((3,1),(4,1))](1⅞>2)-2¼|s: "a"
-    [((3,1),(4,1))]1⅞-(2>2¼)|s: "a"
-    [((5,1),(6,1))](2¼>2⅝)|s: "b"
-    [((7,1),(8,1))](2⅝>3)|s: "c"
+~~~{.ghcisession tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"'}
+import Sound.Tidal.Context
+--cut>>
+import Sound.Tidal.Show
+putStrLn $ showAll (Arc 0 3) $ {{tidalexpression}}
+~~~
 
 Meh, I should just drop it.
 
@@ -667,71 +640,46 @@ thought they look surprising in the event list.)
 
 `fast` speeds things up
 
-    Prelude Sound.Tidal.Context> s $ fast 3 $ parseBP_E "a b c"
-      (0>⅑)|s: "a"
-     (⅑>²₉)|s: "b"
-     (²₉>⅓)|s: "c"
-     (⅓>⁴₉)|s: "a"
-    (⁴₉>⁵₉)|s: "b"
-     (⁵₉>⅔)|s: "c"
-     (⅔>⁷₉)|s: "a"
-    (⁷₉>⁸₉)|s: "b"
-     (⁸₉>1)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ fast 3 $ parseBP_E "a b c"
-
-    [7 cycles]
-    |abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc
-
-
-![](fastfunction.svg)
+~~~{.ghcisession #fastfunction tidalexpression='s $ fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 `fastGap` speeds things up but aligns to the cycle
 
-    Prelude Sound.Tidal.Context> s $ fastGap 3 $ parseBP_E "a b c"
-     (0>⅑)|s: "a"
-    (⅑>²₉)|s: "b"
-    (²₉>⅓)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ fastGap 3 $ parseBP_E "a b c"
-
-    [7 cycles]
-    |abc......|abc......|abc......|abc......|abc......|abc......|abc......
-
-![](fastgapfunction.svg)
+~~~{.ghcisession #fastgapfunction tidalexpression='s $ fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 `compress` squeezes a pattern into a given arc of time
 
-    Prelude Sound.Tidal.Context> s $ compress (1/4,1/2) $ parseBP_E "a b c"
-       (¼>⅓)|s: "a"
-    (⅓>5/12)|s: "b"
-    (5/12>½)|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ compress (1/4,1/2) $ parseBP_E "a b c"
-
-    [6 cycles]
-    |...abc......|...abc......|...abc......|...abc......|...abc......|...abc......
-
-![](compressfunction.svg)
+~~~{.ghcisession #compressfunction tidalexpression='s $ compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 --------------------------------------------------
 
 `zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
 duration of the input pattern.
 
-    Prelude Sound.Tidal.Context> s $ zoom (1/4,3/4) $ parseBP_E "a b c"
-    -1½-(0>⅙)|s: "a"
-        (⅙>⅚)|s: "b"
-     (⅚>1)-1½|s: "c"
-    Prelude Sound.Tidal.Context> drawLine $ zoom (1/4,3/4) $ parseBP_E "a b c"
-
-    [11 cycles]
-
-    |a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c
-
-
-![](zoomfunction.svg)
+~~~{.ghcisession #zoomfunction tidalexpression='s $ zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 (I don't know why the "b" event isn't shown in the `drawLine` output above.)
 
@@ -740,13 +688,12 @@ duration of the input pattern.
 
 `rev` reverses each cycle of a pattern
 
-    Prelude Sound.Tidal.Context> s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"
-    (0>⅓)|s: "b"
-    (⅔>1)|s: "a"
-    Prelude Sound.Tidal.Context> drawLine $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"
-
-    [19 cycles]
-    |b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a
+~~~{.ghcisession tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpressionnoSmoney}}
+~~~
 
 Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
 ![](revfunctioninput.svg)
@@ -770,38 +717,29 @@ each event:
 The basic `parseBP_E` function goes from a string to a pattern without a
 concrete type variable:
 
-    Prelude Sound.Tidal.Context> :t parseBP_E
-    parseBP_E :: (Enumerable a, Parseable a) => String -> Pattern a
-    Prelude Sound.Tidal.Context> parseBP_E "a b c d"
-    (0>¼)|9
-    (¼>½)|11
-    (½>¾)|0
-    (¾>1)|2
-    Prelude Sound.Tidal.Context> :t parseBP_E "a b c d"
-    parseBP_E "a b c d" :: (Enumerable a, Parseable a) => Pattern a
+~~~{.ghcisession tidalexpression='parseBP_E "a b c d"'}
+import Sound.Tidal.Context
+--cut>>
+:t parseBP_E
+{{tidalexpression}}
+:t {{tidalexpression}}
+~~~
+
 
 
 You can define a pattern containing events which contain various basic types by
 giving the expression the concrete type:
 
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Double
-    (0>⅓)|1.0
-    (⅓>⅔)|2.0
-    (⅔>1)|3.0
-    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Double
-    parseBP_E "1 2 3" :: Pattern Double :: Pattern Double
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Char
-    (0>⅓)|'1'
-    (⅓>⅔)|'2'
-    (⅔>1)|'3'
-    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Char
-    parseBP_E "1 2 3" :: Pattern Char :: Pattern Char
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" :: Pattern Int
-    (0>⅓)|1
-    (⅓>⅔)|2
-    (⅔>1)|3
-    Prelude Sound.Tidal.Context> :t parseBP_E "1 2 3" :: Pattern Int
-    parseBP_E "1 2 3" :: Pattern Int :: Pattern Int
+~~~{.ghcisession tidalexpression='parseBP_E "1 2 3"'}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}} :: Pattern Double
+:t {{tidalexpression}} :: Pattern Double
+{{tidalexpression}} :: Pattern Char
+:t {{tidalexpression}} :: Pattern Char
+{{tidalexpression}} :: Pattern Int
+:t {{tidalexpression}} :: Pattern Int
+~~~
 
 ## Pattern algebra
 
