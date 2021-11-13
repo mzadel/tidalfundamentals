@@ -4,6 +4,7 @@ module PatternAlgebraDiagrams where
 import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
+import qualified PatternExpressions as PE
 import qualified LinearDiagrams as Lin
 import qualified Sound.Tidal.Context as T
 
@@ -28,11 +29,11 @@ leftPlusExample3 :: Diagram B
 leftPlusExample3 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
 
 rightPlusExample1 :: Diagram B
-rightPlusExample1 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")
+rightPlusExample1 = patternAlgebraDiagram PE.rightPlusExample1OperatorExpr PE.rightPlusExample1OperatorStringExpr PE.rightPlusExample1LeftExpr PE.rightPlusExample1RightExpr
 rightPlusExample2 :: Diagram B
-rightPlusExample2 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60")
+rightPlusExample2 = patternAlgebraDiagram PE.rightPlusExample2OperatorExpr PE.rightPlusExample2OperatorStringExpr PE.rightPlusExample2LeftExpr PE.rightPlusExample2RightExpr
 rightPlusExample3 :: Diagram B
-rightPlusExample3 = patternAlgebraDiagram (T.+|) "+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
+rightPlusExample3 = patternAlgebraDiagram PE.rightPlusExample3OperatorExpr PE.rightPlusExample3OperatorStringExpr PE.rightPlusExample3LeftExpr PE.rightPlusExample3RightExpr
 
 bothPlusExample1 :: Diagram B
 bothPlusExample1 = patternAlgebraDiagram (T.|+|) "|+|" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")

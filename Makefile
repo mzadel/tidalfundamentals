@@ -13,9 +13,6 @@ diagrams=\
     leftPlusExample1 \
     leftPlusExample2 \
     leftPlusExample3 \
-    rightPlusExample1 \
-    rightPlusExample2 \
-    rightPlusExample3 \
     bothPlusExample1 \
     bothPlusExample2 \
     bothPlusExample3 \

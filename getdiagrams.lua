@@ -23,6 +23,15 @@ function handleDiagramBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
+    if arrayContains(block.classes,"patternalgebraexample") then
+        diagrampatterns[block.identifier][block.identifier .. "Operator"] = '(' .. block.attributes["operator"] .. ')' .. " :: Pattern Double -> Pattern Double -> Pattern Double"
+        diagrampatterns[block.identifier][block.identifier .. "OperatorString"] = '"' .. block.attributes["operator"] .. '"'
+        diagrampatterns[block.identifier][block.identifier .. "Left"] = block.attributes["leftexpression"] .. " :: Pattern Double"
+        diagrampatterns[block.identifier][block.identifier .. "Right"] = block.attributes["rightexpression"] .. " :: Pattern Double"
+
+        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. " :: Pattern Double"
+    end
+
     if tidalexpression ~= nil then
         diagrampatterns[block.identifier][block.identifier] = tidalexpression
     end

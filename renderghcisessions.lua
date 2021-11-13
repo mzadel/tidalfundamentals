@@ -99,6 +99,13 @@ function CodeBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
+    if codeBlockClassesContain(block, "patternalgebraexample") then
+        thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
+        thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
+        thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
+        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
+    end
+
     if tidalexpression ~= nil then
         tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
         expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
