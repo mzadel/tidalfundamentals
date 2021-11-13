@@ -35,7 +35,7 @@ function writeHaskellDiagramPatterns()
                 expressiontext = "undefined"
             end
 
-            io.write(string.format("%sExpr = (%s)\n", variablename, expressiontext))
+            io.write(string.format("%sExpr = %s\n", variablename, expressiontext))
         end
     end
 
