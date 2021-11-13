@@ -30,13 +30,13 @@ function writeHaskellDiagramPatterns()
     io.write("import Sound.Tidal.Context\n\n")
 
     for _, diagramname in ipairs(diagrams) do
-        local expressiontext = "undefined";
+        for variablename, expressiontext in pairs(diagrampatterns[diagramname]) do
+            if not shouldRender(diagramname) then
+                expressiontext = "undefined"
+            end
 
-        if shouldRender(diagramname) then
-            expressiontext = diagrampatterns[diagramname]
+            io.write(string.format("%sExpr = (%s)\n", variablename, expressiontext))
         end
-
-        io.write(string.format("%sExpr = (%s)\n", diagramname, expressiontext))
     end
 
     io.close(fileptr)
@@ -56,9 +56,13 @@ end
 function CodeBlock(block)
     local tidalexpression = block.attributes["tidalexpression"]
 
+    if arrayContains(block.classes,"diagram") then
+        diagrampatterns[block.identifier] = {}
+    end
+
     if tidalexpression ~= nil and arrayContains(block.classes,"diagram") then
         table.insert(diagrams,block.identifier)
-        diagrampatterns[block.identifier] = tidalexpression
+        diagrampatterns[block.identifier][block.identifier] = tidalexpression
     end
 
     if arrayContains(block.classes,"whitelist") then
