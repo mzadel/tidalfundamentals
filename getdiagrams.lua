@@ -4,7 +4,7 @@ local diagrampatterns = {}
 local whitelist = {}
 
 local function arrayContains(arr, item)
-    for index, value in ipairs(arr) do
+    for _, value in ipairs(arr) do
         if value == item then
             return true
         end
