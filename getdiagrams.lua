@@ -17,6 +17,17 @@ local function shouldRender(name)
     return next(whitelist) == nil or arrayContains(whitelist,name)
 end
 
+function handleDiagramBlock(block)
+    table.insert(diagrams,block.identifier)
+    diagrampatterns[block.identifier] = {}
+
+    local tidalexpression = block.attributes["tidalexpression"]
+
+    if tidalexpression ~= nil then
+        diagrampatterns[block.identifier][block.identifier] = tidalexpression
+    end
+end
+
 function writeWhitelistExistsFile()
     if next(whitelist) ~= nil then
         os.execute("touch whitelistexists")
@@ -54,15 +65,8 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
-    local tidalexpression = block.attributes["tidalexpression"]
-
     if arrayContains(block.classes,"diagram") then
-        table.insert(diagrams,block.identifier)
-        diagrampatterns[block.identifier] = {}
-
-        if tidalexpression ~= nil then
-            diagrampatterns[block.identifier][block.identifier] = tidalexpression
-        end
+        handleDiagramBlock(block)
     end
 
     if arrayContains(block.classes,"whitelist") then
