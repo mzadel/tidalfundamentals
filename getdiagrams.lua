@@ -57,12 +57,12 @@ function CodeBlock(block)
     local tidalexpression = block.attributes["tidalexpression"]
 
     if arrayContains(block.classes,"diagram") then
-        diagrampatterns[block.identifier] = {}
-    end
-
-    if tidalexpression ~= nil and arrayContains(block.classes,"diagram") then
         table.insert(diagrams,block.identifier)
-        diagrampatterns[block.identifier][block.identifier] = tidalexpression
+        diagrampatterns[block.identifier] = {}
+
+        if tidalexpression ~= nil then
+            diagrampatterns[block.identifier][block.identifier] = tidalexpression
+        end
     end
 
     if arrayContains(block.classes,"whitelist") then
