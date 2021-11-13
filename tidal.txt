@@ -785,13 +785,13 @@ gets sent.  The change midway through the event does nothing.])
 
 The `+|` operator does addition, but takes the events from the right argument:
 
-~~~{.patternalgebraexample #rightPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40"' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60"' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60 80"' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
