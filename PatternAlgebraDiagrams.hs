@@ -22,11 +22,11 @@ patternAlgebraDiagram operator operatorString pat1 pat2 =
         ]
 
 leftPlusExample1 :: Diagram B
-leftPlusExample1 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40")
+leftPlusExample1 = patternAlgebraDiagram PE.leftPlusExample1OperatorExpr PE.leftPlusExample1OperatorStringExpr PE.leftPlusExample1LeftExpr PE.leftPlusExample1RightExpr
 leftPlusExample2 :: Diagram B
-leftPlusExample2 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60")
+leftPlusExample2 = patternAlgebraDiagram PE.leftPlusExample2OperatorExpr PE.leftPlusExample2OperatorStringExpr PE.leftPlusExample2LeftExpr PE.leftPlusExample2RightExpr
 leftPlusExample3 :: Diagram B
-leftPlusExample3 = patternAlgebraDiagram (T.|+) "|+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
+leftPlusExample3 = patternAlgebraDiagram PE.leftPlusExample3OperatorExpr PE.leftPlusExample3OperatorStringExpr PE.leftPlusExample3LeftExpr PE.leftPlusExample3RightExpr
 
 rightPlusExample1 :: Diagram B
 rightPlusExample1 = patternAlgebraDiagram PE.rightPlusExample1OperatorExpr PE.rightPlusExample1OperatorStringExpr PE.rightPlusExample1LeftExpr PE.rightPlusExample1RightExpr

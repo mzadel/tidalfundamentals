@@ -749,13 +749,11 @@ natural way.
 
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double
-      (0>⅓)|21.0
-    (⅓>½)-⅔|22.0
-    ⅓-(½>⅔)|42.0
-      (⅔>1)|43.0
-
-![](leftPlusExample1.svg)
+~~~{.ghcisession .patternalgebraexample #leftPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}} :: {{type}}
+~~~
 
 (In the text output, notice that the "22" and the "42" entries correspond to
 the same whole event.  I'm taking this to mean that the value changes midway
@@ -764,22 +762,17 @@ later confirmed with `oscdump` and a live tidal repl that that's what's
 happening -- the value that is lined up when the onset happens is the one that
 gets sent.  The change midway through the event does nothing.])
 
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double
-    (0>⅓)|21.0
-    (⅓>⅔)|42.0
-    (⅔>1)|63.0
+~~~{.ghcisession .patternalgebraexample #leftPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}} :: {{type}}
+~~~
 
-![](leftPlusExample2.svg)
-
-    Prelude Sound.Tidal.Context> parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double
-    (0>¼)-⅓|21.0
-    0-(¼>⅓)|41.0
-    (⅓>½)-⅔|42.0
-    ⅓-(½>⅔)|62.0
-    (⅔>¾)-1|63.0
-    ⅔-(¾>1)|83.0
-
-![](leftPlusExample3.svg)
+~~~{.ghcisession .patternalgebraexample #leftPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}} :: {{type}}
+~~~
 
 --------------------------------------------------
 

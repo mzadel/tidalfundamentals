@@ -103,6 +103,11 @@ function CodeBlock(block)
         thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
         thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
         thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
+
+        if block.attributes["type"] ~= nil then
+            thetext = string.gsub(thetext, "{{type}}", "Pattern " .. block.attributes["type"], nil, true)
+        end
+
         tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
     end
 

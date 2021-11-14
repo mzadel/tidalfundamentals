@@ -10,9 +10,6 @@ document=tidal
 diagrams=\
     revfunctioninput \
     revfunctionoutput \
-    leftPlusExample1 \
-    leftPlusExample2 \
-    leftPlusExample3 \
     justPlusExample1 \
     valueAlgebraMapDiagram
 
