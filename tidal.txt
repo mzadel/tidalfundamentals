@@ -696,9 +696,14 @@ drawLine $ {{tidalexpressionnoSmoney}}
 ~~~
 
 Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
-![](revfunctioninput.svg)
+
+~~~{#revfunctioninput tidalexpression='s $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~
+
 Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
-![](revfunctionoutput.svg)
+
+~~~{#revfunctionoutput tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~
 
 
 

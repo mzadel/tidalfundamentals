@@ -7,9 +7,6 @@ diagramexecutable=diagram
 modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTable
 
 document=tidal
-diagrams=\
-    revfunctioninput \
-    revfunctionoutput
 
 all: $(document).html
 
@@ -25,7 +22,7 @@ $(diagramexecutable): $(diagramexecutable).hs PatternExpressions.o $(addsuffix .
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
-$(document).html: $(document).txt $(addsuffix .svg,$(diagramsX)) $(addsuffix .svg,$(diagrams))
+$(document).html: $(document).txt $(addsuffix .svg,$(diagramsX))
 	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
 
 watch:

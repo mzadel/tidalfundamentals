@@ -91,9 +91,9 @@ diagramTableLinear = [
     ,("zoomfunction"
     ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.revfunctioninputExpr 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ,("revfunctionoutput"
-    ,(Lin.diagramLabeledFromSValue (T.s $ T.rev $ T.slow 2 $ T.parseBP_E "a ~ b ~ ~ c") 3 3 colourTable) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramLabeledFromSValue PE.revfunctionoutputExpr 3 3 colourTable) # frame 0.05 # scale outputScaling)
     ]
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]
