@@ -43,7 +43,7 @@ bothPlusExample3 :: Diagram B
 bothPlusExample3 = patternAlgebraDiagram PE.bothPlusExample3OperatorExpr PE.bothPlusExample3OperatorStringExpr PE.bothPlusExample3LeftExpr PE.bothPlusExample3RightExpr
 
 justPlusExample1 :: Diagram B
-justPlusExample1 = patternAlgebraDiagram (+) "+" (T.parseBP_E "1 2 3") (T.parseBP_E "20 40 60 80")
+justPlusExample1 = patternAlgebraDiagram PE.justPlusExample1OperatorExpr PE.justPlusExample1OperatorStringExpr PE.justPlusExample1LeftExpr PE.justPlusExample1RightExpr
 
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =

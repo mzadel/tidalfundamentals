@@ -804,7 +804,8 @@ The `|+|` operator does addition, but takes the events from both arguments:
 
 If you use `+`, it's like `|+|`:
 
-![](justPlusExample1.svg)
+~~~{.patternalgebraexample #justPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='+' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~
 
 --------------------------------------------------
 

@@ -10,7 +10,6 @@ document=tidal
 diagrams=\
     revfunctioninput \
     revfunctionoutput \
-    justPlusExample1 \
     valueAlgebraMapDiagram
 
 all: $(document).html
