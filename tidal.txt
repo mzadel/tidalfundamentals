@@ -832,7 +832,8 @@ for several parameters and then combine them into one stream of events.
 (I manually edited out the context in the square brackets for legibility.  The
 `tidal` prompt comes from running `ghci` with `BootTidal.hs`---see below.)
 
-![](valueAlgebraMapDiagram.svg)
+~~~{.patternalgebraexample #valueAlgebraMapDiagram leftexpression='s $ parseBP_E "bd sd hh"' operator='|+' rightexpression='pan $ slow 3 $ parseBP_E "0.2 0.5 0.7"' type='ValueMap' .diagram .insertdiagram}
+~~~
 
 ## More pattern types
 

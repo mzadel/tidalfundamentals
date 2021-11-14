@@ -9,8 +9,7 @@ modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTab
 document=tidal
 diagrams=\
     revfunctioninput \
-    revfunctionoutput \
-    valueAlgebraMapDiagram
+    revfunctionoutput
 
 all: $(document).html
 

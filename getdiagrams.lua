@@ -37,7 +37,7 @@ function handleDiagramBlock(block)
         diagrampatterns[block.identifier][block.identifier .. "Left"] = block.attributes["leftexpression"] .. patterntypesignature
         diagrampatterns[block.identifier][block.identifier .. "Right"] = block.attributes["rightexpression"] .. patterntypesignature
 
-        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. patterntypesignature
+        tidalexpression = string.format("(%s) %s (%s)", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. patterntypesignature
     end
 
     if tidalexpression ~= nil then

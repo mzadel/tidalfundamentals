@@ -48,10 +48,10 @@ justPlusExample1 = patternAlgebraDiagram PE.justPlusExample1OperatorExpr PE.just
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =
     vsep linearDiagramVerticalPadding [
-        Lin.diagramFromWholes (T.s $ T.parseBP_E "bd sd hh") 3
-        ,lineOfText "|+"
-        ,Lin.diagramFromWholes (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7") 3
+        Lin.diagramFromWholes PE.valueAlgebraMapDiagramLeftExpr 3
+        ,lineOfText PE.valueAlgebraMapDiagramOperatorStringExpr
+        ,Lin.diagramFromWholes PE.valueAlgebraMapDiagramRightExpr 3
         ,lineOfText "=="
-        ,Lin.diagramFromWholes ((T.s $ T.parseBP_E "bd sd hh") T.|+ (T.pan $ T.slow 3 $ T.parseBP_E "0.2 0.5 0.7")) 3
+        ,Lin.diagramFromWholes PE.valueAlgebraMapDiagramExpr 3
         ]
 
