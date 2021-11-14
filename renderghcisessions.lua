@@ -32,6 +32,10 @@ local function runGHCI()
     os.execute("TERM=xterm script -q ghci.output ghci < ghci.input > /dev/null")
 end
 
+local function runTidalRepl()
+    os.execute("TERM=xterm script -q ghci.output ghci -ghci-script BootTidal.hs < ghci.input > /dev/null")
+end
+
 local function readGHCiOutput()
     local fileptr = io.input(ghcioutputfilename)
     local contents = io.read("*all")
@@ -66,7 +70,11 @@ local function getTrimStart(text)
     local _, trimStart = string.find(text, '> --cut>>\n', nil, true)
     if trimStart ~= nil then return trimStart+1 end
 
-    -- if there's no cut present, start with the GHCi starting verbiage
+    -- cut after intro if we're running in a tidal repl
+    _, trimStart = string.find(text, 'Loaded GHCi configuration from BootTidal.hs\n', nil, true)
+    if trimStart ~= nil then return trimStart+1 end
+
+    -- try starting with the GHCi starting verbiage next
     trimStart, _ = string.find(text, 'GHCi, version 8', nil, true)
     if trimStart ~= nil then return trimStart end
 
@@ -119,9 +127,15 @@ function CodeBlock(block)
         thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
     end
 
-    if codeBlockClassesContain(block, "ghcisession") then
+    if codeBlockClassesContain(block, "ghcisession") or codeBlockClassesContain(block, "tidalsession") then
         writetoFile(thetext .. "\n")
-        runGHCI()
+
+        if codeBlockClassesContain(block, "ghcisession") then
+            runGHCI()
+        elseif codeBlockClassesContain(block, "tidalsession") then
+            runTidalRepl()
+        end
+
         local ghcioutput = readGHCiOutput()
         thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end

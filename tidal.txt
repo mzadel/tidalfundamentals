@@ -1041,8 +1041,8 @@ event extents.
 
 NB: `sig` evaluates the continuous function in the *middle* of the query arc!
 
-    tidal> queryArc (pan sine) (Arc 0.125 0.125)
-    [[]~⅛>⅛~|pan: 0.8535533905932737f]
-    tidal> queryArc (pan sine) (Arc 0 0.25)
-    [[]~0>¼~|pan: 0.8535533905932737f]
+~~~{.tidalsession}
+queryArc (pan sine) (Arc 0.125 0.125)
+queryArc (pan sine) (Arc 0 0.25)
+~~~
 
