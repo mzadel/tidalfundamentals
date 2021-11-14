@@ -22,7 +22,7 @@ $(diagramexecutable): $(diagramexecutable).hs PatternExpressions.o $(addsuffix .
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
-$(document).html: $(document).txt $(addsuffix .svg,$(diagramsX))
+$(document).html: $(document).txt $(addsuffix .svg,$(diagrams))
 	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
 
 watch:

@@ -72,7 +72,7 @@ end
 
 function writeDiagramMakefile()
     local fileptr = io.output("Makefile.diagrams")
-    io.write("diagramsX=\\\n")
+    io.write("diagrams=\\\n")
     for _, diagramname in ipairs(diagrams) do
         if shouldRender(diagramname) then
             io.write(string.format("%s\\\n", diagramname))
