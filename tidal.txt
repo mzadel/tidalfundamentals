@@ -1039,3 +1039,49 @@ queryArc (pan sine) (Arc 0.125 0.125)
 queryArc (pan sine) (Arc 0 0.25)
 ~~~
 
+### Setting event parameters from a continuous pattern
+
+I want to try taking the panning value for each event of a pattern from a
+second continuous signal.
+
+This doesn't do what you (I) might expect, given pattern algebra:
+
+~~~{.tidalsession}
+(s $ "a b c d") + (pan $ sine)
+~~~
+
+since
+
+~~~{.tidalsession}
+pure sine
+pan $ sine
+~~~
+
+(I thought it might be misguided to try to do this with pattern algebra in the
+first place since pattern algebra seems to assume discrete patterns, but it
+seems that this is one way to get values out of continuous patterns.)
+
+You need to use the `segment` function to first sample the continuous pattern
+before applying it to the notes:
+
+~~~{.tidalsession}
+(pan $ segment 10 $ sine) +| (s $ "a b c d")
+~~~
+
+I confirmed with `oscdump` that this is effectively only applying the panning
+value at each note onset.  The events without onsets don't get sent out over
+OSC.
+
+So you need to turn the continuous ("analog") signal into a discrete
+("digital") one before you can use `+|`.  Also note that here I used the plus
+that takes the events from the right argument so that I get notes out, and not
+one note per segment of the sampled sine wave.
+
+See <http://tidalcycles.org/docs/reference/sampling/#segment> for an example of
+`segment` which is close to this.
+
+(I looked into the code for `segment` but it was kind of hard to understand at
+this point.  It calls into `tParam`, which is a general internal helper
+function; `tParam` creates a pattern of patterns and then flattens
+(`innerJoin`s) it.)
+
