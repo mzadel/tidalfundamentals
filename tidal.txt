@@ -1064,8 +1064,9 @@ seems that this is one way to get values out of continuous patterns.)
 You need to use the `segment` function to first sample the continuous pattern
 before applying it to the notes:
 
-~~~{.tidalsession}
-(pan $ segment 10 $ sine) +| (s $ "a b c d")
+~~~{.tidalsession tidalexpression='(pan $ segment 10 $ sine) +| (s $ "a b c d")'}
+{{tidalexpression}}
+filterEvents eventHasOnset $ {{tidalexpression}}
 ~~~
 
 I confirmed with `oscdump` that this is effectively only applying the panning
