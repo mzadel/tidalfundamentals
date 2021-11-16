@@ -1,4 +1,6 @@
 
+local shared = require('shared')
+
 local ghciinputfilename="ghci.input"
 local ghcioutputfilename="ghci.output"
 
@@ -7,13 +9,7 @@ local whitelistexists = false
 local skippedCodeBlockText = "SKIPPED"
 
 local function codeBlockClassesContain(block, classname)
-    for _, value in ipairs(block.classes) do
-        if value == classname then
-            return true
-        end
-    end
-
-    return false
+    return shared.arrayContains(block.classes, classname)
 end
 
 function fileExists(name)

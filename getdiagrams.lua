@@ -1,20 +1,12 @@
 
+local shared = require('shared')
+
 local diagrams = {}
 local diagrampatterns = {}
 local whitelist = {}
 
-local function arrayContains(arr, item)
-    for _, value in ipairs(arr) do
-        if value == item then
-            return true
-        end
-    end
-
-    return false
-end
-
 local function shouldRender(name)
-    return next(whitelist) == nil or arrayContains(whitelist,name)
+    return next(whitelist) == nil or shared.arrayContains(whitelist,name)
 end
 
 function handleDiagramBlock(block)
@@ -23,7 +15,7 @@ function handleDiagramBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
-    if arrayContains(block.classes,"patternalgebraexample") then
+    if shared.arrayContains(block.classes,"patternalgebraexample") then
 
         patterntypesignature = ""
         operatortypesignature = ""
@@ -82,11 +74,11 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
-    if arrayContains(block.classes,"diagram") then
+    if shared.arrayContains(block.classes,"diagram") then
         handleDiagramBlock(block)
     end
 
-    if arrayContains(block.classes,"whitelist") then
+    if shared.arrayContains(block.classes,"whitelist") then
         local blockIdentifier = "UNIDENTIFIED"
         if string.len(block.identifier) > 0 then
             blockIdentifier = block.identifier
