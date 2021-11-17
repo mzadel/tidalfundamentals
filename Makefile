@@ -23,11 +23,11 @@ $(diagramexecutable): $(diagramexecutable).hs PatternExpressions.o $(addsuffix .
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
-ghci-output-%.txt: ghci-input-%.txt
-	TERM=xterm script -q $@ ghci < $< > /dev/null
+ghci-output-%.txt: | ghci-input-%.txt
+	TERM=xterm script -q $@ ghci < $| > /dev/null
 
-tidal-output-%.txt: tidal-input-%.txt
-	TERM=xterm script -q $@ ghci -ghci-script BootTidal.hs < $< > /dev/null
+tidal-output-%.txt: | tidal-input-%.txt
+	TERM=xterm script -q $@ ghci -ghci-script BootTidal.hs < $| > /dev/null
 
 $(document).html: $(document).txt $(addsuffix .svg,$(diagrams)) $(replsessions)
 	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
@@ -44,5 +44,7 @@ clean:
 	git clean -f Makefile.diagrams Makefile.replsessions
 	git clean -f whitelistexists
 	git clean -f ghci-input-*.txt tidal-input-*.txt
+
+cleanall: clean
 	git clean -f ghci-output-*.txt tidal-output-*.txt
 
