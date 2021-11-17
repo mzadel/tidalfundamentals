@@ -8,10 +8,6 @@ local whitelistexists = false
 
 local skippedCodeBlockText = "SKIPPED"
 
-local function codeBlockClassesContain(block, classname)
-    return shared.arrayContains(block.classes, classname)
-end
-
 function fileExists(name)
     local f=io.open(name,"r")
     if f ~= nil then io.close(f) return true end
@@ -95,7 +91,7 @@ end
 
 function CodeBlock(block)
 
-    if whitelistexists and not codeBlockClassesContain(block, "whitelist") then
+    if whitelistexists and not shared.codeBlockClassesContain(block, "whitelist") then
         return pandoc.CodeBlock(skippedCodeBlockText)
     end
 
@@ -103,7 +99,7 @@ function CodeBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
-    if codeBlockClassesContain(block, "patternalgebraexample") then
+    if shared.codeBlockClassesContain(block, "patternalgebraexample") then
         thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
         thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
         thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
@@ -123,12 +119,12 @@ function CodeBlock(block)
         thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
     end
 
-    if codeBlockClassesContain(block, "ghcisession") or codeBlockClassesContain(block, "tidalsession") then
+    if shared.codeBlockClassesContain(block, "ghcisession") or shared.codeBlockClassesContain(block, "tidalsession") then
         writetoFile(thetext .. "\n")
 
-        if codeBlockClassesContain(block, "ghcisession") then
+        if shared.codeBlockClassesContain(block, "ghcisession") then
             runGHCI()
-        elseif codeBlockClassesContain(block, "tidalsession") then
+        elseif shared.codeBlockClassesContain(block, "tidalsession") then
             runTidalRepl()
         end
 
@@ -142,7 +138,7 @@ function CodeBlock(block)
         table.insert(returnvalues, pandoc.CodeBlock(thetext))
     end
 
-    if codeBlockClassesContain(block,"insertdiagram") then
+    if shared.codeBlockClassesContain(block,"insertdiagram") then
         table.insert(returnvalues, pandoc.Para(pandoc.Image({}, block.identifier..".svg")))
     end
 

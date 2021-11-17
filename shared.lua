@@ -11,4 +11,8 @@ function shared.arrayContains(arr, item)
     return false
 end
 
+function shared.codeBlockClassesContain(block, classname)
+    return shared.arrayContains(block.classes, classname)
+end
+
 return shared
