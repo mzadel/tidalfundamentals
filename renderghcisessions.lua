@@ -1,9 +1,6 @@
 
 local shared = require('shared')
 
-local ghciinputfilename="ghci.input"
-local ghcioutputfilename="ghci.output"
-
 local whitelistexists = false
 
 local skippedCodeBlockText = "SKIPPED"
@@ -14,22 +11,26 @@ function fileExists(name)
     return false
 end
 
-local function writetoFile(contents)
-    local fileptr = io.output(ghciinputfilename)
-    io.write(contents)
-    io.close(fileptr)
+local function runGHCI(block)
+    local interpreter = shared.codeBlockInterpreter(block)
+    local blockhash = shared.codeBlockSha1(block)
+    local inputfilename = string.format("%s-input-%s.txt", interpreter, blockhash)
+    local outputfilename = string.format("%s-output-%s.txt", interpreter, blockhash)
+    os.execute(string.format("TERM=xterm script -q %s ghci < %s > /dev/null", outputfilename, inputfilename))
 end
 
-local function runGHCI()
-    os.execute("TERM=xterm script -q ghci.output ghci < ghci.input > /dev/null")
+local function runTidalRepl(block)
+    local interpreter = shared.codeBlockInterpreter(block)
+    local blockhash = shared.codeBlockSha1(block)
+    local inputfilename = string.format("%s-input-%s.txt", interpreter, blockhash)
+    local outputfilename = string.format("%s-output-%s.txt", interpreter, blockhash)
+    os.execute(string.format("TERM=xterm script -q %s ghci -ghci-script BootTidal.hs < %s > /dev/null", outputfilename, inputfilename))
 end
 
-local function runTidalRepl()
-    os.execute("TERM=xterm script -q ghci.output ghci -ghci-script BootTidal.hs < ghci.input > /dev/null")
-end
-
-local function readGHCiOutput()
-    local fileptr = io.input(ghcioutputfilename)
+local function readGHCiOutput(block)
+    local interpreter = shared.codeBlockInterpreter(block)
+    local blockhash = shared.codeBlockSha1(block)
+    local fileptr = io.input(string.format("%s-output-%s.txt", interpreter, blockhash))
     local contents = io.read("*all")
     io.close(fileptr)
     return contents
@@ -97,38 +98,14 @@ function CodeBlock(block)
 
     local thetext = block.text
 
-    local tidalexpression = block.attributes["tidalexpression"]
-
-    if shared.codeBlockClassesContain(block, "patternalgebraexample") then
-        thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
-        thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
-        thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
-
-        if block.attributes["type"] ~= nil then
-            thetext = string.gsub(thetext, "{{type}}", "Pattern " .. block.attributes["type"], nil, true)
-        end
-
-        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
-    end
-
-    if tidalexpression ~= nil then
-        tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
-        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
-
-        thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
-        thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
-    end
-
     if shared.codeBlockClassesContain(block, "ghcisession") or shared.codeBlockClassesContain(block, "tidalsession") then
-        writetoFile(thetext .. "\n")
-
         if shared.codeBlockClassesContain(block, "ghcisession") then
-            runGHCI()
+            runGHCI(block)
         elseif shared.codeBlockClassesContain(block, "tidalsession") then
-            runTidalRepl()
+            runTidalRepl(block)
         end
 
-        local ghcioutput = readGHCiOutput()
+        local ghcioutput = readGHCiOutput(block)
         thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end
 

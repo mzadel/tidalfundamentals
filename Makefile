@@ -34,7 +34,8 @@ clean:
 	git clean -f PatternExpressions.*
 	git clean -f *.svg
 	git clean -f *.html
-	git clean -f ghci.input ghci.output
 	git clean -f Makefile.diagrams
 	git clean -f whitelistexists
+	git clean -f ghci-input-*.txt tidal-input-*.txt
+	git clean -f ghci-output-*.txt tidal-output-*.txt
 

@@ -9,6 +9,18 @@ local function shouldRender(name)
     return next(whitelist) == nil or shared.arrayContains(whitelist,name)
 end
 
+function handleREPLBlock(block)
+
+    local interpreter = shared.codeBlockInterpreter(block)
+    local blockhash = shared.codeBlockSha1(block)
+
+    local filename = string.format("%s-input-%s.txt", interpreter, blockhash)
+    local fileptr = io.output(filename)
+    local thetext = getBlockTextWithReplacements(block)
+    io.write(thetext .. "\n")
+    io.close(fileptr)
+end
+
 function handleDiagramBlock(block)
     table.insert(diagrams,block.identifier)
     diagrampatterns[block.identifier] = {}
@@ -35,6 +47,35 @@ function handleDiagramBlock(block)
     if tidalexpression ~= nil then
         diagrampatterns[block.identifier][block.identifier] = tidalexpression
     end
+end
+
+function getBlockTextWithReplacements(block)
+
+    local thetext = block.text
+
+    local tidalexpression = block.attributes["tidalexpression"]
+
+    if shared.codeBlockClassesContain(block, "patternalgebraexample") then
+        thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
+        thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
+        thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
+
+        if block.attributes["type"] ~= nil then
+            thetext = string.gsub(thetext, "{{type}}", "Pattern " .. block.attributes["type"], nil, true)
+        end
+
+        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
+    end
+
+    if tidalexpression ~= nil then
+        tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
+        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
+
+        thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
+        thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
+    end
+
+    return thetext
 end
 
 function writeWhitelistExistsFile()
@@ -74,6 +115,11 @@ function writeDiagramMakefile()
 end
 
 function CodeBlock(block)
+
+    if shared.arrayContains(block.classes, "ghcisession") or shared.arrayContains(block.classes, "tidalsession") then
+        handleREPLBlock(block)
+    end
+
     if shared.arrayContains(block.classes,"diagram") then
         handleDiagramBlock(block)
     end
