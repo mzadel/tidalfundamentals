@@ -46,5 +46,5 @@ clean:
 	git clean -f ghci-input-*.txt tidal-input-*.txt
 
 cleanall: clean
-	git clean -f ghci-output-*.txt tidal-output-*.txt
+	git clean -fx ghci-output-*.txt tidal-output-*.txt
 
