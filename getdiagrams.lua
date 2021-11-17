@@ -4,6 +4,7 @@ local shared = require('shared')
 local diagrams = {}
 local diagrampatterns = {}
 local whitelist = {}
+local replsessionhashes = {}
 
 local function shouldRender(name)
     return next(whitelist) == nil or shared.arrayContains(whitelist,name)
@@ -13,6 +14,8 @@ function handleREPLBlock(block)
 
     local interpreter = shared.codeBlockInterpreter(block)
     local blockhash = shared.codeBlockSha1(block)
+
+    replsessionhashes[blockhash] = interpreter
 
     local filename = string.format("%s-input-%s.txt", interpreter, blockhash)
     local fileptr = io.output(filename)
@@ -114,6 +117,15 @@ function writeDiagramMakefile()
     io.close(fileptr)
 end
 
+function writeGhciMakefile()
+    local fileptr = io.output("Makefile.replsessions")
+    io.write("replsessions=\\\n")
+    for hash, interpreter in pairs(replsessionhashes) do
+        io.write(string.format("%s-output-%s.txt\\\n", interpreter, hash))
+    end
+    io.close(fileptr)
+end
+
 function CodeBlock(block)
 
     if shared.arrayContains(block.classes, "ghcisession") or shared.arrayContains(block.classes, "tidalsession") then
@@ -137,6 +149,7 @@ function Pandoc(pdoc)
     writeWhitelistExistsFile()
     writeHaskellDiagramPatterns()
     writeDiagramMakefile()
+    writeGhciMakefile()
 end
 
 -- vim:sw=4:ts=4:et:ai:

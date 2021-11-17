@@ -11,22 +11,6 @@ function fileExists(name)
     return false
 end
 
-local function runGHCI(block)
-    local interpreter = shared.codeBlockInterpreter(block)
-    local blockhash = shared.codeBlockSha1(block)
-    local inputfilename = string.format("%s-input-%s.txt", interpreter, blockhash)
-    local outputfilename = string.format("%s-output-%s.txt", interpreter, blockhash)
-    os.execute(string.format("TERM=xterm script -q %s ghci < %s > /dev/null", outputfilename, inputfilename))
-end
-
-local function runTidalRepl(block)
-    local interpreter = shared.codeBlockInterpreter(block)
-    local blockhash = shared.codeBlockSha1(block)
-    local inputfilename = string.format("%s-input-%s.txt", interpreter, blockhash)
-    local outputfilename = string.format("%s-output-%s.txt", interpreter, blockhash)
-    os.execute(string.format("TERM=xterm script -q %s ghci -ghci-script BootTidal.hs < %s > /dev/null", outputfilename, inputfilename))
-end
-
 local function readGHCiOutput(block)
     local interpreter = shared.codeBlockInterpreter(block)
     local blockhash = shared.codeBlockSha1(block)
@@ -99,12 +83,6 @@ function CodeBlock(block)
     local thetext = block.text
 
     if shared.codeBlockClassesContain(block, "ghcisession") or shared.codeBlockClassesContain(block, "tidalsession") then
-        if shared.codeBlockClassesContain(block, "ghcisession") then
-            runGHCI(block)
-        elseif shared.codeBlockClassesContain(block, "tidalsession") then
-            runTidalRepl(block)
-        end
-
         local ghcioutput = readGHCiOutput(block)
         thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end

@@ -2,6 +2,7 @@
 MK=/usr/bin/make
 
 -include Makefile.diagrams
+-include Makefile.replsessions
 
 diagramexecutable=diagram
 modules=Shared LinearDiagrams PatternAlgebraDiagrams CircularDiagrams DiagramTable
@@ -10,7 +11,7 @@ document=tidal
 
 all: $(document).html
 
-Makefile.diagrams PatternExpressions.hs: $(document).txt
+Makefile.diagrams Makefile.replsessions PatternExpressions.hs: $(document).txt
 	pandoc -f markdown -t native --lua-filter getdiagrams.lua < $< > /dev/null
 
 PatternExpressions.o: PatternExpressions.hs
@@ -22,7 +23,13 @@ $(diagramexecutable): $(diagramexecutable).hs PatternExpressions.o $(addsuffix .
 %.svg: $(diagramexecutable)
 	./$< -S $(basename $@) -o $@
 
-$(document).html: $(document).txt $(addsuffix .svg,$(diagrams))
+ghci-output-%.txt: ghci-input-%.txt
+	TERM=xterm script -q $@ ghci < $< > /dev/null
+
+tidal-output-%.txt: tidal-input-%.txt
+	TERM=xterm script -q $@ ghci -ghci-script BootTidal.hs < $< > /dev/null
+
+$(document).html: $(document).txt $(addsuffix .svg,$(diagrams)) $(replsessions)
 	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
 
 watch:
@@ -34,7 +41,7 @@ clean:
 	git clean -f PatternExpressions.*
 	git clean -f *.svg
 	git clean -f *.html
-	git clean -f Makefile.diagrams
+	git clean -f Makefile.diagrams Makefile.replsessions
 	git clean -f whitelistexists
 	git clean -f ghci-input-*.txt tidal-input-*.txt
 	git clean -f ghci-output-*.txt tidal-output-*.txt
