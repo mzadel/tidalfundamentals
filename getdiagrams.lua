@@ -121,7 +121,9 @@ function writeGhciMakefile()
     local fileptr = io.output("Makefile.replsessions")
     io.write("replsessions=\\\n")
     for hash, interpreter in pairs(replsessionhashes) do
-        io.write(string.format("%s-output-%s.txt\\\n", interpreter, hash))
+        if shouldRender(hash) then
+            io.write(string.format("%s-output-%s.txt\\\n", interpreter, hash))
+        end
     end
     io.close(fileptr)
 end
@@ -137,12 +139,21 @@ function CodeBlock(block)
     end
 
     if shared.arrayContains(block.classes,"whitelist") then
-        local blockIdentifier = "UNIDENTIFIED"
-        if string.len(block.identifier) > 0 then
-            blockIdentifier = block.identifier
+
+        -- add a dummy entry for the case where a block is neither a REPL
+        -- session nor a diagram, but we still want to whitelist the block
+        table.insert(whitelist,"WHITELISTEXISTS")
+
+        if shared.arrayContains(block.classes, "ghcisession") or shared.arrayContains(block.classes, "tidalsession") then
+            table.insert(whitelist,shared.codeBlockSha1(block))
         end
-        table.insert(whitelist,blockIdentifier)
+
+        if shared.arrayContains(block.classes,"diagram") and string.len(block.identifier) > 0 then
+            table.insert(whitelist,block.identifier)
+        end
+
     end
+
 end
 
 function Pandoc(pdoc)
