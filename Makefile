@@ -39,12 +39,12 @@ clean:
 	git clean -f $(wildcard $(diagramexecutable)*)
 	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
 	git clean -f PatternExpressions.*
-	git clean -f *.svg
+	git clean -fq *.svg
 	git clean -f *.html
 	git clean -f Makefile.diagrams Makefile.replsessions
 	git clean -f whitelistexists
-	git clean -f ghci-input-*.txt tidal-input-*.txt
+	git clean -fq ghci-input-*.txt tidal-input-*.txt
 
 cleanall: clean
-	git clean -fx ghci-output-*.txt tidal-output-*.txt
+	git clean -fxq ghci-output-*.txt tidal-output-*.txt
 
