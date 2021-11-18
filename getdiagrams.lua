@@ -142,7 +142,9 @@ function CodeBlock(block)
 
         -- add a dummy entry for the case where a block is neither a REPL
         -- session nor a diagram, but we still want to whitelist the block
-        table.insert(whitelist,"WHITELISTEXISTS")
+        if next(whitelist) == nil then
+            table.insert(whitelist,"WHITELISTEXISTS")
+        end
 
         if shared.arrayContains(block.classes, "ghcisession") or shared.arrayContains(block.classes, "tidalsession") then
             table.insert(whitelist,shared.codeBlockSha1(block))
