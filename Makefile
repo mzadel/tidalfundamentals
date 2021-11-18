@@ -30,7 +30,7 @@ tidal-output-%.txt: | tidal-input-%.txt
 	TERM=xterm script -q $@ ghci -ghci-script BootTidal.hs < $| > /dev/null
 
 $(document).html: $(document).txt $(addsuffix .svg,$(diagrams)) $(replsessions)
-	pandoc -f markdown -t html -s --lua-filter renderghcisessions.lua < $< > $@
+	pandoc -f markdown -t html -s --toc --lua-filter renderghcisessions.lua < $< > $@
 
 watch:
 	while true; do $(MK) -q || $(MK); sleep 0.5; done
