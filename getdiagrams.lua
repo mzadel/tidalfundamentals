@@ -47,6 +47,12 @@ function handleDiagramBlock(block)
         tidalexpression = string.format("(%s) %s (%s)", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. patterntypesignature
     end
 
+    if shared.arrayContains(block.classes,"signalsamplingexample") then
+        diagrampatterns[block.identifier][block.identifier .. "Parameter"] = block.attributes["parameter"]
+        diagrampatterns[block.identifier][block.identifier .. "Function"] = block.attributes["function"] .. " :: Pattern Double"
+        diagrampatterns[block.identifier][block.identifier .. "Arc"] = block.attributes["arc"] .. " :: Arc"
+    end
+
     if tidalexpression ~= nil then
         diagrampatterns[block.identifier][block.identifier] = tidalexpression
     end
@@ -68,6 +74,12 @@ function getBlockTextWithReplacements(block)
         end
 
         tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
+    end
+
+    if shared.codeBlockClassesContain(block, "signalsamplingexample") then
+        thetext = string.gsub(thetext, "{{parameter}}", block.attributes["parameter"], nil, true)
+        thetext = string.gsub(thetext, "{{function}}", block.attributes["function"], nil, true)
+        thetext = string.gsub(thetext, "{{arc}}", block.attributes["arc"], nil, true)
     end
 
     if tidalexpression ~= nil then

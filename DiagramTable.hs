@@ -4,6 +4,7 @@ module DiagramTable (diagramListForMainWith) where
 import qualified PatternExpressions as PE
 import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams as Lin
+import qualified SignalDiagrams as Sig
 import qualified PatternAlgebraDiagrams as PA
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
@@ -111,6 +112,11 @@ diagramTablePatternAlgebra = [
     ,("valueAlgebraMapDiagram", PA.valueAlgebraMapDiagram # frame 0.05 # scale outputScaling)
     ]
 
+diagramTableSignals :: [(String, Diagram B)]
+diagramTableSignals = [
+    ("sigEvaluatesAtMiddle", Sig.sigEvaluatesAtMiddle # frame 0.05 # scale outputScaling)
+    ]
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra
+diagramListForMainWith = (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals
 

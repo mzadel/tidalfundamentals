@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances         #-}
 
-module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes) where
+module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram) where
 
 import Shared
 import Diagrams.Prelude
@@ -33,6 +33,24 @@ labelGeometry labelString boxStartLoc = label
     where
         label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
         labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
+
+curveGeometry :: T.Pattern Double -> Diagram B
+curveGeometry ctspattern = fromVertices (getZipList curvepoints)
+    where
+        curvepoints :: ZipList (P2 Double)
+        curvepoints = (^&) <$> xs <*> ys
+        xs :: ZipList Double
+        xs = fromRational <$> ts
+        ys :: ZipList Double
+        ys = (curveValueAtTime ctspattern) <$> ts
+        ts :: ZipList T.Time
+        ts = ZipList [0, deltat .. 1]
+        deltat = 1 % 100
+
+curveValueAtTime :: T.Pattern a -> T.Time -> a
+curveValueAtTime ctspattern t = T.eventValue $ head events
+    where
+        events = T.queryArc ctspattern (T.Arc t t)
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> Diagram B
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable
@@ -115,4 +133,22 @@ diagramFromWholes tidalPattern queryEnd =
         boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
+
+curveDiagramHeight :: Double
+curveDiagramHeight = 0.2
+
+curveDiagramTickMarkOffset :: Double
+curveDiagramTickMarkOffset = fromRational (-eventLabelInset)
+
+curveDiagram :: T.Pattern Double -> Integer -> Diagram B
+curveDiagram ctsPattern ticksPerCycle =
+    curveandaxes # scaleY curveDiagramHeight
+    <> mconcat (map tickMark tickLocList)
+    <> mconcat (map tickMarkLabel tickLocList) # translateY curveDiagramTickMarkOffset
+    where
+        curveandaxes =
+            fromOffsets [unitY]
+            <> fromOffsets [unitX]
+            <> curveGeometry ctsPattern
+        tickLocList = tickMarkLocations (1%ticksPerCycle) 1
 
