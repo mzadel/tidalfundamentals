@@ -949,7 +949,7 @@ Either run `ghci` and then `:script BootTidal.hs`, or run
 `ghci -ghci-script BootTidal.hs`.
 
 
-# Inspecting OSC
+## Inspecting OSC
 
 You can use `oscdump` from `liblo` to see what messages are coming in:
 
