@@ -5,6 +5,7 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness,d3Colors2)
 import Data.Ratio
+import qualified Sound.Tidal.Context as T
 
 ratioToString :: Rational -> String
 ratioToString r = case (denominator r) of
@@ -31,4 +32,9 @@ tickMarkLocations tickDivision endTickLoc = [0,tickDivision..endTickLoc]
 
 style :: Brightness -> Int -> Diagram B -> Diagram B
 style brightness colourindex = lw none $ fc $ d3Colors2 brightness colourindex
+
+curveValueAtTime :: T.Pattern a -> T.Time -> a
+curveValueAtTime ctspattern t = T.eventValue $ head events
+    where
+        events = T.queryArc ctspattern (T.Arc t t)
 

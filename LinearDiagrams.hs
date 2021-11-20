@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances         #-}
 
-module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram) where
+module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint) where
 
 import Shared
 import Diagrams.Prelude
@@ -46,11 +46,6 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         ts :: ZipList T.Time
         ts = ZipList [0, deltat .. 1]
         deltat = 1 % 100
-
-curveValueAtTime :: T.Pattern a -> T.Time -> a
-curveValueAtTime ctspattern t = T.eventValue $ head events
-    where
-        events = T.queryArc ctspattern (T.Arc t t)
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> Diagram B
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable
@@ -151,4 +146,11 @@ curveDiagram ctsPattern ticksPerCycle =
             <> fromOffsets [unitX]
             <> curveGeometry ctsPattern
         tickLocList = tickMarkLocations (1%ticksPerCycle) 1
+
+curveDiagramLabeledPoint :: P2 Double -> String -> Diagram B
+curveDiagramLabeledPoint pos labelText = (thedot <> label) # translate (scaledpos .-. origin)
+    where
+        scaledpos = pos # scaleY curveDiagramHeight
+        thedot = circle 0.0075 # fc red # lw none
+        label = alignedText 0 0.5 labelText # fontSize eventLabelSize # translateX (fromRational eventLabelInset)
 
