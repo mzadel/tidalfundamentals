@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances         #-}
 
-module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint) where
+module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
 
 import Shared
 import Diagrams.Prelude
@@ -153,4 +153,26 @@ curveDiagramLabeledPoint pos labelText = (thedot <> label) # translate (scaledpo
         scaledpos = pos # scaleY curveDiagramHeight
         thedot = circle 0.0075 # fc red # lw none
         label = alignedText 0 0.5 labelText # fontSize eventLabelSize # translateX (fromRational eventLabelInset)
+
+arcDiagram :: [T.Arc] -> Diagram B
+arcDiagram arcs =
+    mconcat arclabels <> mconcat arcgeometries
+    where
+        arcgeometries = getZipList $ boxgeometries
+        arclabels = getZipList $ labelgeometries
+        --
+        getLabel :: T.Arc -> String
+        getLabel a = "Arc " ++ (show $ startdouble) ++ " " ++ (show $ stopdouble)
+            where
+                startdouble = fromRational $ T.start a :: Double
+                stopdouble = fromRational $ T.stop a :: Double
+        --
+        labels = getLabel <$> ZipList arcs
+        starts = T.start <$> ZipList arcs
+        stops = T.stop <$> ZipList arcs
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = boxGeometry <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = labelGeometry <$> labels <*> starts
 
