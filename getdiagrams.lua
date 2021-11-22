@@ -25,8 +25,7 @@ function handleREPLBlock(block)
 end
 
 function handleDiagramBlock(block)
-    table.insert(diagrams,block.identifier)
-    diagrampatterns[block.identifier] = {}
+    exp = {}
 
     local tidalexpression = block.attributes["tidalexpression"]
 
@@ -39,23 +38,26 @@ function handleDiagramBlock(block)
             operatortypesignature =  string.format(" :: Pattern %s -> Pattern %s -> Pattern %s", block.attributes["type"], block.attributes["type"], block.attributes["type"])
         end
 
-        diagrampatterns[block.identifier][block.identifier .. "Operator"] = '(' .. block.attributes["operator"] .. ')' .. operatortypesignature
-        diagrampatterns[block.identifier][block.identifier .. "OperatorString"] = '"' .. block.attributes["operator"] .. '"'
-        diagrampatterns[block.identifier][block.identifier .. "Left"] = block.attributes["leftexpression"] .. patterntypesignature
-        diagrampatterns[block.identifier][block.identifier .. "Right"] = block.attributes["rightexpression"] .. patterntypesignature
+        exp[block.identifier .. "Operator"] = '(' .. block.attributes["operator"] .. ')' .. operatortypesignature
+        exp[block.identifier .. "OperatorString"] = '"' .. block.attributes["operator"] .. '"'
+        exp[block.identifier .. "Left"] = block.attributes["leftexpression"] .. patterntypesignature
+        exp[block.identifier .. "Right"] = block.attributes["rightexpression"] .. patterntypesignature
 
         tidalexpression = string.format("(%s) %s (%s)", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. patterntypesignature
     end
 
     if shared.arrayContains(block.classes,"signalsamplingexample") then
-        diagrampatterns[block.identifier][block.identifier .. "Parameter"] = block.attributes["parameter"]
-        diagrampatterns[block.identifier][block.identifier .. "Function"] = block.attributes["function"] .. " :: Pattern Double"
-        diagrampatterns[block.identifier][block.identifier .. "Arc"] = block.attributes["arc"] .. " :: Arc"
+        exp[block.identifier .. "Parameter"] = block.attributes["parameter"]
+        exp[block.identifier .. "Function"] = block.attributes["function"] .. " :: Pattern Double"
+        exp[block.identifier .. "Arc"] = block.attributes["arc"] .. " :: Arc"
     end
 
     if tidalexpression ~= nil then
-        diagrampatterns[block.identifier][block.identifier] = tidalexpression
+        exp[block.identifier] = tidalexpression
     end
+
+    table.insert(diagrams,block.identifier)
+    diagrampatterns[block.identifier] = exp
 end
 
 function getBlockTextWithReplacements(block)
