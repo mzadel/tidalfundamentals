@@ -31,8 +31,8 @@ function handleDiagramBlock(block)
 
     if shared.arrayContains(block.classes,"patternalgebraexample") then
 
-        patterntypesignature = ""
-        operatortypesignature = ""
+        local patterntypesignature = ""
+        local operatortypesignature = ""
         if block.attributes["type"] ~= nil then
             patterntypesignature = string.format(" :: Pattern %s", block.attributes["type"])
             operatortypesignature =  string.format(" :: Pattern %s -> Pattern %s -> Pattern %s", block.attributes["type"], block.attributes["type"], block.attributes["type"])
