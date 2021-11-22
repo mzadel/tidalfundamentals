@@ -367,11 +367,11 @@ on the syntax of the following examples.
 
 Tilde is a rest:
 
-~~~{.ghcisession #tildeisarest tidalexpression='s $ parseBP_E "bd ~ bd ~"' .diagram}
+~~~{.ghcisession #tildeisarest .spatternexample tidalexpression='parseBP_E "bd ~ bd ~"' .diagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 So the dot in the `drawLine` output is the rest.
@@ -382,11 +382,11 @@ So the dot in the `drawLine` output is the rest.
 
 Underscore elongates a note:
 
-~~~{.ghcisession #underscoreelongates tidalexpression='s $ parseBP_E "a _ c"' .diagram}
+~~~{.ghcisession #underscoreelongates .spatternexample tidalexpression='parseBP_E "a _ c"' .diagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 The hyphen means that the a note is held for an extra division.
@@ -397,22 +397,22 @@ The hyphen means that the a note is held for an extra division.
 
 `@` elongates a pattern by some number of counts:
 
-~~~{.ghcisession #atelongates tidalexpression='s $ parseBP_E "a@3 b"' .diagram .insertdiagram}
+~~~{.ghcisession #atelongates .spatternexample tidalexpression='parseBP_E "a@3 b"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:
 
-~~~{.ghcisession #repeateventasterisk tidalexpression='s $ parseBP_E "a*2 c"' .diagram .insertdiagram}
+~~~{.ghcisession #repeateventasterisk .spatternexample tidalexpression='parseBP_E "a*2 c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 So instead of getting the cycle divided into three, it's divided into four.
@@ -423,11 +423,11 @@ The 'a' events have duration 1/4.
 
 Use ! to repeat an event.  Contrast this with * .
 
-~~~{.ghcisession #repeateventbang tidalexpression='s $ parseBP_E "a!2 c"' .diagram .insertdiagram}
+~~~{.ghcisession #repeateventbang .spatternexample tidalexpression='parseBP_E "a!2 c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 The 'a' events have duration 1/3 here.
@@ -436,11 +436,11 @@ The 'a' events have duration 1/3 here.
 
 Use square brackets for grouping.
 
-~~~{.ghcisession #squarebrackets tidalexpression='s $ parseBP_E "[a b c] [d e]"' .diagram}
+~~~{.ghcisession #squarebrackets .spatternexample tidalexpression='parseBP_E "[a b c] [d e]"' .diagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 So it divided the pattern into two halves, and then divided the first half into
@@ -452,11 +452,11 @@ three and the second half into two.
 
 You can do the same with a dot:
 
-~~~{.ghcisession #thedot tidalexpression='s $ parseBP_E "a b c . d e"' .diagram .insertdiagram}
+~~~{.ghcisession #thedot .spatternexample tidalexpression='parseBP_E "a b c . d e"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
@@ -464,11 +464,11 @@ drawLine $ {{tidalexpressionnoSmoney}}
 So this is where I think it starts to get interesting.
 Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
 
-~~~{.ghcisession #commaforparallel tidalexpression='s $ parseBP_E "[a b c , d e]"' .diagram}
+~~~{.ghcisession #commaforparallel .spatternexample tidalexpression='parseBP_E "[a b c , d e]"' .diagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 I'm officially feeling this.
@@ -481,11 +481,11 @@ The first expression's output orders the interleaved events by onset time.
 
 You can create polymetric sequences with braces:
 
-~~~{.ghcisession #polymetricbraces tidalexpression='s $ parseBP_E "{a b c , d e}"' .diagram .insertdiagram}
+~~~{.ghcisession #polymetricbraces .spatternexample tidalexpression='parseBP_E "{a b c , d e}"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 So it looks like it takes the first pattern and divides the cycle by the number
@@ -494,11 +494,11 @@ pattern.
 
 Contrast with doing it in the other order:
 
-~~~{.ghcisession #polymetricbracesotherorder tidalexpression='s $ parseBP_E "{d e , a b c}"' .diagram .insertdiagram}
+~~~{.ghcisession #polymetricbracesotherorder .spatternexample tidalexpression='parseBP_E "{d e , a b c}"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 So in this second version, the 'a b c' events have a longer duration:
@@ -513,42 +513,42 @@ You can set the length of the polymetric sequence with `%`.
 
 This expression divides the cycle into eight
 
-~~~{.ghcisession #polymetricdividebyeight tidalexpression='s $ parseBP_E "{a b c d e}%8"' .diagram .insertdiagram}
+~~~{.ghcisession #polymetricdividebyeight .spatternexample tidalexpression='parseBP_E "{a b c d e}%8"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 This expression divides the cycle into seven.
 
-~~~{.ghcisession #polymetricdividebyseven tidalexpression='s $ parseBP_E "{a b c d e}%7"' .diagram .insertdiagram}
+~~~{.ghcisession #polymetricdividebyseven .spatternexample tidalexpression='parseBP_E "{a b c d e}%7"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 Use angle brackets to alternate between the events
 
-~~~{.ghcisession #anglebrackets tidalexpression='s $ parseBP_E "<a b c> d <e f>"' .diagram .insertdiagram}
+~~~{.ghcisession #anglebrackets .spatternexample tidalexpression='parseBP_E "<a b c> d <e f>"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 Use brackets to create a Euclidean rhythm:
 
-~~~{.ghcisession #euclideanrhythm tidalexpression='s $ parseBP_E "a(3,7)"' .diagram .insertdiagram}
+~~~{.ghcisession #euclideanrhythm .spatternexample tidalexpression='parseBP_E "a(3,7)"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 ## Standard library functions
@@ -563,22 +563,22 @@ I'll start to play with some of the basic ones here to understand what they're d
 
 `slow` elongates (i.e., slows down) a pattern
 
-~~~{.ghcisession #slowfunction tidalexpression='s $ slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #slowfunction .spatternexample tidalexpression='slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 ### Digression: querying across cycle boundaries
 
 Interestingly, `slow` seems to query results on cycle boundaries:
 
-~~~{.ghcisession #slowoneandahalf tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #slowoneandahalf .spatternexample tidalexpression='slow 1.5 $ parseBP_E "a a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 (I'm using `queryArc` and `part` to make the diagrams, so it shows up there as well.)
@@ -640,33 +640,33 @@ thought they look surprising in the event list.)
 
 `fast` speeds things up
 
-~~~{.ghcisession #fastfunction tidalexpression='s $ fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #fastfunction .spatternexample tidalexpression='fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 `fastGap` speeds things up but aligns to the cycle
 
-~~~{.ghcisession #fastgapfunction tidalexpression='s $ fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #fastgapfunction .spatternexample tidalexpression='fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 `compress` squeezes a pattern into a given arc of time
 
-~~~{.ghcisession #compressfunction tidalexpression='s $ compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #compressfunction .spatternexample tidalexpression='compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 --------------------------------------------------
@@ -674,11 +674,11 @@ drawLine $ {{tidalexpressionnoSmoney}}
 `zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
 duration of the input pattern.
 
-~~~{.ghcisession #zoomfunction tidalexpression='s $ zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #zoomfunction .spatternexample tidalexpression='zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 (I don't know why the "b" event isn't shown in the `drawLine` output above.)
@@ -688,11 +688,11 @@ drawLine $ {{tidalexpressionnoSmoney}}
 
 `rev` reverses each cycle of a pattern
 
-~~~{.ghcisession tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
+~~~{.ghcisession .spatternexample tidalexpression='rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}}
-drawLine $ {{tidalexpressionnoSmoney}}
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
 ~~~
 
 Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):

@@ -29,6 +29,10 @@ function handleDiagramBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
+    if shared.arrayContains(block.classes,"spatternexample") then
+        tidalexpression = "s $ " .. tidalexpression
+    end
+
     if shared.arrayContains(block.classes,"patternalgebraexample") then
         local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+) +([%|%+]+) +(.+) +:: +(.+)")
 
@@ -65,10 +69,7 @@ function getBlockTextWithReplacements(block)
 
     if tidalexpression ~= nil then
         tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
-        expressionwithoutSmoney = string.gsub(tidalexpression, "s $ ", "", nil, true)
-
         thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
-        thetext = string.gsub(thetext, "{{tidalexpressionnoSmoney}}", expressionwithoutSmoney, nil, true)
     end
 
     return thetext
