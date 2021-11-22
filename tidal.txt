@@ -754,10 +754,10 @@ natural way.
 
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double'  .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}} :: {{type}}
+{{tidalexpression}}
 ~~~
 
 (In the text output, notice that the "22" and the "42" entries correspond to
@@ -767,49 +767,49 @@ later confirmed with `oscdump` and a live tidal repl that that's what's
 happening -- the value that is lined up when the onset happens is the one that
 gets sent.  The change midway through the event does nothing.])
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample2 tidalexpression='parseBP_E "1 2 3" |+ parseBP_E "20 40 60" :: Pattern Double' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}} :: {{type}}
+{{tidalexpression}}
 ~~~
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='|+' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample3 tidalexpression='parseBP_E "1 2 3" |+ parseBP_E "20 40 60 80" :: Pattern Double' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-{{tidalexpression}} :: {{type}}
+{{tidalexpression}}
 ~~~
 
 --------------------------------------------------
 
 The `+|` operator does addition, but takes the events from the right argument:
 
-~~~{.patternalgebraexample #rightPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample1 tidalexpression='parseBP_E "1 2 3" +| parseBP_E "20 40" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample2 tidalexpression='parseBP_E "1 2 3" +| parseBP_E "20 40 60" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='+|' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample3 tidalexpression='parseBP_E "1 2 3" +| parseBP_E "20 40 60 80" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
 
 The `|+|` operator does addition, but takes the events from both arguments:
 
-~~~{.patternalgebraexample #bothPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample1 tidalexpression='parseBP_E "1 2 3" |+| parseBP_E "20 40" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #bothPlusExample2 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40 60"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample2 tidalexpression='parseBP_E "1 2 3" |+| parseBP_E "20 40 60" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #bothPlusExample3 leftexpression='parseBP_E "1 2 3"' operator='|+|' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample3 tidalexpression='parseBP_E "1 2 3" |+| parseBP_E "20 40 60 80" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
 
 If you use `+`, it's like `|+|`:
 
-~~~{.patternalgebraexample #justPlusExample1 leftexpression='parseBP_E "1 2 3"' operator='+' rightexpression='parseBP_E "20 40 60 80"' type="Double" .diagram .insertdiagram}
+~~~{.patternalgebraexample #justPlusExample1 tidalexpression='parseBP_E "1 2 3" + parseBP_E "20 40 60 80" :: Pattern Double' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
@@ -837,7 +837,7 @@ for several parameters and then combine them into one stream of events.
 (I manually edited out the context in the square brackets for legibility.  The
 `tidal` prompt comes from running `ghci` with `BootTidal.hs`---see below.)
 
-~~~{.patternalgebraexample #valueAlgebraMapDiagram leftexpression='s $ parseBP_E "bd sd hh"' operator='|+' rightexpression='pan $ slow 3 $ parseBP_E "0.2 0.5 0.7"' type='ValueMap' .diagram .insertdiagram}
+~~~{.patternalgebraexample #valueAlgebraMapDiagram tidalexpression='(s $ parseBP_E "bd sd hh") |+ (pan $ slow 3 $ parseBP_E "0.2 0.5 0.7") :: Pattern ValueMap' .diagram .insertdiagram}
 ~~~
 
 ## More pattern types

@@ -30,20 +30,13 @@ function handleDiagramBlock(block)
     local tidalexpression = block.attributes["tidalexpression"]
 
     if shared.arrayContains(block.classes,"patternalgebraexample") then
+        local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+) +([%|%+]+) +(.+) +:: +(.+)")
+        local operatortypesignature =  string.format("%s -> %s -> %s", patterntypesignature, patterntypesignature, patterntypesignature)
 
-        local patterntypesignature = ""
-        local operatortypesignature = ""
-        if block.attributes["type"] ~= nil then
-            patterntypesignature = string.format(" :: Pattern %s", block.attributes["type"])
-            operatortypesignature =  string.format(" :: Pattern %s -> Pattern %s -> Pattern %s", block.attributes["type"], block.attributes["type"], block.attributes["type"])
-        end
-
-        exp[block.identifier .. "Operator"] = '(' .. block.attributes["operator"] .. ')' .. operatortypesignature
-        exp[block.identifier .. "OperatorString"] = '"' .. block.attributes["operator"] .. '"'
-        exp[block.identifier .. "Left"] = block.attributes["leftexpression"] .. patterntypesignature
-        exp[block.identifier .. "Right"] = block.attributes["rightexpression"] .. patterntypesignature
-
-        tidalexpression = string.format("(%s) %s (%s)", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"]) .. patterntypesignature
+        exp[block.identifier .. "Operator"] = '(' .. operator .. ')' .. ' :: ' .. operatortypesignature
+        exp[block.identifier .. "OperatorString"] = '"' .. operator .. '"'
+        exp[block.identifier .. "Left"] = left .. ' :: ' .. patterntypesignature
+        exp[block.identifier .. "Right"] = right .. ' :: ' .. patterntypesignature
     end
 
     if shared.arrayContains(block.classes,"signalsamplingexample") then
@@ -65,18 +58,6 @@ function getBlockTextWithReplacements(block)
     local thetext = block.text
 
     local tidalexpression = block.attributes["tidalexpression"]
-
-    if shared.codeBlockClassesContain(block, "patternalgebraexample") then
-        thetext = string.gsub(thetext, "{{leftexpression}}", block.attributes["leftexpression"], nil, true)
-        thetext = string.gsub(thetext, "{{rightexpression}}", block.attributes["rightexpression"], nil, true)
-        thetext = string.gsub(thetext, "{{operator}}", block.attributes["operator"], nil, true)
-
-        if block.attributes["type"] ~= nil then
-            thetext = string.gsub(thetext, "{{type}}", "Pattern " .. block.attributes["type"], nil, true)
-        end
-
-        tidalexpression = string.format("%s %s %s", block.attributes["leftexpression"], block.attributes["operator"], block.attributes["rightexpression"])
-    end
 
     if shared.codeBlockClassesContain(block, "signalsamplingexample") then
         thetext = string.gsub(thetext, "{{parameter}}", block.attributes["parameter"], nil, true)
