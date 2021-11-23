@@ -42,9 +42,10 @@ function handleDiagramBlock(block)
     end
 
     if shared.arrayContains(block.classes,"signalsamplingexample") then
-        exp[block.identifier .. "Parameter"] = block.attributes["parameter"]
-        exp[block.identifier .. "Function"] = block.attributes["function"] .. " :: Pattern Double"
-        exp[block.identifier .. "Arc"] = block.attributes["arc"] .. " :: Arc"
+        local parameter, func, arc = string.match(tidalexpression, "queryArc %((%a+) (%a+)%) +%((Arc [%d%.]+ [%d%.]+)%)")
+        exp[block.identifier .. "Parameter"] = parameter
+        exp[block.identifier .. "Function"] = func .. " :: Pattern Double"
+        exp[block.identifier .. "Arc"] = arc .. " :: Arc"
     end
 
     if tidalexpression ~= nil then
@@ -60,12 +61,6 @@ function getBlockTextWithReplacements(block)
     local thetext = block.text
 
     local tidalexpression = block.attributes["tidalexpression"]
-
-    if shared.codeBlockClassesContain(block, "signalsamplingexample") then
-        thetext = string.gsub(thetext, "{{parameter}}", block.attributes["parameter"], nil, true)
-        thetext = string.gsub(thetext, "{{function}}", block.attributes["function"], nil, true)
-        thetext = string.gsub(thetext, "{{arc}}", block.attributes["arc"], nil, true)
-    end
 
     if tidalexpression ~= nil then
         tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
