@@ -1,4 +1,3 @@
-{-# LANGUAGE FlexibleInstances         #-}
 
 module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
 
@@ -8,7 +7,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import qualified Data.Map as M (Map, (!), toList, findWithDefault, empty)
+import qualified Data.Map as M (Map, (!), findWithDefault, empty)
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 tickMark :: Rational -> Diagram B
@@ -95,20 +94,8 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLane <$> lanes
 
-class Labelable l where
-    toLabel :: l -> String
-
-instance Labelable Double where
-    toLabel d = show d
-
-instance Labelable T.ValueMap where
-    toLabel vmap = finalstring
-        where
-            pairstrings = map (\(k, v) -> k ++ ": " ++ (show v)) (M.toList vmap)
-            finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
-
-diagramFromWholes :: (Labelable a) => T.Pattern a -> Rational -> Diagram B
-diagramFromWholes tidalPattern queryEnd =
+diagramFromWholes :: (a -> String) -> T.Pattern a -> Rational -> Diagram B
+diagramFromWholes formatLabel tidalPattern queryEnd =
     mconcat patterneventlabels <> mconcat patternevents
     where
         events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
@@ -117,8 +104,7 @@ diagramFromWholes tidalPattern queryEnd =
         patternevents = getZipList $ boxgeometries
         patterneventlabels = getZipList $ labelgeometries
         --
-        getLabel :: (Labelable a) => T.Event a -> String
-        getLabel = toLabel . T.eventValue
+        getLabel = formatLabel . T.eventValue
         --
         labels = getLabel <$> eventswithonsets
         starts = T.wholeStart <$> eventswithonsets

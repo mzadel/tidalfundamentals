@@ -14,11 +14,11 @@ lineOfText texttoshow = (alignedText 0 0.5 texttoshow # fontSize eventLabelSize)
 patternAlgebraDiagram :: T.Pattern Double -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
 patternAlgebraDiagram leftpat operatorString rightpat combinedpat =
     vsep linearDiagramVerticalPadding [
-        Lin.diagramFromWholes (leftpat) 1
+        Lin.diagramFromWholes show (leftpat) 1
         ,lineOfText operatorString
-        ,Lin.diagramFromWholes (rightpat) 1
+        ,Lin.diagramFromWholes show (rightpat) 1
         ,lineOfText "=="
-        ,Lin.diagramFromWholes combinedpat 1
+        ,Lin.diagramFromWholes show combinedpat 1
         ]
 
 leftPlusExample1 :: Diagram B
@@ -48,10 +48,10 @@ justPlusExample1 = patternAlgebraDiagram PE.justPlusExample1LeftExpr PE.justPlus
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =
     vsep linearDiagramVerticalPadding [
-        Lin.diagramFromWholes (PE.valueAlgebraMapDiagramLeftExpr :: T.ControlPattern) 3
+        Lin.diagramFromWholes showValueMap (PE.valueAlgebraMapDiagramLeftExpr :: T.ControlPattern) 3
         ,lineOfText PE.valueAlgebraMapDiagramOperatorStringExpr
-        ,Lin.diagramFromWholes (PE.valueAlgebraMapDiagramRightExpr :: T.ControlPattern) 3
+        ,Lin.diagramFromWholes showValueMap (PE.valueAlgebraMapDiagramRightExpr :: T.ControlPattern) 3
         ,lineOfText "=="
-        ,Lin.diagramFromWholes (PE.valueAlgebraMapDiagramExpr :: T.ControlPattern) 3
+        ,Lin.diagramFromWholes showValueMap (PE.valueAlgebraMapDiagramExpr :: T.ControlPattern) 3
         ]
 

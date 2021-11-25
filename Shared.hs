@@ -5,6 +5,7 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness,d3Colors2)
 import Data.Ratio
+import qualified Data.Map as M (toList)
 import qualified Sound.Tidal.Context as T
 
 ratioToString :: Rational -> String
@@ -37,4 +38,13 @@ curveValueAtTime :: T.Pattern a -> T.Time -> a
 curveValueAtTime ctspattern t = T.eventValue $ head events
     where
         events = T.queryArc ctspattern (T.Arc t t)
+
+_showValueMap :: (T.Value -> String) -> T.ValueMap -> String
+_showValueMap showValueFunc vmap = finalstring
+    where
+        pairstrings = map (\(k, v) -> k ++ ": " ++ (showValueFunc v)) (M.toList vmap)
+        finalstring = foldr1 (\a b -> a ++ ", " ++ b) pairstrings
+
+showValueMap :: T.ValueMap -> String
+showValueMap = _showValueMap show
 
