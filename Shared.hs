@@ -48,3 +48,6 @@ _showValueMap showValueFunc vmap = finalstring
 showValueMap :: T.ValueMap -> String
 showValueMap = _showValueMap show
 
+lineOfText :: String -> Diagram B
+lineOfText texttoshow = (alignedText 0 0.5 texttoshow # fontSize eventLabelSize) <> (strut (0.0 ^& 0.03))
+

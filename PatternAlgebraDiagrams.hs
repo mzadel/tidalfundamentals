@@ -8,9 +8,6 @@ import qualified PatternExpressions as PE
 import qualified LinearDiagrams as Lin
 import qualified Sound.Tidal.Context as T
 
-lineOfText :: String -> Diagram B
-lineOfText texttoshow = (alignedText 0 0.5 texttoshow # fontSize eventLabelSize) <> (strut (0.0 ^& 0.03))
-
 patternAlgebraDiagram :: T.Pattern Double -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
 patternAlgebraDiagram leftpat operatorString rightpat combinedpat =
     vsep linearDiagramVerticalPadding [
