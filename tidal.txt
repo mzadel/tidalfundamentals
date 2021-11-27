@@ -1064,7 +1064,7 @@ seems that this is one way to get values out of continuous patterns.)
 You need to use the `segment` function to first sample the continuous pattern
 before applying it to the notes:
 
-~~~{.tidalsession #sigToSetPanning .signalsetsparameter tidalexpression='(pan $ segment 10 $ sine) +| (s $ "a b c d")' .diagram .insertdiagram}
+~~~{.tidalsession #sigToSetPanning .signalsetsparameter tidalexpression='(pan $ segment 7 $ sine) +| (s $ "a b c d")' .diagram .insertdiagram}
 {{tidalexpression}}
 filterEvents eventHasOnset $ {{tidalexpression}}
 ~~~
