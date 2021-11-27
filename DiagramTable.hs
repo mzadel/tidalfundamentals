@@ -30,6 +30,15 @@ colourFunc e = table ! (T.svalue $ T.eventValue e ! "s")
             ,("o", 1)
             ,("bd", 0)]
 
+colourStringsFunc :: T.Event String -> Int
+colourStringsFunc e = table ! T.eventValue e
+    where
+        table :: Map String Int
+        table = fromList [
+             ("phi", 1)
+            ,("psi", 2)
+            ,("tau", 3)]
+
 constColour :: Int -> T.Event a -> Int
 constColour colourindex _ = colourindex
 
@@ -59,6 +68,8 @@ basicsTable :: [(String, Diagram B)]
 basicsTable = [
     ("purecycle"
     ,(Lin.diagramShowValue PE.purecycleExpr 1 3 (constColour 0)) # frame 0.05 # scale outputScaling)
+    ,("fromListExample"
+    ,(Lin.diagramShowValue PE.fromListExampleExpr 1 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]

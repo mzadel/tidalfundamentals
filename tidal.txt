@@ -204,6 +204,19 @@ silence
 
 (There are no events to print.)
 
+You can use `fromList` (`Core.hs`) to make a pattern where each list item
+corresponds to an event with length one cycle:
+
+~~~{.ghcisession #fromListExample tidalexpression='fromList ["phi", "psi" , "tau"]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+pat
+putStrLn $ showAll (Arc 0 3) pat
+:t pat
+~~~
+
+
 
 ## Pattern type
 
