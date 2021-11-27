@@ -1016,7 +1016,7 @@ putStrLn $ showAll (Arc 1.5 1.5) $ pan sine
 putStrLn $ showAll (Arc 1.75 1.75) $ pan sine
 ~~~
 
-So it varies continuously, and it's sampled at the event's onset.
+So it varies continuously.
 
 `sine` is defined in `src/Sound/Tidal/Core.hs`
 
