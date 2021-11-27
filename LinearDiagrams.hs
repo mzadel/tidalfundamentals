@@ -1,5 +1,5 @@
 
-module LinearDiagrams (diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
+module LinearDiagrams (diagramShowValue,diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
 
 import Shared
 import Diagrams.Prelude
@@ -45,6 +45,35 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         ts :: ZipList T.Time
         ts = ZipList [0, deltat .. 1]
         deltat = 1 % 100
+
+diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
+diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc =
+        vsep linearDiagramVerticalPadding [
+            mconcat (map tickMarkLabel tickLocList)
+            ,mconcat (map tickMark tickLocList)
+            ,(mconcat patterneventlabels <> mconcat patternevents)
+            ]
+    where
+        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 queryEnd)
+        --
+        patternevents = getZipList $ (boxStyles <*> boxgeometries)
+        patterneventlabels = getZipList $ (labelStyles <*> labelgeometries)
+        --
+        tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
+        --
+        labels = (show . T.eventValue) <$> events
+        colours = colourFunc <$> events
+        starts = T.eventPartStart <$> events
+        stops = T.eventPartStop <$> events
+        --
+        boxgeometries :: ZipList (Diagram B)
+        boxgeometries = boxGeometry <$> starts <*> stops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = labelGeometry <$> labels <*> starts
+        boxStyles :: ZipList (Diagram B -> Diagram B)
+        boxStyles = style Dark <$> colours
+        labelStyles :: ZipList (Diagram B -> Diagram B)
+        labelStyles = style Light <$> colours
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc

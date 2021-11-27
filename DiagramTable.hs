@@ -30,6 +30,9 @@ colourFunc e = table ! (T.svalue $ T.eventValue e ! "s")
             ,("o", 1)
             ,("bd", 0)]
 
+constColour :: Int -> T.Event a -> Int
+constColour colourindex _ = colourindex
+
 laneFunc :: T.Event T.ValueMap -> Int
 laneFunc e = table ! (T.svalue $ T.eventValue e ! "s")
     where
@@ -51,6 +54,12 @@ laneFunc2 e = table ! (T.svalue $ T.eventValue e ! "s")
             ,("c", 1)
             ,("d", 0)
             ,("e", 0)]
+
+basicsTable :: [(String, Diagram B)]
+basicsTable = [
+    ("purecycle"
+    ,(Lin.diagramShowValue PE.purecycleExpr 1 3 (constColour 0)) # frame 0.05 # scale outputScaling)
+    ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
 patternTable = [
@@ -128,5 +137,5 @@ diagramTableSignals = [
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals
+diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals
 

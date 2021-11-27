@@ -164,6 +164,47 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
 
 
 
+## Making Patterns
+
+The basic functions for making patterns are in `Pattern.hs`, `Core.hs` and
+`UI.hs` (as far as I can tell).
+
+Almost all the examples you see start from Tidal's pattern mini-language (like
+`s $ "a b c"`), but that's not necessary for making patterns and it's outside
+the core functionality.
+
+A pattern is something you can query to get a list of events.  Events have
+extents in time and can carry an arbitrary kind of data.  From `Pattern.hs`:
+
+    data Pattern a = Pattern {query :: State -> [Event a]}
+
+    type Event a = EventF (ArcF Time) a
+
+
+The most basic pattern you can make is using `pure`:
+
+~~~{.ghcisession #purecycle tidalexpression='pure "eventcontents" :: Pattern String' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+So this is a pattern that has one event per cycle, and the event's contents are
+the string `"eventcontents"`.
+
+You can make an empty pattern with `silence` (`Core.hs`), which is just an
+alias for `empty` (`Pattern.hs`).
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+silence
+:t silence
+~~~
+
+(There are no events to print.)
+
+
 ## Pattern type
 
 ~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}
