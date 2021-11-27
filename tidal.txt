@@ -58,7 +58,8 @@ the method I preferred was the following:
 
 NB: THIS IS NOT SUFFICIENT TO MAKE SOUND!!  I'm only interested in
 executing expressions and inspecting types at this stage.  Look at
-the installation instructions on <tidalcycles.org> for installing
+the installation instructions on
+[tidalcycles.org](https://tidalcycles.org) for installing
 SuperCollider, SuperDirt and a compatible text editor, which are all
 required for a typical install.
 
