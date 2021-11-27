@@ -115,6 +115,7 @@ diagramTablePatternAlgebra = [
 diagramTableSignals :: [(String, Diagram B)]
 diagramTableSignals = [
     ("sigEvaluatesAtMiddle", Sig.sigEvaluatesAtMiddle # frame 0.05 # scale outputScaling)
+    ,("sigToSetPanning", Sig.sigToSetPanning # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
