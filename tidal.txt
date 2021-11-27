@@ -368,7 +368,7 @@ on the syntax of the following examples.
 
 Tilde is a rest:
 
-~~~{.ghcisession #tildeisarest .spatternexample tidalexpression='parseBP_E "bd ~ bd ~"' .diagram}
+~~~{.ghcisession #tildeisarest .spatternexample tidalexpression='parseBP_E "b ~ b ~"' .diagram}
 import Sound.Tidal.Context
 --cut>>
 s $ {{tidalexpression}}
