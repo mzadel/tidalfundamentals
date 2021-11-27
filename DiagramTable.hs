@@ -70,6 +70,8 @@ basicsTable = [
     ,(Lin.diagramShowValue PE.purecycleExpr 1 3 (constColour 0)) # frame 0.05 # scale outputScaling)
     ,("fromListExample"
     ,(Lin.diagramShowValue PE.fromListExampleExpr 1 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
+    ,("fastFromListExample"
+    ,(Lin.diagramShowValue PE.fastFromListExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]

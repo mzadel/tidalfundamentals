@@ -216,7 +216,18 @@ putStrLn $ showAll (Arc 0 3) pat
 :t pat
 ~~~
 
+Use `fastFromList` (`Core.hs`) to make a pattern that squeezes each list item
+into one cycle:
 
+~~~{.ghcisession #fastFromListExample tidalexpression='fastFromList ["phi", "psi" , "tau"]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+pat
+:t pat
+~~~
+
+`listToPat` is a synonym from `fastFromList`.
 
 ## Pattern type
 
