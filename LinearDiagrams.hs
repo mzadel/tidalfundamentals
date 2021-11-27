@@ -7,7 +7,7 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import qualified Data.Map as M (Map, (!), findWithDefault, empty)
+import qualified Data.Map as M ((!))
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 tickMark :: Rational -> Diagram B
@@ -46,17 +46,17 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         ts = ZipList [0, deltat .. 1]
         deltat = 1 % 100
 
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourTable = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable
+diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
-        laneTable = M.empty
+        laneFunc _ = 0
 
 -- lanes are numbered from zero, starting at the top
 moveToLane :: Int -> Diagram B -> Diagram B
 moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
 
-diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> M.Map String Int -> M.Map String Int -> Diagram B
-diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable colourTable =
+diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> (T.Event T.ValueMap -> Int) -> Diagram B
+diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabel tickLocList)
             ,mconcat (map tickMark tickLocList)
@@ -72,14 +72,10 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneTable 
         --
         getLabel :: T.Event T.ValueMap -> String
         getLabel e = T.svalue $ T.eventValue e M.! "s"
-        lookUpColour :: T.Event T.ValueMap -> Int
-        lookUpColour e = colourTable M.! getLabel e
-        lookUpLane :: T.Event T.ValueMap -> Int
-        lookUpLane e = M.findWithDefault 0 (getLabel e) laneTable
         --
         labels = getLabel <$> events
-        colours = lookUpColour <$> events
-        lanes = lookUpLane <$> events
+        colours = colourFunc <$> events
+        lanes = laneFunc <$> events
         starts = T.eventPartStart <$> events
         stops = T.eventPartStop <$> events
         --
