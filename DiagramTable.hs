@@ -67,7 +67,7 @@ laneFunc2 e = table ! (T.svalue $ T.eventValue e ! "s")
 basicsTable :: [(String, Diagram B)]
 basicsTable = [
     ("purecycle"
-    ,(Lin.diagramShowValue PE.purecycleExpr 1 3 (constColour 0)) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowValue (PE.purecycleExpr :: T.Pattern String) 1 3 (constColour 0)) # frame 0.05 # scale outputScaling)
     ,("fromListExample"
     ,(Lin.diagramShowValue PE.fromListExampleExpr 1 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("fastFromListExample"
