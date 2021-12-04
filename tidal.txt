@@ -282,6 +282,15 @@ import Sound.Tidal.Context
 
 You could imagine using this for creating events of arbitrary lengths.
 
+`overlay` superimposes two patterns, playing them in parallel.
+
+~~~{.ghcisession #overlayExample tidalexpression='overlay (fastFromList [\'a\', \'b\', \'c\', \'d\']) (fastFromList [\'j\', \'k\', \'l\'])' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+
 ## Pattern type
 
 ~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}
