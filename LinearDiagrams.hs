@@ -75,17 +75,8 @@ diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc =
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = style Light <$> colours
 
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
-    where
-        laneFunc _ = 0
-
--- lanes are numbered from zero, starting at the top
-moveToLane :: Int -> Diagram B -> Diagram B
-moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
-
-diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc =
+diagramWithLanes :: (T.Event a -> String) -> T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> (T.Event a -> Int) -> Diagram B
+diagramWithLanes formatLabel tidalPattern ticksPerCycle queryEnd laneFunc colourFunc =
         vsep linearDiagramVerticalPadding [
             mconcat (map tickMarkLabel tickLocList)
             ,mconcat (map tickMark tickLocList)
@@ -99,10 +90,7 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc c
         --
         tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
         --
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e M.! "s"
-        --
-        labels = getLabel <$> events
+        labels = formatLabel <$> events
         colours = colourFunc <$> events
         lanes = laneFunc <$> events
         starts = T.eventPartStart <$> events
@@ -118,6 +106,21 @@ diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc c
         labelStyles = style Light <$> colours
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLane <$> lanes
+
+diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
+diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
+    where
+        laneFunc _ = 0
+
+-- lanes are numbered from zero, starting at the top
+moveToLane :: Int -> Diagram B -> Diagram B
+moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
+
+diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> (T.Event T.ValueMap -> Int) -> Diagram B
+diagramWithLanesLabeledFromSValue = diagramWithLanes getLabel
+    where
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel e = T.svalue $ T.eventValue e M.! "s"
 
 diagramFromWholes :: (a -> String) -> T.Pattern a -> Rational -> Diagram B
 diagramFromWholes formatLabel tidalPattern queryEnd =
