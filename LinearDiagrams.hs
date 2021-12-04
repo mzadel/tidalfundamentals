@@ -47,33 +47,12 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         deltat = 1 % 100
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
-diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc =
-        vsep linearDiagramVerticalPadding [
-            mconcat (map tickMarkLabel tickLocList)
-            ,mconcat (map tickMark tickLocList)
-            ,(mconcat patterneventlabels <> mconcat patternevents)
-            ]
+diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
-        events = ZipList $ T.queryArc tidalPattern (T.Arc 0 queryEnd)
-        --
-        patternevents = getZipList $ (boxStyles <*> boxgeometries)
-        patterneventlabels = getZipList $ (labelStyles <*> labelgeometries)
-        --
-        tickLocList = tickMarkLocations (1%ticksPerCycle) queryEnd
-        --
-        labels = (show . T.eventValue) <$> events
-        colours = colourFunc <$> events
-        starts = T.eventPartStart <$> events
-        stops = T.eventPartStop <$> events
-        --
-        boxgeometries :: ZipList (Diagram B)
-        boxgeometries = boxGeometry <$> starts <*> stops
-        labelgeometries :: ZipList (Diagram B)
-        labelgeometries = labelGeometry <$> labels <*> starts
-        boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = style Dark <$> colours
-        labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = style Light <$> colours
+        laneFunc _ = 0
+
+diagramWithLanesShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> (T.Event a -> Int) -> Diagram B
+diagramWithLanesShowValue = diagramWithLanes (show . T.eventValue)
 
 diagramWithLanes :: (T.Event a -> String) -> T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> (T.Event a -> Int) -> Diagram B
 diagramWithLanes formatLabel tidalPattern ticksPerCycle queryEnd laneFunc colourFunc =
