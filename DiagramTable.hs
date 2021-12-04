@@ -117,6 +117,18 @@ basicsTable = [
     ,(Lin.diagramWithLanesShowValue PE.overlayExampleExpr 4 1 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("stackExample"
     ,(Lin.diagramWithLanesShowValue PE.stackExampleExpr 3 2 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("fastfunction"
+    ,(Lin.diagramLabeledFromSValue PE.fastfunctionExpr 9 1 colourFunc) # frame 0.05 # scale outputScaling)
+    ,("fastgapfunction"
+    ,(Lin.diagramLabeledFromSValue PE.fastgapfunctionExpr 3 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,("compressfunction"
+    ,(Lin.diagramLabeledFromSValue PE.compressfunctionExpr 4 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,("zoomfunction"
+    ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,("revfunctioninput"
+    ,(Lin.diagramLabeledFromSValue PE.revfunctioninputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,("revfunctionoutput"
+    ,(Lin.diagramLabeledFromSValue PE.revfunctionoutputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
@@ -159,18 +171,6 @@ diagramTableLinear = [
     ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"
     ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfoneeighthticksExpr 8 3 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("fastfunction"
-    ,(Lin.diagramLabeledFromSValue PE.fastfunctionExpr 9 1 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("fastgapfunction"
-    ,(Lin.diagramLabeledFromSValue PE.fastgapfunctionExpr 3 2 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("compressfunction"
-    ,(Lin.diagramLabeledFromSValue PE.compressfunctionExpr 4 3 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("zoomfunction"
-    ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("revfunctioninput"
-    ,(Lin.diagramLabeledFromSValue PE.revfunctioninputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("revfunctionoutput"
-    ,(Lin.diagramLabeledFromSValue PE.revfunctionoutputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
     ]
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]

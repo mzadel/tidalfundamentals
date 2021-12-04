@@ -299,6 +299,77 @@ import Sound.Tidal.Context
 ~~~
 
 
+## Back to our regularly scheduled program
+
+`fast` speeds things up
+
+~~~{.ghcisession #fastfunction .spatternexample tidalexpression='fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+`fastGap` speeds things up but aligns to the cycle
+
+~~~{.ghcisession #fastgapfunction .spatternexample tidalexpression='fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+`compress` squeezes a pattern into a given arc of time
+
+~~~{.ghcisession #compressfunction .spatternexample tidalexpression='compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+`zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
+duration of the input pattern.
+
+~~~{.ghcisession #zoomfunction .spatternexample tidalexpression='zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+(I don't know why the "b" event isn't shown in the `drawLine` output above.)
+
+
+--------------------------------------------------
+
+`rev` reverses each cycle of a pattern
+
+~~~{.ghcisession .spatternexample tidalexpression='rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+
+~~~{#revfunctioninput tidalexpression='s $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~
+
+Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+
+~~~{#revfunctionoutput tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~
+
+
+
 
 ## Pattern type
 
@@ -772,78 +843,6 @@ Meh, I should just drop it.
 that using `speed 1.5` sends the OSC messages that you'd expect.  So the
 scheduler is doing the right thing when it's sending the messages out even
 thought they look surprising in the event list.)
-
-### Back to our regularly scheduled program
-
-`fast` speeds things up
-
-~~~{.ghcisession #fastfunction .spatternexample tidalexpression='fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
-
---------------------------------------------------
-
-`fastGap` speeds things up but aligns to the cycle
-
-~~~{.ghcisession #fastgapfunction .spatternexample tidalexpression='fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
-
---------------------------------------------------
-
-`compress` squeezes a pattern into a given arc of time
-
-~~~{.ghcisession #compressfunction .spatternexample tidalexpression='compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
-
---------------------------------------------------
-
-`zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
-duration of the input pattern.
-
-~~~{.ghcisession #zoomfunction .spatternexample tidalexpression='zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
-
-(I don't know why the "b" event isn't shown in the `drawLine` output above.)
-
-
---------------------------------------------------
-
-`rev` reverses each cycle of a pattern
-
-~~~{.ghcisession .spatternexample tidalexpression='rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
-
-Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
-
-~~~{#revfunctioninput tidalexpression='s $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
-~~~
-
-Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
-
-~~~{#revfunctionoutput tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
-~~~
-
-
-
 
 ## Pattern types
 
