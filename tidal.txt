@@ -229,6 +229,59 @@ pat
 
 `listToPat` is a synonym from `fastFromList`.
 
+`fromMaybes` allows you to put gaps in the pattern:
+
+~~~{.ghcisession #fromMaybesExample tidalexpression='fromMaybes [Just "phi", Nothing, Just "tau"]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+pat
+:t pat
+~~~
+
+`append` alternates between cycles of two patterns.
+
+~~~{.ghcisession #appendExample tidalexpression='append (fromList [\'a\', \'j\']) (fromList [\'c\', \'k\'])' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+putStrLn $ showAll (Arc 0 8) pat
+:t pat
+~~~
+
+`cat` alternates between cycles of several patterns.
+
+~~~{.ghcisession #catExample tidalexpression='cat [fromList [\'a\', \'j\'], fromList [\'c\', \'k\'], fromList [\'e\', \'l\']]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+putStrLn $ showAll (Arc 0 8) pat
+:t pat
+~~~
+
+`slowCat` and `slowcat` (lowercase) are aliases for `cat`.
+
+`fastCat` (also `fastcat`), works like `cat` but squeezes all the patterns into one cycle
+
+~~~{.ghcisession #fastCatExample tidalexpression='fastCat [fromList [\'a\', \'j\'], fromList [\'c\', \'k\'], fromList [\'e\', \'l\']]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+putStrLn $ showAll (Arc 0 3) pat
+:t pat
+~~~
+
+`timeCat` takes patterns and squeezes them into parts of a cycle.  The time
+argument for each pattern is its relative duration.
+
+~~~{.ghcisession #timeCatExample tidalexpression='timeCat [(1, fastFromList [\'a\', \'b\']), (2, fastFromList [\'c\', \'d\', \'e\'])]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+You could imagine using this for creating events of arbitrary lengths.
+
 ## Pattern type
 
 ~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}

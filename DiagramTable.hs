@@ -39,6 +39,20 @@ colourStringsFunc e = table ! T.eventValue e
             ,("psi", 2)
             ,("tau", 3)]
 
+colourCharsFunc :: T.Event Char -> Int
+colourCharsFunc e = table ! T.eventValue e
+    where
+        table :: Map Char Int
+        table = fromList [
+             ('a', 0)
+            ,('b', 2)
+            ,('c', 1)
+            ,('d', 7)
+            ,('e', 3)
+            ,('j', 6)
+            ,('k', 4)
+            ,('l', 5)]
+
 constColour :: Int -> T.Event a -> Int
 constColour colourindex _ = colourindex
 
@@ -72,6 +86,16 @@ basicsTable = [
     ,(Lin.diagramShowValue PE.fromListExampleExpr 1 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("fastFromListExample"
     ,(Lin.diagramShowValue PE.fastFromListExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
+    ,("fromMaybesExample"
+    ,(Lin.diagramShowValue PE.fromMaybesExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
+    ,("appendExample"
+    ,(Lin.diagramShowValue PE.appendExampleExpr 1 4 colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("catExample"
+    ,(Lin.diagramShowValue PE.catExampleExpr 1 6 colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("fastCatExample"
+    ,(Lin.diagramShowValue PE.fastCatExampleExpr 3 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("timeCatExample"
+    ,(Lin.diagramShowValue PE.timeCatExampleExpr 3 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
