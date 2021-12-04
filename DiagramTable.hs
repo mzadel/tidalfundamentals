@@ -51,7 +51,9 @@ colourCharsFunc e = table ! T.eventValue e
             ,('e', 3)
             ,('j', 6)
             ,('k', 4)
-            ,('l', 5)]
+            ,('l', 5)
+            ,('m', 8)
+            ,('n', 9)]
 
 laneCharsFunc :: T.Event Char -> Int
 laneCharsFunc e = table ! T.eventValue e
@@ -64,7 +66,9 @@ laneCharsFunc e = table ! T.eventValue e
             ,('d', 0)
             ,('j', 1)
             ,('k', 1)
-            ,('l', 1)]
+            ,('l', 1)
+            ,('m', 2)
+            ,('n', 2)]
 
 constColour :: Int -> T.Event a -> Int
 constColour colourindex _ = colourindex
@@ -111,6 +115,8 @@ basicsTable = [
     ,(Lin.diagramShowValue PE.timeCatExampleExpr 3 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("overlayExample"
     ,(Lin.diagramWithLanesShowValue PE.overlayExampleExpr 4 1 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("stackExample"
+    ,(Lin.diagramWithLanesShowValue PE.stackExampleExpr 3 2 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
