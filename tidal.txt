@@ -380,6 +380,16 @@ Output (`rev $ slow 2 $ fromMaybes [Just 'a', Nothing, Just 'b', Nothing, Nothin
 ~~~
 
 
+--------------------------------------------------
+
+`every` applies a function to the input pattern, but only every `n` cycles.
+
+~~~{.ghcisession #everyfunction tidalexpression='every 3 rev $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
 
 
 ## Pattern type
