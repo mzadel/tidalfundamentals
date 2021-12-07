@@ -337,10 +337,10 @@ drawLine $ {{tidalexpression}}
 `zoom` zooms in on a portion of a pattern.  It maps the zoomed portion to the
 duration of the input pattern.
 
-~~~{.ghcisession #zoomfunction .spatternexample tidalexpression='zoom (1/4,3/4) $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #zoomfunction tidalexpression='zoom (1/4,3/4) $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 

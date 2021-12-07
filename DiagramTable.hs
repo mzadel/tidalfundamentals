@@ -124,7 +124,7 @@ basicsTable = [
     ,("compressfunction"
     ,(Lin.diagramShowCharValue PE.compressfunctionExpr 4 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("zoomfunction"
-    ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.zoomfunctionExpr 6 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
     ,(Lin.diagramLabeledFromSValue PE.revfunctioninputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("revfunctionoutput"
