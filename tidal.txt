@@ -314,10 +314,10 @@ drawLine $ {{tidalexpression}}
 
 `fastGap` speeds things up but aligns to the cycle
 
-~~~{.ghcisession #fastgapfunction .spatternexample tidalexpression='fastGap 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #fastgapfunction tidalexpression='fastGap 3 $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 
