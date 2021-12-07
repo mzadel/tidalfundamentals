@@ -303,10 +303,10 @@ import Sound.Tidal.Context
 
 `fast` speeds things up
 
-~~~{.ghcisession #fastfunction .spatternexample tidalexpression='fast 3 $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #fastfunction tidalexpression='fast 3 $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 

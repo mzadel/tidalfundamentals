@@ -118,7 +118,7 @@ basicsTable = [
     ,("stackExample"
     ,(Lin.diagramWithLanesShowValue PE.stackExampleExpr 3 2 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("fastfunction"
-    ,(Lin.diagramLabeledFromSValue PE.fastfunctionExpr 9 1 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.fastfunctionExpr 9 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
     ,(Lin.diagramLabeledFromSValue PE.fastgapfunctionExpr 3 2 colourFunc) # frame 0.05 # scale outputScaling)
     ,("compressfunction"

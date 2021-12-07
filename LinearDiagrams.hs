@@ -1,5 +1,5 @@
 
-module LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
+module LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
 
 import Shared
 import Diagrams.Prelude
@@ -89,6 +89,14 @@ diagramWithLanes formatLabel tidalPattern ticksPerCycle queryEnd laneFunc colour
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
+        laneFunc _ = 0
+
+diagramShowCharValue :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> Diagram B
+diagramShowCharValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanes showFunction tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
+    where
+        charToString :: Char -> String
+        charToString c = [c]
+        showFunction = charToString . T.eventValue
         laneFunc _ = 0
 
 -- lanes are numbered from zero, starting at the top
