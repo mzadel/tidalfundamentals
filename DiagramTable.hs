@@ -126,9 +126,9 @@ basicsTable = [
     ,("zoomfunction"
     ,(Lin.diagramShowCharValue PE.zoomfunctionExpr 6 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
-    ,(Lin.diagramLabeledFromSValue PE.revfunctioninputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.revfunctioninputExpr 3 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("revfunctionoutput"
-    ,(Lin.diagramLabeledFromSValue PE.revfunctionoutputExpr 3 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.revfunctionoutputExpr 3 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]

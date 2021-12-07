@@ -351,21 +351,21 @@ drawLine $ {{tidalexpression}}
 
 `rev` reverses each cycle of a pattern
 
-~~~{.ghcisession .spatternexample tidalexpression='rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"'}
+~~~{.ghcisession tidalexpression='rev $ slow 2 $ fromMaybes [Just \'a\', Nothing, Just \'b\', Nothing, Nothing, Just \'c\']'}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 
-Input (`slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+Input (`slow 2 $ fromMaybes [Just 'a', Nothing, Just 'b', Nothing, Nothing, Just 'c']`):
 
-~~~{#revfunctioninput tidalexpression='s $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~{#revfunctioninput tidalexpression='slow 2 $ fromMaybes [Just \'a\', Nothing, Just \'b\', Nothing, Nothing, Just \'c\']' .diagram .insertdiagram}
 ~~~
 
-Output (`rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"`):
+Output (`rev $ slow 2 $ fromMaybes [Just 'a', Nothing, Just 'b', Nothing, Nothing, Just 'c']`):
 
-~~~{#revfunctionoutput tidalexpression='s $ rev $ slow 2 $ parseBP_E "a ~ b ~ ~ c"' .diagram .insertdiagram}
+~~~{#revfunctionoutput tidalexpression='rev $ slow 2 $ fromMaybes [Just \'a\', Nothing, Just \'b\', Nothing, Nothing, Just \'c\']' .diagram .insertdiagram}
 ~~~
 
 
