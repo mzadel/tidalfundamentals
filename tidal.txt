@@ -325,10 +325,10 @@ drawLine $ {{tidalexpression}}
 
 `compress` squeezes a pattern into a given arc of time
 
-~~~{.ghcisession #compressfunction .spatternexample tidalexpression='compress (1/4,1/2) $ parseBP_E "a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #compressfunction tidalexpression='compress (1/4,1/2) $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 

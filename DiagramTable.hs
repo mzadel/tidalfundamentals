@@ -122,7 +122,7 @@ basicsTable = [
     ,("fastgapfunction"
     ,(Lin.diagramShowCharValue PE.fastgapfunctionExpr 3 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("compressfunction"
-    ,(Lin.diagramLabeledFromSValue PE.compressfunctionExpr 4 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.compressfunctionExpr 4 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("zoomfunction"
     ,(Lin.diagramLabeledFromSValue PE.zoomfunctionExpr 6 2 colourFunc) # frame 0.05 # scale outputScaling)
     ,("revfunctioninput"
