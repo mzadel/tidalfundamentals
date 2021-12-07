@@ -312,6 +312,17 @@ drawLine $ {{tidalexpression}}
 
 --------------------------------------------------
 
+`slow` elongates (i.e., slows down) a pattern
+
+~~~{.ghcisession #slowfunction .spatternexample tidalexpression='slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+s $ {{tidalexpression}}
+drawLine $ {{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
 `fastGap` speeds things up but aligns to the cycle
 
 ~~~{.ghcisession #fastgapfunction tidalexpression='fastGap 3 $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
@@ -766,17 +777,6 @@ What we've seen above is the pattern "mini-language".  There are also a lot of p
 There is documentation online starting at <https://tidalcycles.org/docs/patternlib/tour/concatenation>.  (See "Small Reference" at the left.)
 
 I'll start to play with some of the basic ones here to understand what they're doing.
-
---------------------------------------------------
-
-`slow` elongates (i.e., slows down) a pattern
-
-~~~{.ghcisession #slowfunction .spatternexample tidalexpression='slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
-import Sound.Tidal.Context
---cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
-~~~
 
 ### Digression: querying across cycle boundaries
 

@@ -119,6 +119,8 @@ basicsTable = [
     ,(Lin.diagramWithLanesShowValue PE.stackExampleExpr 3 2 laneCharsFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("fastfunction"
     ,(Lin.diagramShowCharValue PE.fastfunctionExpr 3 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("slowfunction"
+    ,(Lin.diagramLabeledFromSValue PE.slowfunctionExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
     ,(Lin.diagramShowCharValue PE.fastgapfunctionExpr 3 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("compressfunction"
@@ -165,8 +167,6 @@ diagramTableLinear = [
     ,(Lin.diagramLabeledFromSValue PE.anglebracketsExpr 3 4 colourFunc) # frame 0.05 # scale outputScaling)
     ,("euclideanrhythm"
     ,(Lin.diagramLabeledFromSValue PE.euclideanrhythmExpr 7 2 colourFunc) # frame 0.05 # scale outputScaling)
-    ,("slowfunction"
-    ,(Lin.diagramLabeledFromSValue PE.slowfunctionExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
     ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"
