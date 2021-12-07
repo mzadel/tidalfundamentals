@@ -120,7 +120,7 @@ basicsTable = [
     ,("fastfunction"
     ,(Lin.diagramShowCharValue PE.fastfunctionExpr 3 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("slowfunction"
-    ,(Lin.diagramLabeledFromSValue PE.slowfunctionExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.slowfunctionExpr 2 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("fastgapfunction"
     ,(Lin.diagramShowCharValue PE.fastgapfunctionExpr 3 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("compressfunction"

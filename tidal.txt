@@ -314,10 +314,10 @@ drawLine $ {{tidalexpression}}
 
 `slow` elongates (i.e., slows down) a pattern
 
-~~~{.ghcisession #slowfunction .spatternexample tidalexpression='slow 2 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #slowfunction tidalexpression='slow 2 $ fastFromList [\'a\', \'a\', \'b\', \'c\']' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
+{{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 
