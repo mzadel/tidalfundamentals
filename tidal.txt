@@ -333,6 +333,9 @@ import Sound.Tidal.Context
 drawLine $ {{tidalexpression}}
 ~~~
 
+`drawLine` is a utility function from `Show.hs` that renders out a `Pattern
+Char` as ascii art.  It only works on char patterns!
+
 --------------------------------------------------
 
 `slow` elongates (i.e., slows down) a pattern
