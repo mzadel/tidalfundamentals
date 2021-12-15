@@ -164,14 +164,15 @@ I'd prefer not to use it right now since I'm explicitly trying to figure out the
 
 
 
-## Making Patterns
+## `Core.hs`
 
 The basic functions for making patterns are in `Pattern.hs`, `Core.hs` and
 `UI.hs` (as far as I can tell).
 
 Almost all the examples you see start from Tidal's pattern mini-language (like
 `s $ "a b c"`), but that's not necessary for making patterns and it's outside
-the core functionality.
+the core functionality.  I'm going to start by surveying some of the basic API
+in `Core.hs`.
 
 A pattern is something you can query to get a list of events.  Events have
 extents in time and can carry an arbitrary kind of data.  From `Pattern.hs`:
