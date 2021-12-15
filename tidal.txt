@@ -192,6 +192,8 @@ import Sound.Tidal.Context
 So this is a pattern that has one event per cycle, and the event's contents are
 the string `"eventcontents"`.
 
+--------------------------------------------------
+
 You can make an empty pattern with `silence` (`Core.hs`), which is just an
 alias for `empty` (`Pattern.hs`).
 
@@ -204,6 +206,8 @@ silence
 
 (There are no events to print.)
 
+--------------------------------------------------
+
 You can use `fromList` (`Core.hs`) to make a pattern where each list item
 corresponds to an event with length one cycle:
 
@@ -215,6 +219,8 @@ pat
 putStrLn $ showAll (Arc 0 3) pat
 :t pat
 ~~~
+
+--------------------------------------------------
 
 Use `fastFromList` (`Core.hs`) to make a pattern that squeezes each list item
 into one cycle:
@@ -229,6 +235,8 @@ pat
 
 `listToPat` is a synonym from `fastFromList`.
 
+--------------------------------------------------
+
 `fromMaybes` allows you to put gaps in the pattern:
 
 ~~~{.ghcisession #fromMaybesExample tidalexpression='fromMaybes [Just "phi", Nothing, Just "tau"]' .diagram .insertdiagram}
@@ -239,6 +247,8 @@ pat
 :t pat
 ~~~
 
+--------------------------------------------------
+
 `append` alternates between cycles of two patterns.
 
 ~~~{.ghcisession #appendExample tidalexpression='append (fromList [\'a\', \'j\']) (fromList [\'c\', \'k\'])' .diagram .insertdiagram}
@@ -248,6 +258,8 @@ pat = {{tidalexpression}}
 putStrLn $ showAll (Arc 0 8) pat
 :t pat
 ~~~
+
+--------------------------------------------------
 
 `cat` alternates between cycles of several patterns.
 
@@ -261,6 +273,8 @@ putStrLn $ showAll (Arc 0 8) pat
 
 `slowCat` and `slowcat` (lowercase) are aliases for `cat`.
 
+--------------------------------------------------
+
 `fastCat` (also `fastcat`), works like `cat` but squeezes all the patterns into one cycle
 
 ~~~{.ghcisession #fastCatExample tidalexpression='fastCat [fromList [\'a\', \'j\'], fromList [\'c\', \'k\'], fromList [\'e\', \'l\']]' .diagram .insertdiagram}
@@ -270,6 +284,8 @@ pat = {{tidalexpression}}
 putStrLn $ showAll (Arc 0 3) pat
 :t pat
 ~~~
+
+--------------------------------------------------
 
 `timeCat` takes patterns and squeezes them into parts of a cycle.  The time
 argument for each pattern is its relative duration.
@@ -281,6 +297,8 @@ import Sound.Tidal.Context
 ~~~
 
 You could imagine using this for creating events of arbitrary lengths.
+
+--------------------------------------------------
 
 `overlay` superimposes two patterns, playing them in parallel.
 
@@ -298,6 +316,7 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+--------------------------------------------------
 
 `fast` speeds things up
 
