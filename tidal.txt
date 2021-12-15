@@ -407,6 +407,20 @@ second six cycles the pattern is reversed every three.
 
 
 
+--------------------------------------------------
+
+`when` applies a function when the given predicate function returns true.
+The predicate is fed the current cycle number.
+
+~~~{.ghcisession #whenfunction tidalexpression='when (\x -> (x+2) `mod` 3 == 0) rev (fastFromList [\'a\',\'b\',\'c\'])' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+drawLine $ {{tidalexpression}}
+~~~
+
+
+
+
 ## Pattern type
 
 ~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}

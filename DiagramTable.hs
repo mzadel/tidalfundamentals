@@ -133,6 +133,8 @@ basicsTable = [
     ,(Lin.diagramShowCharValue PE.revfunctionoutputExpr 3 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("everyfunction"
     ,(Lin.diagramShowCharValue PE.everyfunctionExpr 1 4 colourCharsFunc) # frame 0.05 # scale outputScaling)
+    ,("whenfunction"
+    ,(Lin.diagramShowCharValue PE.whenfunctionExpr 1 4 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
