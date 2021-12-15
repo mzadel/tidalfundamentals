@@ -71,8 +71,8 @@ cycleDirectionArrow = arro
 tickMarkLabelOffset :: Double
 tickMarkLabelOffset = 0.05
 
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramLabeledFromSValue tidalPattern numTicks colourFunc =
+diagram :: (T.Event a -> String) -> T.Pattern a -> Integer -> (T.Event a -> Int) -> Diagram B
+diagram formatLabel tidalPattern numTicks colourFunc =
         mconcat patterneventlabels
         <> mconcat patternevents
         <> cycleDirectionArrow
@@ -87,10 +87,7 @@ diagramLabeledFromSValue tidalPattern numTicks colourFunc =
         --
         tickLocList = init $ tickMarkLocations (1%numTicks) 1
         --
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e M.! "s"
-        --
-        labels = getLabel <$> events
+        labels = formatLabel <$> events
         colours = colourFunc <$> events
         starts = T.eventPartStart <$> events
         stops = T.eventPartStop <$> events
@@ -103,4 +100,10 @@ diagramLabeledFromSValue tidalPattern numTicks colourFunc =
         wedgeStyles = style Dark <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = style Light <$> colours
+
+diagramLabeledFromSValue :: T.ControlPattern -> Integer -> (T.Event T.ValueMap -> Int) -> Diagram B
+diagramLabeledFromSValue = diagram getLabel
+    where
+        getLabel :: T.Event T.ValueMap -> String
+        getLabel e = T.svalue $ T.eventValue e M.! "s"
 
