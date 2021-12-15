@@ -299,8 +299,6 @@ import Sound.Tidal.Context
 ~~~
 
 
-## Back to our regularly scheduled program
-
 `fast` speeds things up
 
 ~~~{.ghcisession #fastfunction tidalexpression='fast 3 $ fastFromList [\'a\', \'b\', \'c\']' .diagram .insertdiagram}
