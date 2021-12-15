@@ -391,6 +391,21 @@ import Sound.Tidal.Context
 drawLine $ {{tidalexpression}}
 ~~~
 
+The '`n` cycles' argument is actually of type `Pattern Int`, so you can vary
+the argument over time like this:
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+pat = fastFromList ['a', 'b', 'c']
+ints = slow 6 $ cat [2, 3]
+drawLine $ every ints rev pat
+~~~
+
+For the first six cycles the pattern is reversed every two repetitions; for the
+second six cycles the pattern is reversed every three.
+
+
 
 ## Pattern type
 
