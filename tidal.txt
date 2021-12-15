@@ -420,6 +420,27 @@ drawLine $ {{tidalexpression}}
 
 
 
+--------------------------------------------------
+
+`rotR` shifts a pattern forward in time by a certain number of cycles.
+
+~~~{.ghcisession #rotRexample tidalexpression='rotR (1%3) (fastFromList [\'a\', \'b\', \'c\'])' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+drawLine $ {{tidalexpression}}
+~~~
+
+You can use `rotR` and `fastGap` to manually put an event at a particular point
+in time with a particular duration.
+
+~~~{.ghcisession #rotRwithfastGap tidalexpression='rotR (3%8) (fastGap 4 (pure \'a\'))' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+
+
 
 ## Pattern type
 
