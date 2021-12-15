@@ -103,6 +103,8 @@ basicsTable = [
     ,(Lin.diagramShowValue PE.fromListExampleExpr 1 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("fastFromListExample"
     ,(Lin.diagramShowValue PE.fastFromListExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
+    ,("fastFromListExampleCircular"
+    ,(Cir.diagramShowValue PE.fastFromListExampleCircularExpr 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("fromMaybesExample"
     ,(Lin.diagramShowValue PE.fromMaybesExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("appendExample"

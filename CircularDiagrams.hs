@@ -1,5 +1,5 @@
 
-module CircularDiagrams (diagramLabeledFromSValue) where
+module CircularDiagrams (diagramLabeledFromSValue,diagramShowValue) where
 
 import Shared
 import Diagrams.Prelude
@@ -106,4 +106,7 @@ diagramLabeledFromSValue = diagram getLabel
     where
         getLabel :: T.Event T.ValueMap -> String
         getLabel e = T.svalue $ T.eventValue e M.! "s"
+
+diagramShowValue :: (Show a) => T.Pattern a -> Integer -> (T.Event a -> Int) -> Diagram B
+diagramShowValue = diagram (show . T.eventValue)
 

@@ -233,6 +233,11 @@ pat
 :t pat
 ~~~
 
+We can also draw the pattern on a circle to reflect its cyclical nature:
+
+~~~{#fastFromListExampleCircular tidalexpression='fastFromList ["phi", "psi" , "tau"]' .diagram .insertdiagram}
+~~~
+
 `listToPat` is a synonym from `fastFromList`.
 
 --------------------------------------------------
