@@ -106,7 +106,7 @@ basicsTable = [
     ,("fastFromListExampleCircular"
     ,(Cir.diagramShowValue PE.fastFromListExampleCircularExpr 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("fromMaybesExample"
-    ,(Lin.diagramShowValue PE.fromMaybesExampleExpr 3 2 colourStringsFunc) # frame 0.05 # scale outputScaling)
+    ,(Cir.diagramShowValue PE.fromMaybesExampleExpr 3 colourStringsFunc) # frame 0.05 # scale outputScaling)
     ,("appendExample"
     ,(Lin.diagramShowValue PE.appendExampleExpr 1 4 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("catExample"
