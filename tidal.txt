@@ -221,6 +221,9 @@ putStrLn $ showAll (Arc 0 3) pat
 :t pat
 ~~~
 
+`showAll` from `Show.hs` takes an `Arc` argument, so we can print the pattern
+over more than one cycle.
+
 --------------------------------------------------
 
 Use `fastFromList` (`Core.hs`) to make a pattern that squeezes each list item
