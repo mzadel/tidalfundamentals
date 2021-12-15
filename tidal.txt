@@ -317,6 +317,8 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+--------------------------------------------------
+
 `stack` superimposes a list of patterns.
 
 ~~~{.ghcisession #stackExample tidalexpression='stack [pure \'a\', fastFromList [\'j\', \'k\', \'l\'], fromList [\'m\', \'n\']]' .diagram .insertdiagram}
