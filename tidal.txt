@@ -644,7 +644,7 @@ import Sound.Tidal.Context
 parseBP_E "a e g"
 ~~~
 
-## Defining and showing patterns
+## Mini-Notation
 
 You can use the output as above, or `drawLine`:
 
