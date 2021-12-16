@@ -850,7 +850,7 @@ s $ {{tidalexpression}}
 drawLine $ {{tidalexpression}}
 ~~~
 
-### Digression: querying across cycle boundaries
+## Querying across cycle boundaries
 
 Interestingly, `slow` seems to query results on cycle boundaries:
 
