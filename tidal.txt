@@ -475,21 +475,6 @@ import Sound.Tidal.Context
 
 ## Pattern type
 
-~~~{.ghcisession #mnocycle tidalexpression='s $ parseBP_E "m n o"' .diagram}
-import Sound.Tidal.Context
---cut>>
-a = {{tidalexpression}}
-a
-:t a
-~~~
-
-m n o is arbitrary here.  There's a mini pattern language that's used in the string literal that's parsed by `parseBP_E`.
-
-"m n o" takes one bar (ie one cycle) and divides it into three, and each one is
-an event.
-
-![](mnocycle.svg)
-
 `Pattern` is defined in `Sound/Tidal/Pattern.hs`.
 
     -- | A datatype representing events taking place over time

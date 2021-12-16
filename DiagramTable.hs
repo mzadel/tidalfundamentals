@@ -25,9 +25,6 @@ colourFunc e = table ! (T.svalue $ T.eventValue e ! "s")
             ,("d", 7)
             ,("e", 3)
             ,("f", 4)
-            ,("m", 0)
-            ,("n", 2)
-            ,("o", 1)
             ,("bd", 0)]
 
 colourStringsFunc :: T.Event String -> Int
@@ -145,8 +142,7 @@ basicsTable = [
 
 patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
 patternTable = [
-    ("mnocycle", (PE.mnocycleExpr, 3))
-    ,("basicpattern", (T.s $ T.parseBP_E PE.basicpatternExpr, 3))
+    ("basicpattern", (T.s $ T.parseBP_E PE.basicpatternExpr, 3))
     ,("tildeisarest", (PE.tildeisarestExpr, 4))
     ,("underscoreelongates", (PE.underscoreelongatesExpr, 3))
     ,("atelongates", (PE.atelongatesExpr, 4))
