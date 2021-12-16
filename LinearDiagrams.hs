@@ -46,6 +46,9 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         ts = ZipList [0, deltat .. 1]
         deltat = 1 % 100
 
+arcGeometry :: Rational -> Rational -> Diagram B
+arcGeometry startLoc stopLoc = rect (fromRational $ stopLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
@@ -157,9 +160,9 @@ curveDiagramLabeledPoint pos labelText = (thedot <> label) # translate (scaledpo
 
 arcDiagram :: [T.Arc] -> Diagram B
 arcDiagram arcs =
-    mconcat arclabels <> mconcat arcgeometries
+    mconcat arclabels <> mconcat arcdrawings
     where
-        arcgeometries = getZipList $ boxgeometries
+        arcdrawings = getZipList $ arcgeometries
         arclabels = getZipList $ labelgeometries
         --
         getLabel :: T.Arc -> String
@@ -172,8 +175,8 @@ arcDiagram arcs =
         starts = T.start <$> ZipList arcs
         stops = T.stop <$> ZipList arcs
         --
-        boxgeometries :: ZipList (Diagram B)
-        boxgeometries = boxGeometry <$> starts <*> stops
+        arcgeometries :: ZipList (Diagram B)
+        arcgeometries = arcGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
 
