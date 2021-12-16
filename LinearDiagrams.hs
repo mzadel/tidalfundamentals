@@ -58,6 +58,12 @@ arcGeometry startLoc stopLoc = (strokeP leftedge <> strokeP rightedge <> thearro
             & arrowHead .~ dart & headLength .~ small
             & arrowTail .~ dart' & tailLength .~ small
 
+arcLabelGeometry :: String -> Rational -> Rational -> Diagram B
+arcLabelGeometry labelString arcStartLoc arcStopLoc = label
+    where
+        label = alignedText 0.5 0.5 labelString # fontSize eventLabelSize # moveTo labelCentre
+        labelCentre = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
+
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
@@ -187,5 +193,5 @@ arcDiagram arcs =
         arcgeometries :: ZipList (Diagram B)
         arcgeometries = arcGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
-        labelgeometries = labelGeometry <$> labels <*> starts
+        labelgeometries = arcLabelGeometry <$> labels <*> starts <*> stops
 
