@@ -47,7 +47,16 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         deltat = 1 % 100
 
 arcGeometry :: Rational -> Rational -> Diagram B
-arcGeometry startLoc stopLoc = rect (fromRational $ stopLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
+arcGeometry startLoc stopLoc = (strokeP leftedge <> strokeP rightedge <> thearrow) # alignL # moveTo ((fromRational startLoc) ^& 0)
+    where
+        ysize = eventWidth
+        xsize = fromRational $ stopLoc - startLoc
+        leftedge = vrule ysize
+        rightedge = vrule ysize # translateX xsize
+        thearrow = arrowV' arrowopts (xsize ^& 0) # translateY (-ysize * 0.35)
+        arrowopts = with
+            & arrowHead .~ dart & headLength .~ small
+            & arrowTail .~ dart' & tailLength .~ small
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
