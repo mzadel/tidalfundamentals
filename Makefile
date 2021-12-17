@@ -5,7 +5,7 @@ MK=/usr/bin/make
 -include Makefile.replsessions
 
 diagramexecutable=diagram
-modules=Shared LinearDiagrams PatternAlgebraDiagrams SignalDiagrams CircularDiagrams DiagramTable
+modules=Shared LinearDiagrams PatternAlgebraDiagrams SignalDiagrams QueryDiagrams CircularDiagrams DiagramTable
 
 document=tidal
 

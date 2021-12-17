@@ -1,10 +1,10 @@
 
-module LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
+module LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram,queryDiagram) where
 
 import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
+import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M ((!))
@@ -194,4 +194,39 @@ arcDiagram arcs =
         arcgeometries = arcGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = arcLabelGeometry <$> labels <*> starts <*> stops
+
+queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
+queryDiagram events colourFunc =
+    mconcat querylabels
+    <> mconcat partdrawings
+    <> mconcat wholedrawings
+    where
+        wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
+        partdrawings = getZipList $ partstyles <*> partboxgeometries
+        querylabels = getZipList $ labelstyles <*> labelgeometries
+        --
+        charToString :: Char -> String
+        charToString c = [c]
+        getLabel = charToString . T.eventValue
+        --
+        labels = getLabel <$> ZipList events
+        wholestarts = T.wholeStart <$> ZipList events
+        wholestops = T.wholeStop <$> ZipList events
+        partstarts = T.eventPartStart <$> ZipList events
+        partstops = T.eventPartStop <$> ZipList events
+        colours = colourFunc <$> ZipList events
+        --
+        wholeboxgeometries :: ZipList (Diagram B)
+        wholeboxgeometries = boxGeometry <$> wholestarts <*> wholestops
+        partboxgeometries :: ZipList (Diagram B)
+        partboxgeometries = boxGeometry <$> partstarts <*> partstops
+        labelgeometries :: ZipList (Diagram B)
+        labelgeometries = labelGeometry <$> labels <*> partstarts
+        --
+        wholestyles :: ZipList (Diagram B -> Diagram B)
+        wholestyles = (lc . d3Colors2 Dark) <$> colours
+        partstyles :: ZipList (Diagram B -> Diagram B)
+        partstyles = (pure $ lw none) <*> (fc . d3Colors2 Dark) <$> colours
+        labelstyles :: ZipList (Diagram B -> Diagram B)
+        labelstyles = (fc . d3Colors2 Light) <$> colours
 

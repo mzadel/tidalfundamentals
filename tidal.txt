@@ -475,6 +475,10 @@ import Sound.Tidal.Context
 ~~~
 
 
+## Queries
+
+~~~{#testQueryExample .diagram .insertdiagram}
+~~~
 
 
 ## Pattern type

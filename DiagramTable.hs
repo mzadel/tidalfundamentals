@@ -6,6 +6,7 @@ import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams as Lin
 import qualified SignalDiagrams as Sig
 import qualified PatternAlgebraDiagrams as PA
+import qualified QueryDiagrams as Q
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T
@@ -200,6 +201,11 @@ diagramTableSignals = [
     ,("sigToSetPanning", Sig.sigToSetPanning # frame 0.05 # scale outputScaling)
     ]
 
+diagramTableQueries :: [(String, Diagram B)]
+diagramTableQueries = [
+    ("testQueryExample", Q.example colourCharsFunc # frame 0.05 # scale outputScaling)
+    ]
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals
+diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals ++ diagramTableQueries
 
