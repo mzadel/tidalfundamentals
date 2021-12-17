@@ -64,6 +64,16 @@ arcLabelGeometry labelString arcStartLoc arcStopLoc = label
         label = alignedText 0.5 0.5 labelString # fontSize eventLabelSize # moveTo labelCentre
         labelCentre = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
 
+partDesignatorGeometry :: Rational -> Diagram B
+partDesignatorGeometry boxStartLoc = label
+    where
+        label = topLeftText "part" # fontSize designatorSize # moveTo labelPoint
+        labelPoint = (fromRational $ boxStartLoc + designatorInset) ^& designatorVerticalOffset
+        --
+        designatorSize = eventLabelSize * 0.75
+        designatorInset = eventLabelInset / 4
+        designatorVerticalOffset = -eventWidth / 2
+
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
@@ -199,12 +209,14 @@ arcDiagram arcs =
 queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagram events colourFunc =
     mconcat querylabels
+    <> mconcat partdesignators
     <> mconcat partdrawings
     <> mconcat wholedrawings
     where
         wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
         partdrawings = getZipList $ partstyles <*> partboxgeometries
         querylabels = getZipList $ labelstyles <*> labelgeometries
+        partdesignators = getZipList $ partdesignatorstyles <*> partdesignatorgeometries
         --
         getLabel = charToString . T.eventValue
         --
@@ -221,6 +233,8 @@ queryDiagram events colourFunc =
         partboxgeometries = boxGeometry <$> partstarts <*> partstops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> partstarts
+        partdesignatorgeometries :: ZipList (Diagram B)
+        partdesignatorgeometries = partDesignatorGeometry <$> partstarts
         --
         wholestyles :: ZipList (Diagram B -> Diagram B)
         wholestyles = (lc . d3Colors2 Dark) <$> colours
@@ -228,4 +242,6 @@ queryDiagram events colourFunc =
         partstyles = (pure $ lw none) <*> (fc . d3Colors2 Dark) <$> colours
         labelstyles :: ZipList (Diagram B -> Diagram B)
         labelstyles = (fc . d3Colors2 Light) <$> colours
+        partdesignatorstyles :: ZipList (Diagram B -> Diagram B)
+        partdesignatorstyles = (fc . d3Colors2 Light) <$> colours
 
