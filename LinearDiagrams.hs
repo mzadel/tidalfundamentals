@@ -235,7 +235,7 @@ arcDiagram arcs =
 
 queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagram events colourFunc =
-    mconcat querylabels
+    mconcat valuelabels
     <> mconcat wholedesignators
     <> mconcat partdesignators
     <> mconcat partdrawings
@@ -243,7 +243,7 @@ queryDiagram events colourFunc =
     where
         wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
         partdrawings = getZipList $ partstyles <*> partboxgeometries
-        querylabels = getZipList $ labelstyles <*> labelgeometries
+        valuelabels = getZipList $ labelstyles <*> labelgeometries
         wholedesignators = getZipList $ wholedesignatorstyles <*> wholedesignatorgeometries
         partdesignators = getZipList $ partdesignatorstyles <*> partdesignatorgeometries
         --
