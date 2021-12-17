@@ -109,11 +109,12 @@ diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagra
     where
         laneFunc _ = 0
 
+charToString :: Char -> String
+charToString c = [c]
+
 diagramShowCharValue :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> Diagram B
 diagramShowCharValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanes showFunction tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
-        charToString :: Char -> String
-        charToString c = [c]
         showFunction = charToString . T.eventValue
         laneFunc _ = 0
 
@@ -205,8 +206,6 @@ queryDiagram events colourFunc =
         partdrawings = getZipList $ partstyles <*> partboxgeometries
         querylabels = getZipList $ labelstyles <*> labelgeometries
         --
-        charToString :: Char -> String
-        charToString c = [c]
         getLabel = charToString . T.eventValue
         --
         labels = getLabel <$> ZipList events
