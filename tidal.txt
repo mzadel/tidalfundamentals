@@ -477,7 +477,10 @@ import Sound.Tidal.Context
 
 ## Queries
 
-~~~{#testQueryExample .diagram .insertdiagram}
+~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
 ~~~
 
 

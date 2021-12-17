@@ -66,6 +66,12 @@ function handleDiagramBlock(block)
         tidalexpression = string.gsub(tidalexpression, "s $ ", "s $ parseBP_E ", nil, true)
     end
 
+    if shared.arrayContains(block.classes,"queryexample") then
+        local pat, arc = string.match(tidalexpression, "queryArc %((.+)%) %((Arc [%d%.]+ [%d%.]+)%)")
+        exp[block.identifier .. "Pattern"] = pat
+        exp[block.identifier .. "Arc"] = arc .. " :: Arc"
+    end
+
     if tidalexpression ~= nil then
         exp[block.identifier] = tidalexpression
     end
