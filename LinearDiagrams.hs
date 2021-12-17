@@ -64,15 +64,42 @@ arcLabelGeometry labelString arcStartLoc arcStopLoc = label
         label = alignedText 0.5 0.5 labelString # fontSize eventLabelSize # moveTo labelCentre
         labelCentre = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
 
+designatorSize :: Measure Double
+designatorSize = eventLabelSize * 0.75
+
+designatorInset :: Rational
+designatorInset = eventLabelInset / 4
+
+designatorVerticalOffset :: Double
+designatorVerticalOffset = -eventWidth / 2
+
 partDesignatorGeometry :: Rational -> Diagram B
 partDesignatorGeometry boxStartLoc = label
     where
         label = topLeftText "part" # fontSize designatorSize # moveTo labelPoint
         labelPoint = (fromRational $ boxStartLoc + designatorInset) ^& designatorVerticalOffset
-        --
-        designatorSize = eventLabelSize * 0.75
-        designatorInset = eventLabelInset / 4
-        designatorVerticalOffset = -eventWidth / 2
+
+wholeDesignatorGeometryAtLeft :: Rational -> Diagram B
+wholeDesignatorGeometryAtLeft boxStartLoc = label
+    where
+        label = topLeftText "whole" # fontSize designatorSize # moveTo labelPoint
+        labelPoint = (fromRational $ boxStartLoc + designatorInset) ^& designatorVerticalOffset
+
+wholeDesignatorGeometryAtRight :: Rational -> Diagram B
+wholeDesignatorGeometryAtRight boxEndLoc = label
+    where
+        label = alignedText 1 1 "whole" # fontSize designatorSize # moveTo labelPoint
+        labelPoint = (fromRational $ boxEndLoc - designatorInset) ^& designatorVerticalOffset
+
+wholeDesignatorGeometry :: T.Event Char -> Diagram B
+wholeDesignatorGeometry (T.Event _ Nothing _ _) = mempty
+wholeDesignatorGeometry (T.Event _ (Just thewhole) thepart _) = designatorgeometry
+    where
+        designatorgeometry
+            | (T.start thewhole < T.start thepart) = wholeDesignatorGeometryAtLeft (T.start thewhole)
+            | (T.stop thepart < T.stop thewhole) = wholeDesignatorGeometryAtRight (T.stop thewhole)
+            -- otherwise thewhole == thepart
+            | otherwise = wholeDesignatorGeometryAtRight (T.stop thewhole)
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
@@ -209,6 +236,7 @@ arcDiagram arcs =
 queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagram events colourFunc =
     mconcat querylabels
+    <> mconcat wholedesignators
     <> mconcat partdesignators
     <> mconcat partdrawings
     <> mconcat wholedrawings
@@ -216,6 +244,7 @@ queryDiagram events colourFunc =
         wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
         partdrawings = getZipList $ partstyles <*> partboxgeometries
         querylabels = getZipList $ labelstyles <*> labelgeometries
+        wholedesignators = getZipList $ wholedesignatorstyles <*> wholedesignatorgeometries
         partdesignators = getZipList $ partdesignatorstyles <*> partdesignatorgeometries
         --
         getLabel = charToString . T.eventValue
@@ -233,6 +262,8 @@ queryDiagram events colourFunc =
         partboxgeometries = boxGeometry <$> partstarts <*> partstops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> partstarts
+        wholedesignatorgeometries :: ZipList (Diagram B)
+        wholedesignatorgeometries = wholeDesignatorGeometry <$> ZipList events
         partdesignatorgeometries :: ZipList (Diagram B)
         partdesignatorgeometries = partDesignatorGeometry <$> partstarts
         --
@@ -242,6 +273,8 @@ queryDiagram events colourFunc =
         partstyles = (pure $ lw none) <*> (fc . d3Colors2 Dark) <$> colours
         labelstyles :: ZipList (Diagram B -> Diagram B)
         labelstyles = (fc . d3Colors2 Light) <$> colours
+        wholedesignatorstyles :: ZipList (Diagram B -> Diagram B)
+        wholedesignatorstyles = (fc . d3Colors2 Light) <$> colours
         partdesignatorstyles :: ZipList (Diagram B -> Diagram B)
         partdesignatorstyles = (fc . d3Colors2 Light) <$> colours
 
