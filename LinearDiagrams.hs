@@ -64,8 +64,13 @@ arcGeometry startLoc stopLoc
 arcLabelGeometry :: String -> Rational -> Rational -> Diagram B
 arcLabelGeometry labelString arcStartLoc arcStopLoc = label
     where
-        label = alignedText 0.5 0.5 labelString # fontSize eventLabelSize # moveTo labelCentre
-        labelCentre = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
+        label = alignedText xalignment 0.5 labelString # fontSize eventLabelSize # moveTo labelPos
+        labelPos = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
+        xalignment
+            -- centre text in the typical case
+            | arcStartLoc /= arcStopLoc = 0.5
+            -- left-align text in the degenerate case (arcStartLoc == arcStopLoc)
+            | otherwise = 0.0
 
 designatorSize :: Measure Double
 designatorSize = eventLabelSize * 0.75
