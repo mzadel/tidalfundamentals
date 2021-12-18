@@ -2,7 +2,7 @@
 module QueryDiagrams (example) where
 
 import Shared (linearDiagramVerticalPadding)
-import qualified LinearDiagrams as Lin (diagramShowCharValue,arcDiagram,queryDiagram)
+import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue,arcDiagram,queryDiagram)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T

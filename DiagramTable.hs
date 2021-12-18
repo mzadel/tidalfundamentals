@@ -3,7 +3,7 @@ module DiagramTable (diagramListForMainWith) where
 
 import qualified PatternExpressions as PE
 import qualified CircularDiagrams as Cir
-import qualified LinearDiagrams as Lin
+import qualified LinearDiagrams.LinearDiagrams as Lin
 import qualified SignalDiagrams as Sig
 import qualified PatternAlgebraDiagrams as PA
 import qualified QueryDiagrams as Q

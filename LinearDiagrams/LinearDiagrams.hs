@@ -1,5 +1,5 @@
 
-module LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram,queryDiagram) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram,queryDiagram) where
 
 import Shared
 import Diagrams.Prelude

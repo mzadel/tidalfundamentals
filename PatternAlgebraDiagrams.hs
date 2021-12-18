@@ -5,7 +5,7 @@ import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified PatternExpressions as PE
-import qualified LinearDiagrams as Lin
+import qualified LinearDiagrams.LinearDiagrams as Lin
 import qualified Sound.Tidal.Context as T
 
 patternAlgebraDiagram :: T.Pattern Double -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
