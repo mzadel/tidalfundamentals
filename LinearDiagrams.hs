@@ -113,27 +113,36 @@ queryResultPartDrawing colourFunc e
                         label = alignedText 0.5 1 "zero-width part" # fontSize designatorSize
                         labelPoint = (fromRational $ (T.eventPartStart e)) ^& designatorVerticalOffset
 
-wholeDesignatorGeometryAtLeft :: Rational -> Diagram B
-wholeDesignatorGeometryAtLeft boxStartLoc = label
+queryResultWholeDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
+queryResultWholeDrawing _ (T.Event _ Nothing _ _) = mempty
+queryResultWholeDrawing colourFunc e@(T.Event _ (Just thewhole) thepart _) = boxdrawing <> designatordrawing
     where
-        label = topLeftText "whole" # fontSize designatorSize # moveTo labelPoint
-        labelPoint = (fromRational $ boxStartLoc + designatorInset) ^& designatorVerticalOffset
-
-wholeDesignatorGeometryAtRight :: Rational -> Diagram B
-wholeDesignatorGeometryAtRight boxEndLoc = label
-    where
-        label = alignedText 1 1 "whole" # fontSize designatorSize # moveTo labelPoint
-        labelPoint = (fromRational $ boxEndLoc - designatorInset) ^& designatorVerticalOffset
-
-wholeDesignatorGeometry :: T.Event Char -> Diagram B
-wholeDesignatorGeometry (T.Event _ Nothing _ _) = mempty
-wholeDesignatorGeometry (T.Event _ (Just thewhole) thepart _) = designatorgeometry
-    where
+        colourindex = colourFunc e
+        --
+        boxdrawing :: Diagram B
+        boxdrawing = boxGeometry (T.start thewhole) (T.stop thewhole) # lc (d3Colors2 Dark colourindex)
+        --
+        designatordrawing :: Diagram B
+        designatordrawing = designatorgeometry # fc (d3Colors2 Light colourindex)
+        --
+        designatorgeometry :: Diagram B
         designatorgeometry
-            | (T.start thewhole < T.start thepart) = wholeDesignatorGeometryAtLeft (T.start thewhole)
-            | (T.stop thepart < T.stop thewhole) = wholeDesignatorGeometryAtRight (T.stop thewhole)
+            | (T.start thewhole < T.start thepart) = wholeDesignatorGeometryAtLeft
+            | (T.stop thepart < T.stop thewhole) = wholeDesignatorGeometryAtRight
             -- otherwise thewhole == thepart
-            | otherwise = wholeDesignatorGeometryAtRight (T.stop thewhole)
+            | otherwise = wholeDesignatorGeometryAtRight
+        --
+        wholeDesignatorGeometryAtLeft :: Diagram B
+        wholeDesignatorGeometryAtLeft = label # moveTo labelPoint
+            where
+                label = topLeftText "whole" # fontSize designatorSize
+                labelPoint = (fromRational $ (T.wholeStart e) + designatorInset) ^& designatorVerticalOffset
+        --
+        wholeDesignatorGeometryAtRight :: Diagram B
+        wholeDesignatorGeometryAtRight = label # moveTo labelPoint
+            where
+                label = alignedText 1 1 "whole" # fontSize designatorSize
+                labelPoint = (fromRational $ (T.wholeStop e) - designatorInset) ^& designatorVerticalOffset
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
@@ -270,34 +279,22 @@ arcDiagram arcs =
 queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagram events colourFunc =
     mconcat valuelabels
-    <> mconcat wholedesignators
     <> mconcat partdrawings
     <> mconcat wholedrawings
     where
-        wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
+        wholedrawings = getZipList $ (queryResultWholeDrawing colourFunc) <$> (ZipList events)
         partdrawings = getZipList $ (queryResultPartDrawing colourFunc) <$> (ZipList events)
         valuelabels = getZipList $ labelstyles <*> labelgeometries
-        wholedesignators = getZipList $ wholedesignatorstyles <*> wholedesignatorgeometries
         --
         getLabel = charToString . T.eventValue
         --
         labels = getLabel <$> ZipList events
-        wholestarts = T.wholeStart <$> ZipList events
-        wholestops = T.wholeStop <$> ZipList events
         partstarts = T.eventPartStart <$> ZipList events
         colours = colourFunc <$> ZipList events
         --
-        wholeboxgeometries :: ZipList (Diagram B)
-        wholeboxgeometries = boxGeometry <$> wholestarts <*> wholestops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> partstarts
-        wholedesignatorgeometries :: ZipList (Diagram B)
-        wholedesignatorgeometries = wholeDesignatorGeometry <$> ZipList events
         --
-        wholestyles :: ZipList (Diagram B -> Diagram B)
-        wholestyles = (lc . d3Colors2 Dark) <$> colours
         labelstyles :: ZipList (Diagram B -> Diagram B)
         labelstyles = (fc . d3Colors2 Light) <$> colours
-        wholedesignatorstyles :: ZipList (Diagram B -> Diagram B)
-        wholedesignatorstyles = (fc . d3Colors2 Light) <$> colours
 
