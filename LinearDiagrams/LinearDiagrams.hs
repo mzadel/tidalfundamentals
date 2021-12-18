@@ -1,11 +1,11 @@
 
-module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram,queryDiagram) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram) where
 
 import Shared
 import LinearDiagrams.Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
+import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M ((!))
@@ -63,78 +63,6 @@ arcLabelGeometry labelString arcStartLoc arcStopLoc = label
             | arcStartLoc /= arcStopLoc = 0.5
             -- left-align text in the degenerate case (arcStartLoc == arcStopLoc)
             | otherwise = 0.0
-
-designatorSize :: Measure Double
-designatorSize = eventLabelSize * 0.75
-
-designatorInset :: Rational
-designatorInset = eventLabelInset / 4
-
-designatorVerticalOffset :: Double
-designatorVerticalOffset = -eventWidth / 2
-
-queryResultPartDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
-queryResultPartDrawing colourFunc e
-    | not iszerowidth = queryResultPartDrawingNormal
-    | otherwise = queryResultPartDrawingZW
-    where
-        iszerowidth = T.eventPartStart e == T.eventPartStop e
-        colourindex = colourFunc e
-        --
-        queryResultPartDrawingNormal :: Diagram B
-        queryResultPartDrawingNormal = boxdrawing <> designatordrawing
-            where
-                boxdrawing :: Diagram B
-                boxdrawing = boxGeometry (T.eventPartStart e) (T.eventPartStop e) # lw none # fc (d3Colors2 Dark colourindex)
-                --
-                designatordrawing :: Diagram B
-                designatordrawing = label # moveTo labelPoint # fc (d3Colors2 Light colourindex)
-                    where
-                        label = topLeftText "part" # fontSize designatorSize
-                        labelPoint = (fromRational $ (T.eventPartStart e) + designatorInset) ^& designatorVerticalOffset
-        --
-        queryResultPartDrawingZW :: Diagram B
-        queryResultPartDrawingZW  = boxdrawing <> designatordrawing
-            where
-                boxdrawing :: Diagram B
-                boxdrawing = boxGeometry (T.eventPartStart e) (T.eventPartStop e) # lc (d3Colors2 Dark colourindex)
-                --
-                designatordrawing :: Diagram B
-                designatordrawing = label # moveTo labelPoint # fc (d3Colors2 Light colourindex)
-                    where
-                        label = alignedText 0.5 1 "zero-width part" # fontSize designatorSize
-                        labelPoint = (fromRational $ (T.eventPartStart e)) ^& designatorVerticalOffset
-
-queryResultWholeDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
-queryResultWholeDrawing _ (T.Event _ Nothing _ _) = mempty
-queryResultWholeDrawing colourFunc e@(T.Event _ (Just thewhole) thepart _) = boxdrawing <> designatordrawing
-    where
-        colourindex = colourFunc e
-        --
-        boxdrawing :: Diagram B
-        boxdrawing = boxGeometry (T.start thewhole) (T.stop thewhole) # lc (d3Colors2 Dark colourindex)
-        --
-        designatordrawing :: Diagram B
-        designatordrawing = designatorgeometry # fc (d3Colors2 Light colourindex)
-        --
-        designatorgeometry :: Diagram B
-        designatorgeometry
-            | (T.start thewhole < T.start thepart) = wholeDesignatorGeometryAtLeft
-            | (T.stop thepart < T.stop thewhole) = wholeDesignatorGeometryAtRight
-            -- otherwise thewhole == thepart
-            | otherwise = wholeDesignatorGeometryAtRight
-        --
-        wholeDesignatorGeometryAtLeft :: Diagram B
-        wholeDesignatorGeometryAtLeft = label # moveTo labelPoint
-            where
-                label = topLeftText "whole" # fontSize designatorSize
-                labelPoint = (fromRational $ (T.wholeStart e) + designatorInset) ^& designatorVerticalOffset
-        --
-        wholeDesignatorGeometryAtRight :: Diagram B
-        wholeDesignatorGeometryAtRight = label # moveTo labelPoint
-            where
-                label = alignedText 1 1 "whole" # fontSize designatorSize
-                labelPoint = (fromRational $ (T.wholeStop e) - designatorInset) ^& designatorVerticalOffset
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
@@ -264,26 +192,4 @@ arcDiagram arcs =
         arcgeometries = arcGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = arcLabelGeometry <$> labels <*> starts <*> stops
-
-queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
-queryDiagram events colourFunc =
-    mconcat valuelabels
-    <> mconcat partdrawings
-    <> mconcat wholedrawings
-    where
-        wholedrawings = getZipList $ (queryResultWholeDrawing colourFunc) <$> (ZipList events)
-        partdrawings = getZipList $ (queryResultPartDrawing colourFunc) <$> (ZipList events)
-        valuelabels = getZipList $ labelstyles <*> labelgeometries
-        --
-        getLabel = charToString . T.eventValue
-        --
-        labels = getLabel <$> ZipList events
-        partstarts = T.eventPartStart <$> ZipList events
-        colours = colourFunc <$> ZipList events
-        --
-        labelgeometries :: ZipList (Diagram B)
-        labelgeometries = labelGeometry <$> labels <*> partstarts
-        --
-        labelstyles :: ZipList (Diagram B -> Diagram B)
-        labelstyles = (fc . d3Colors2 Light) <$> colours
 

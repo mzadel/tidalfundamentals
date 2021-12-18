@@ -2,7 +2,8 @@
 module QueryDiagrams (example) where
 
 import Shared (linearDiagramVerticalPadding)
-import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue,arcDiagram,queryDiagram)
+import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue,arcDiagram)
+import qualified LinearDiagrams.Query as Q (queryDiagram)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T
@@ -12,6 +13,6 @@ example pat arctoquery colourCharsFunc =
     vsep linearDiagramVerticalPadding [
         Lin.diagramShowCharValue pat 1 1 colourCharsFunc
         ,Lin.arcDiagram [arctoquery]
-        ,Lin.queryDiagram (T.queryArc pat arctoquery) colourCharsFunc
+        ,Q.queryDiagram (T.queryArc pat arctoquery) colourCharsFunc
         ]
 
