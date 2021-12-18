@@ -483,6 +483,13 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+~~~{.ghcisession #testQueryZW .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.25)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+
 
 ## Pattern type
 

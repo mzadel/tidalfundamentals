@@ -204,6 +204,7 @@ diagramTableSignals = [
 diagramTableQueries :: [(String, Diagram B)]
 diagramTableQueries = [
     ("testQueryExample", Q.example PE.testQueryExamplePatternExpr PE.testQueryExampleArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("testQueryZW", Q.example PE.testQueryZWPatternExpr PE.testQueryZWArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

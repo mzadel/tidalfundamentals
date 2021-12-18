@@ -47,16 +47,19 @@ curveGeometry ctspattern = fromVertices (getZipList curvepoints)
         deltat = 1 % 100
 
 arcGeometry :: Rational -> Rational -> Diagram B
-arcGeometry startLoc stopLoc = (strokeP leftedge <> strokeP rightedge <> thearrow) # alignL # moveTo ((fromRational startLoc) ^& 0)
-    where
-        ysize = eventWidth
-        xsize = fromRational $ stopLoc - startLoc
-        leftedge = vrule ysize
-        rightedge = vrule ysize # translateX xsize
-        thearrow = arrowV' arrowopts (xsize ^& 0) # translateY (-ysize * 0.35)
-        arrowopts = with
-            & arrowHead .~ dart & headLength .~ small
-            & arrowTail .~ dart' & tailLength .~ small
+arcGeometry startLoc stopLoc
+    | startLoc /= stopLoc = (strokeP leftedge <> strokeP rightedge <> thearrow) # alignL # moveTo ((fromRational startLoc) ^& 0)
+    -- otherwise startLoc == stopLoc
+    | otherwise = strokeP leftedge # moveTo ((fromRational startLoc) ^& 0)
+        where
+            ysize = eventWidth
+            xsize = fromRational $ stopLoc - startLoc
+            leftedge = vrule ysize
+            rightedge = vrule ysize # translateX xsize
+            thearrow = arrowV' arrowopts (xsize ^& 0) # translateY (-ysize * 0.35)
+            arrowopts = with
+                & arrowHead .~ dart & headLength .~ small
+                & arrowTail .~ dart' & tailLength .~ small
 
 arcLabelGeometry :: String -> Rational -> Rational -> Diagram B
 arcLabelGeometry labelString arcStartLoc arcStopLoc = label
