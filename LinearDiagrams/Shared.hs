@@ -1,9 +1,23 @@
 
-module LinearDiagrams.Shared (boxGeometry,labelGeometry,charToString) where
+module LinearDiagrams.Shared (tickMark,tickMarkLabel,boxGeometry,labelGeometry,charToString) where
 
 import Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
+
+tickMark :: Rational -> Diagram B
+tickMark tickLoc = mark
+    where
+        tickMarkSize = 0.016
+        point = p2 (fromRational tickLoc, 0)
+        mark = vrule tickMarkSize # moveTo point
+
+tickMarkLabel :: Rational -> Diagram B
+tickMarkLabel tickLoc = label
+    where
+        labelPoint = p2 (fromRational tickLoc, 0)
+        labelText = ratioToString tickLoc
+        label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
 
 boxGeometry :: Rational -> Rational -> Diagram B
 boxGeometry startLoc stopLoc = rect (fromRational $ stopLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)

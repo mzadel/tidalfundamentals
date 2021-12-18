@@ -7,13 +7,14 @@ import Diagrams.Backend.SVG.CmdLine
 import qualified PatternExpressions as PE
 import qualified LinearDiagrams.LinearDiagrams as Lin
 import qualified LinearDiagrams.Arc as A
+import qualified LinearDiagrams.Curve as C
 import qualified Sound.Tidal.Context as T
 
 sigEvaluatesAtMiddle :: Diagram B
 sigEvaluatesAtMiddle =
     vsep linearDiagramVerticalPadding [
-        (Lin.curveDiagramLabeledPoint thelocation labeltext
-        <> Lin.curveDiagram PE.sigEvaluatesAtMiddleFunctionExpr 10)
+        (C.curveDiagramLabeledPoint thelocation labeltext
+        <> C.curveDiagram PE.sigEvaluatesAtMiddleFunctionExpr 10)
         ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
     where
@@ -26,7 +27,7 @@ sigEvaluatesAtMiddle =
         labeltext = show valueatlocation
 
 curvePointFromArc :: T.Pattern Double -> T.Arc -> Diagram B
-curvePointFromArc pat thearc = Lin.curveDiagramLabeledPoint pt (showDoubleTruncated yval)
+curvePointFromArc pat thearc = C.curveDiagramLabeledPoint pt (showDoubleTruncated yval)
     where
         arcmidpoint :: T.Arc -> T.Time
         arcmidpoint (T.Arc arcstart arcstop) = (arcstop + arcstart) / 2
@@ -38,7 +39,7 @@ sigToSetPanning :: Diagram B
 sigToSetPanning =
     vsep linearDiagramVerticalPadding [
         (mconcat labeledpoints
-        <> Lin.curveDiagram PE.sigToSetPanningFunctionExpr 1)
+        <> C.curveDiagram PE.sigToSetPanningFunctionExpr 1)
         ,strut (unitY * 0.01)
         ,lineOfText PE.sigToSetPanningSegmentedCurveStringExpr
         ,Lin.diagramFromWholes showDoubleTruncated PE.sigToSetPanningSegmentedCurveExpr 1

@@ -1,5 +1,5 @@
 
-module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -10,33 +10,6 @@ import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M ((!))
 import Control.Applicative (ZipList(ZipList,getZipList))
-
-tickMark :: Rational -> Diagram B
-tickMark tickLoc = mark
-    where
-        tickMarkSize = 0.016
-        point = p2 (fromRational tickLoc, 0)
-        mark = vrule tickMarkSize # moveTo point
-
-tickMarkLabel :: Rational -> Diagram B
-tickMarkLabel tickLoc = label
-    where
-        labelPoint = p2 (fromRational tickLoc, 0)
-        labelText = ratioToString tickLoc
-        label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
-
-curveGeometry :: T.Pattern Double -> Diagram B
-curveGeometry ctspattern = fromVertices (getZipList curvepoints)
-    where
-        curvepoints :: ZipList (P2 Double)
-        curvepoints = (^&) <$> xs <*> ys
-        xs :: ZipList Double
-        xs = fromRational <$> ts
-        ys :: ZipList Double
-        ys = (curveValueAtTime ctspattern) <$> ts
-        ts :: ZipList T.Time
-        ts = ZipList [0, deltat .. 1]
-        deltat = 1 % 100
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
 diagramShowValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesShowValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
@@ -119,29 +92,4 @@ diagramFromWholes formatLabel tidalPattern queryEnd =
         boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
-
-curveDiagramHeight :: Double
-curveDiagramHeight = 0.2
-
-curveDiagramTickMarkOffset :: Double
-curveDiagramTickMarkOffset = fromRational (-eventLabelInset)
-
-curveDiagram :: T.Pattern Double -> Integer -> Diagram B
-curveDiagram ctsPattern ticksPerCycle =
-    curveandaxes # scaleY curveDiagramHeight
-    <> mconcat (map tickMark tickLocList)
-    <> mconcat (map tickMarkLabel tickLocList) # translateY curveDiagramTickMarkOffset
-    where
-        curveandaxes =
-            fromOffsets [unitY]
-            <> fromOffsets [unitX]
-            <> curveGeometry ctsPattern
-        tickLocList = tickMarkLocations (1%ticksPerCycle) 1
-
-curveDiagramLabeledPoint :: P2 Double -> String -> Diagram B
-curveDiagramLabeledPoint pos labelText = (thedot <> label) # translate (scaledpos .-. origin)
-    where
-        scaledpos = pos # scaleY curveDiagramHeight
-        thedot = circle 0.0075 # fc red # lw none
-        label = alignedText 0 0.5 labelText # fontSize eventLabelSize # translateX (fromRational eventLabelInset)
 
