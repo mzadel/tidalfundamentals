@@ -2,7 +2,8 @@
 module QueryDiagrams (example) where
 
 import Shared (linearDiagramVerticalPadding)
-import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue,arcDiagram)
+import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue)
+import qualified LinearDiagrams.Arc as Lin (arcDiagram)
 import qualified LinearDiagrams.Query as Q (queryDiagram)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine

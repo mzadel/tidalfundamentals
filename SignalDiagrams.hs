@@ -6,6 +6,7 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified PatternExpressions as PE
 import qualified LinearDiagrams.LinearDiagrams as Lin
+import qualified LinearDiagrams.Arc as A
 import qualified Sound.Tidal.Context as T
 
 sigEvaluatesAtMiddle :: Diagram B
@@ -13,7 +14,7 @@ sigEvaluatesAtMiddle =
     vsep linearDiagramVerticalPadding [
         (Lin.curveDiagramLabeledPoint thelocation labeltext
         <> Lin.curveDiagram PE.sigEvaluatesAtMiddleFunctionExpr 10)
-        ,Lin.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
+        ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
     where
         T.Arc arcstart arcstop = PE.sigEvaluatesAtMiddleArcExpr
