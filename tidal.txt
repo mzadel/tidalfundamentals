@@ -477,6 +477,12 @@ import Sound.Tidal.Context
 
 ## Queries
 
+Patterns can be queried over a time range, returning a list of events.  The
+scheduler does this repeatedly over small time slices to decide when to send
+OSC ([Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control))
+messages to SuperCollider.  We can use this to check how our pattern will be
+rendered.
+
 ~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
