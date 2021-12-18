@@ -2,6 +2,7 @@
 module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes,curveDiagram,curveDiagramLabeledPoint,arcDiagram,queryDiagram) where
 
 import Shared
+import LinearDiagrams.Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
@@ -23,15 +24,6 @@ tickMarkLabel tickLoc = label
         labelPoint = p2 (fromRational tickLoc, 0)
         labelText = ratioToString tickLoc
         label = text labelText # fontSize tickMarkLabelSize # alignB # moveTo labelPoint
-
-boxGeometry :: Rational -> Rational -> Diagram B
-boxGeometry startLoc stopLoc = rect (fromRational $ stopLoc-startLoc) eventWidth # alignL # moveTo ((fromRational $ startLoc) ^& 0)
-
-labelGeometry :: String -> Rational -> Diagram B
-labelGeometry labelString boxStartLoc = label
-    where
-        label = alignedText 0 0.5 labelString # fontSize eventLabelSize # moveTo labelPoint
-        labelPoint = (fromRational (boxStartLoc + eventLabelInset)) ^& 0
 
 curveGeometry :: T.Pattern Double -> Diagram B
 curveGeometry ctspattern = fromVertices (getZipList curvepoints)
@@ -188,9 +180,6 @@ diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event 
 diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
         laneFunc _ = 0
-
-charToString :: Char -> String
-charToString c = [c]
 
 diagramShowCharValue :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> Diagram B
 diagramShowCharValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanes showFunction tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
