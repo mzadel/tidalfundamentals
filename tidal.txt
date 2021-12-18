@@ -483,6 +483,22 @@ OSC ([Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control))
 messages to SuperCollider.  We can use this to check how our pattern will be
 rendered.
 
+Each `Pattern` implements `query`:
+
+    data Pattern a = Pattern {query :: State -> [Event a]}
+
+    data State = State {arc :: Arc,
+                        controls :: ValueMap
+                       }
+
+You pass in a `State`, but for our purposes we'll always leave `controls` empty.
+(I understand it to be the current values of any external MIDI controllers,
+which we don't need.)  That means `query` essentially goes from an `Arc` of
+time to a list of `Event`s; that's exactly what `queryArc` does:
+
+    queryArc :: Pattern a -> Arc -> [Event a]
+    queryArc p a = query p $ State a Map.empty
+
 --------------------------------------------------
 
 ~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
