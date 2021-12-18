@@ -110,8 +110,8 @@ queryResultPartDrawing colourFunc e
                 designatordrawing :: Diagram B
                 designatordrawing = label # moveTo labelPoint # fc (d3Colors2 Light colourindex)
                     where
-                        label = topLeftText "part" # fontSize designatorSize
-                        labelPoint = (fromRational $ (T.eventPartStart e) + designatorInset) ^& designatorVerticalOffset
+                        label = alignedText 0.5 1 "zero-width part" # fontSize designatorSize
+                        labelPoint = (fromRational $ (T.eventPartStart e)) ^& designatorVerticalOffset
 
 wholeDesignatorGeometryAtLeft :: Rational -> Diagram B
 wholeDesignatorGeometryAtLeft boxStartLoc = label
