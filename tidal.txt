@@ -483,11 +483,15 @@ OSC ([Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control))
 messages to SuperCollider.  We can use this to check how our pattern will be
 rendered.
 
+--------------------------------------------------
+
 ~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
 ~~~
+
+--------------------------------------------------
 
 ~~~{.ghcisession #testQueryZW .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.25)' .diagram .insertdiagram}
 import Sound.Tidal.Context
