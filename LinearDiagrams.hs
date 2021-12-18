@@ -81,11 +81,37 @@ designatorInset = eventLabelInset / 4
 designatorVerticalOffset :: Double
 designatorVerticalOffset = -eventWidth / 2
 
-partDesignatorGeometry :: Rational -> Diagram B
-partDesignatorGeometry boxStartLoc = label
+queryResultPartDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
+queryResultPartDrawing colourFunc e
+    | not iszerowidth = queryResultPartDrawingNormal
+    | otherwise = queryResultPartDrawingZW
     where
-        label = topLeftText "part" # fontSize designatorSize # moveTo labelPoint
-        labelPoint = (fromRational $ boxStartLoc + designatorInset) ^& designatorVerticalOffset
+        iszerowidth = T.eventPartStart e == T.eventPartStop e
+        colourindex = colourFunc e
+        --
+        queryResultPartDrawingNormal :: Diagram B
+        queryResultPartDrawingNormal = boxdrawing <> designatordrawing
+            where
+                boxdrawing :: Diagram B
+                boxdrawing = boxGeometry (T.eventPartStart e) (T.eventPartStop e) # lw none # fc (d3Colors2 Dark colourindex)
+                --
+                designatordrawing :: Diagram B
+                designatordrawing = label # moveTo labelPoint # fc (d3Colors2 Light colourindex)
+                    where
+                        label = topLeftText "part" # fontSize designatorSize
+                        labelPoint = (fromRational $ (T.eventPartStart e) + designatorInset) ^& designatorVerticalOffset
+        --
+        queryResultPartDrawingZW :: Diagram B
+        queryResultPartDrawingZW  = boxdrawing <> designatordrawing
+            where
+                boxdrawing :: Diagram B
+                boxdrawing = boxGeometry (T.eventPartStart e) (T.eventPartStop e) # lc (d3Colors2 Dark colourindex)
+                --
+                designatordrawing :: Diagram B
+                designatordrawing = label # moveTo labelPoint # fc (d3Colors2 Light colourindex)
+                    where
+                        label = topLeftText "part" # fontSize designatorSize
+                        labelPoint = (fromRational $ (T.eventPartStart e) + designatorInset) ^& designatorVerticalOffset
 
 wholeDesignatorGeometryAtLeft :: Rational -> Diagram B
 wholeDesignatorGeometryAtLeft boxStartLoc = label
@@ -245,15 +271,13 @@ queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagram events colourFunc =
     mconcat valuelabels
     <> mconcat wholedesignators
-    <> mconcat partdesignators
     <> mconcat partdrawings
     <> mconcat wholedrawings
     where
         wholedrawings = getZipList $ wholestyles <*> wholeboxgeometries
-        partdrawings = getZipList $ partstyles <*> partboxgeometries
+        partdrawings = getZipList $ (queryResultPartDrawing colourFunc) <$> (ZipList events)
         valuelabels = getZipList $ labelstyles <*> labelgeometries
         wholedesignators = getZipList $ wholedesignatorstyles <*> wholedesignatorgeometries
-        partdesignators = getZipList $ partdesignatorstyles <*> partdesignatorgeometries
         --
         getLabel = charToString . T.eventValue
         --
@@ -261,28 +285,19 @@ queryDiagram events colourFunc =
         wholestarts = T.wholeStart <$> ZipList events
         wholestops = T.wholeStop <$> ZipList events
         partstarts = T.eventPartStart <$> ZipList events
-        partstops = T.eventPartStop <$> ZipList events
         colours = colourFunc <$> ZipList events
         --
         wholeboxgeometries :: ZipList (Diagram B)
         wholeboxgeometries = boxGeometry <$> wholestarts <*> wholestops
-        partboxgeometries :: ZipList (Diagram B)
-        partboxgeometries = boxGeometry <$> partstarts <*> partstops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> partstarts
         wholedesignatorgeometries :: ZipList (Diagram B)
         wholedesignatorgeometries = wholeDesignatorGeometry <$> ZipList events
-        partdesignatorgeometries :: ZipList (Diagram B)
-        partdesignatorgeometries = partDesignatorGeometry <$> partstarts
         --
         wholestyles :: ZipList (Diagram B -> Diagram B)
         wholestyles = (lc . d3Colors2 Dark) <$> colours
-        partstyles :: ZipList (Diagram B -> Diagram B)
-        partstyles = (pure $ lw none) <*> (fc . d3Colors2 Dark) <$> colours
         labelstyles :: ZipList (Diagram B -> Diagram B)
         labelstyles = (fc . d3Colors2 Light) <$> colours
         wholedesignatorstyles :: ZipList (Diagram B -> Diagram B)
         wholedesignatorstyles = (fc . d3Colors2 Light) <$> colours
-        partdesignatorstyles :: ZipList (Diagram B -> Diagram B)
-        partdesignatorstyles = (fc . d3Colors2 Light) <$> colours
 
