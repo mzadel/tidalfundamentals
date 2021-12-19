@@ -13,24 +13,21 @@ import qualified Sound.Tidal.Context as T
 sigEvaluatesAtMiddle :: Diagram B
 sigEvaluatesAtMiddle =
     vsep linearDiagramVerticalPadding [
-        (C.curveDiagramLabeledPoint thelocation labeltext
+        (C.curveDiagramLabeledPoint PE.sigEvaluatesAtMiddleFunctionExpr midpoint labeltext
         <> C.curveDiagram PE.sigEvaluatesAtMiddleFunctionExpr 10)
         ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
     where
         midpoint = arcMidpoint PE.sigEvaluatesAtMiddleArcExpr
-        thelocation :: P2 Double
-        thelocation = (fromRational midpoint) ^& valueatlocation
         valueatlocation :: Double
         valueatlocation = curveValueAtTime PE.sigEvaluatesAtMiddleFunctionExpr midpoint
         labeltext = show valueatlocation
 
 curvePointFromArc :: T.Pattern Double -> T.Arc -> Diagram B
-curvePointFromArc pat thearc = C.curveDiagramLabeledPoint pt (showDoubleTruncated yval)
+curvePointFromArc pat thearc = C.curveDiagramLabeledPoint pat (arcMidpoint thearc) (showDoubleTruncated yval)
     where
         t = arcMidpoint thearc
         yval = curveValueAtTime pat t
-        pt = (fromRational t) ^& yval
 
 sigToSetPanning :: Diagram B
 sigToSetPanning =
