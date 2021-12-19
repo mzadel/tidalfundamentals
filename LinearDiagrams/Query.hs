@@ -1,5 +1,5 @@
 
-module LinearDiagrams.Query (queryDiagram) where
+module LinearDiagrams.Query (queryDiagramChar) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -18,7 +18,7 @@ designatorInset = eventLabelInset / 4
 designatorVerticalOffset :: Double
 designatorVerticalOffset = -eventWidth / 2
 
-queryResultPartDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
+queryResultPartDrawing :: (T.Event a -> Int) -> T.Event a -> Diagram B
 queryResultPartDrawing colourFunc e
     | not iszerowidth = queryResultPartDrawingNormal
     | otherwise = queryResultPartDrawingZW
@@ -50,7 +50,7 @@ queryResultPartDrawing colourFunc e
                         label = alignedText 0.5 1 "zero-width part" # fontSize designatorSize
                         labelPoint = (fromRational $ (T.eventPartStart e)) ^& designatorVerticalOffset
 
-queryResultWholeDrawing :: (T.Event Char -> Int) -> T.Event Char -> Diagram B
+queryResultWholeDrawing :: (T.Event a -> Int) -> T.Event a -> Diagram B
 queryResultWholeDrawing _ (T.Event _ Nothing _ _) = mempty
 queryResultWholeDrawing colourFunc e@(T.Event _ (Just thewhole) thepart _) = boxdrawing <> designatordrawing
     where
@@ -81,8 +81,8 @@ queryResultWholeDrawing colourFunc e@(T.Event _ (Just thewhole) thepart _) = box
                 label = alignedText 1 1 "whole" # fontSize designatorSize
                 labelPoint = (fromRational $ (T.wholeStop e) - designatorInset) ^& designatorVerticalOffset
 
-queryDiagram :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
-queryDiagram events colourFunc =
+queryDiagram :: (T.Event a -> String) -> [T.Event a] -> (T.Event a -> Int) -> Diagram B
+queryDiagram formatValue events colourFunc =
     mconcat valuelabels
     <> mconcat partdrawings
     <> mconcat wholedrawings
@@ -91,9 +91,7 @@ queryDiagram events colourFunc =
         partdrawings = fmap (queryResultPartDrawing colourFunc) events
         valuelabels = getZipList $ labelstyles <*> labelgeometries
         --
-        getLabel = charToString . T.eventValue
-        --
-        labels = getLabel <$> ZipList events
+        labels = formatValue <$> ZipList events
         partstarts = T.eventPartStart <$> ZipList events
         colours = colourFunc <$> ZipList events
         --
@@ -102,4 +100,7 @@ queryDiagram events colourFunc =
         --
         labelstyles :: ZipList (Diagram B -> Diagram B)
         labelstyles = (fc . d3Colors2 Light) <$> colours
+
+queryDiagramChar :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
+queryDiagramChar = queryDiagram (charToString . T.eventValue)
 

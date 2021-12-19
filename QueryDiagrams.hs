@@ -4,7 +4,7 @@ module QueryDiagrams (example) where
 import Shared (linearDiagramVerticalPadding,lineOfText)
 import qualified LinearDiagrams.LinearDiagrams as Lin (diagramShowCharValue)
 import qualified LinearDiagrams.Arc as Lin (arcDiagram)
-import qualified LinearDiagrams.Query as Q (queryDiagram)
+import qualified LinearDiagrams.Query as Q (queryDiagramChar)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T
@@ -16,6 +16,6 @@ example pat arctoquery colourCharsFunc =
         ,lineOfText "Arc to query:"
         ,Lin.arcDiagram [arctoquery]
         ,lineOfText "Result:"
-        ,Q.queryDiagram (T.queryArc pat arctoquery) colourCharsFunc
+        ,Q.queryDiagramChar (T.queryArc pat arctoquery) colourCharsFunc
         ]
 
