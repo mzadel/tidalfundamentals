@@ -40,6 +40,9 @@ curveValueAtTime ctspattern t = T.eventValue $ head events
     where
         events = T.queryArc ctspattern (T.Arc t t)
 
+arcMidpoint :: T.Arc -> T.Time
+arcMidpoint (T.Arc s e) = (s + e) / 2
+
 -- show doubles to three decimal places, and avoid trailing zeroes
 showDoubleTruncated :: Double -> String
 showDoubleTruncated d = formatFloat $ roundToDecimalPlace d

@@ -23,10 +23,10 @@ arcGeometry (T.Arc startLoc stopLoc)
                 & arrowTail .~ dart' & tailLength .~ small
 
 arcLabelGeometry :: String -> T.Arc -> Diagram B
-arcLabelGeometry labelString (T.Arc arcStartLoc arcStopLoc) = label
+arcLabelGeometry labelString a@(T.Arc arcStartLoc arcStopLoc) = label
     where
         label = alignedText xalignment 0.5 labelString # fontSize eventLabelSize # moveTo labelPos
-        labelPos = (fromRational (arcStartLoc + arcStopLoc) / 2) ^& 0
+        labelPos = (fromRational $ arcMidpoint a) ^& 0
         xalignment
             -- centre text in the typical case
             | arcStartLoc /= arcStopLoc = 0.5

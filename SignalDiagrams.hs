@@ -1,7 +1,7 @@
 
 module SignalDiagrams where
 
-import Shared (linearDiagramVerticalPadding,curveValueAtTime,showDoubleTruncated,showValueMapTruncatedDouble,lineOfText)
+import Shared (linearDiagramVerticalPadding,curveValueAtTime,arcMidpoint,showDoubleTruncated,showValueMapTruncatedDouble,lineOfText)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified PatternExpressions as PE
@@ -18,20 +18,17 @@ sigEvaluatesAtMiddle =
         ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
     where
-        T.Arc arcstart arcstop = PE.sigEvaluatesAtMiddleArcExpr
-        arcmidpoint = (arcstop + arcstart) / 2.0
+        midpoint = arcMidpoint PE.sigEvaluatesAtMiddleArcExpr
         thelocation :: P2 Double
-        thelocation = (fromRational arcmidpoint) ^& valueatlocation
+        thelocation = (fromRational midpoint) ^& valueatlocation
         valueatlocation :: Double
-        valueatlocation = curveValueAtTime PE.sigEvaluatesAtMiddleFunctionExpr arcmidpoint
+        valueatlocation = curveValueAtTime PE.sigEvaluatesAtMiddleFunctionExpr midpoint
         labeltext = show valueatlocation
 
 curvePointFromArc :: T.Pattern Double -> T.Arc -> Diagram B
 curvePointFromArc pat thearc = C.curveDiagramLabeledPoint pt (showDoubleTruncated yval)
     where
-        arcmidpoint :: T.Arc -> T.Time
-        arcmidpoint (T.Arc arcstart arcstop) = (arcstop + arcstart) / 2
-        t = arcmidpoint thearc
+        t = arcMidpoint thearc
         yval = curveValueAtTime pat t
         pt = (fromRational t) ^& yval
 
