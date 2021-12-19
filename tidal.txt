@@ -504,7 +504,64 @@ later.
 
 --------------------------------------------------
 
-~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
+~~~{.ghcisession #queryFullCycle .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0 1)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+In this example, each of the output events has a `whole`, and that `whole` is the same as its `part`.
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryHalfCycle .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0 0.5)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryQuarterCycle .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0 0.25)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+So we see here that the `Event`'s `whole` is the entire extent of the event
+that intersects with the query `Arc`; the `part` is the intersection of the
+query `Arc` and the overlapping pattern element.
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryEmptySpace .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0 0.2)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+Querying an arc that doesn't overlap any pattern events returns an empty list.
+Note here that the right edge of the query arc touches the first pattern event.
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryOverlapOneItemExactly .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.6 0.8)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryOverlapTwoItems .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.7 0.9)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
