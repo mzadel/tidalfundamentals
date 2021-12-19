@@ -499,6 +499,9 @@ time to a list of `Event`s; that's exactly what `queryArc` does:
     queryArc :: Pattern a -> Arc -> [Event a]
     queryArc p a = query p $ State a Map.empty
 
+The events that are returned have a `whole` and a `part`, which we'll get into
+later.
+
 --------------------------------------------------
 
 ~~~{.ghcisession #testQueryExample .queryexample tidalexpression='queryArc (fromMaybes [Just \'a\', Nothing, Just \'c\']) (Arc 0.25 0.75)' .diagram .insertdiagram}
