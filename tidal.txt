@@ -600,7 +600,15 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
---------------------------------------------------
+
+### Querying continuous patterns
+
+Tidal also has a concept of a continuous pattern.
+
+~~~{#simplesine tidalexpression='sine :: Pattern Double' .diagram .insertdiagram}
+~~~
+
+(This is `sine` from `Core.hs`.)
 
 
 

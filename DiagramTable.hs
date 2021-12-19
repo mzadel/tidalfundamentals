@@ -4,6 +4,7 @@ module DiagramTable (diagramListForMainWith) where
 import qualified PatternExpressions as PE
 import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams.LinearDiagrams as Lin
+import qualified LinearDiagrams.Curve as Curve
 import qualified SignalDiagrams as Sig
 import qualified PatternAlgebraDiagrams as PA
 import qualified QueryDiagrams as Q
@@ -213,6 +214,7 @@ diagramTableQueries = [
     ,("queryOverlapTwoItems", Q.example PE.queryOverlapTwoItemsPatternExpr PE.queryOverlapTwoItemsArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryTwoItemsZeroWidth", Q.example PE.queryTwoItemsZeroWidthPatternExpr PE.queryTwoItemsZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOneItemZeroWidth", Q.example PE.queryOneItemZeroWidthPatternExpr PE.queryOneItemZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("simplesine", Curve.curveDiagram PE.simplesineExpr 1 # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
