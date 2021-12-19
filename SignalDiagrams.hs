@@ -18,9 +18,6 @@ sigEvaluatesAtMiddle =
         ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
 
-curvePointFromArc :: T.Pattern Double -> T.Arc -> Diagram B
-curvePointFromArc pat thearc = C.curveDiagramLabeledPoint showDoubleTruncated pat (arcMidpoint thearc)
-
 sigToSetPanning :: Diagram B
 sigToSetPanning =
     vsep linearDiagramVerticalPadding [
@@ -36,5 +33,8 @@ sigToSetPanning =
     where
         segmentevents = T.queryArc PE.sigToSetPanningSegmentedCurveExpr (T.Arc 0 1)
         arcs = map T.eventPart segmentevents
-        labeledpoints = map (curvePointFromArc PE.sigToSetPanningFunctionExpr) arcs
+        labeledpoints = map curvePointFromArc arcs
+        curvePointFromArc :: T.Arc -> Diagram B
+        curvePointFromArc thearc = C.curveDiagramLabeledPoint showDoubleTruncated PE.sigToSetPanningFunctionExpr (arcMidpoint thearc)
+
 
