@@ -215,6 +215,7 @@ diagramTableQueries = [
     ,("queryTwoItemsZeroWidth", Q.example PE.queryTwoItemsZeroWidthPatternExpr PE.queryTwoItemsZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOneItemZeroWidth", Q.example PE.queryOneItemZeroWidthPatternExpr PE.queryOneItemZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("simplesine", Curve.curveDiagram PE.simplesineExpr 1 # frame 0.05 # scale outputScaling)
+    ,("querycontinuouspattern", Q.continuousPatternExample PE.querycontinuouspatternPatternExpr PE.querycontinuouspatternArcExpr # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]

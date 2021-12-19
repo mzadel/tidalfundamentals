@@ -1,5 +1,5 @@
 
-module LinearDiagrams.Query (queryDiagramChar) where
+module LinearDiagrams.Query (queryDiagramChar,queryDiagramDouble) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -103,4 +103,7 @@ queryDiagram formatValue events colourFunc =
 
 queryDiagramChar :: [T.Event Char] -> (T.Event Char -> Int) -> Diagram B
 queryDiagramChar = queryDiagram (charToString . T.eventValue)
+
+queryDiagramDouble :: [T.Event Double] -> Diagram B
+queryDiagramDouble es = queryDiagram (showDoubleTruncated . T.eventValue) es (const 0)
 

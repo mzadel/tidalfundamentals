@@ -72,6 +72,13 @@ function handleDiagramBlock(block)
         exp[block.identifier .. "Arc"] = arc .. " :: Arc"
     end
 
+    if shared.arrayContains(block.classes,"queryexamplecontinuous") then
+        local pat, arc = string.match(tidalexpression, "queryArc (%a+) %((Arc [%d%.]+ [%d%.]+)%)")
+        exp[block.identifier .. "Pattern"] = pat .. " :: Pattern Double"
+        exp[block.identifier .. "Arc"] = arc .. " :: Arc"
+        tidalexpression = "queryArc (" .. pat .. " :: Pattern Double) (" .. arc .. ")"
+    end
+
     if tidalexpression ~= nil then
         exp[block.identifier] = tidalexpression
     end

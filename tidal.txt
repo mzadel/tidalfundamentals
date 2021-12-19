@@ -610,6 +610,13 @@ Tidal also has a concept of a continuous pattern.
 
 (This is `sine` from `Core.hs`.)
 
+These patterns accept `query` like any other pattern.
+
+~~~{.ghcisession #querycontinuouspattern .queryexamplecontinuous tidalexpression='queryArc sine (Arc 0.5 0.75)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
 
 
 
