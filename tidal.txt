@@ -532,6 +532,12 @@ So we see here that the `Event`'s `whole` is the entire extent of the event
 that intersects with the query `Arc`; the `part` is the intersection of the
 query `Arc` and the overlapping pattern element.
 
+We see `(⅕>¼)-⅖` in the ghci output.  The way to read this is
+
+ - `(⅕>¼)` is the part, where the query window overlaps with the input event window,
+ - `⅕` to `⅖` is the whole, and
+ - `(⅕>¼)-⅖` is a representation that combines both the part and the whole
+
 --------------------------------------------------
 
 ~~~{.ghcisession #queryEmptySpace .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0 0.2)' .diagram .insertdiagram}
