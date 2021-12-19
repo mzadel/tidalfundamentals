@@ -553,7 +553,42 @@ import Sound.Tidal.Context
 
 --------------------------------------------------
 
+~~~{.ghcisession #queryOverlapOneItemExactly2 .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.8 1.0)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryOverlapTwoItemsExactly .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.6 1.0)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
 ~~~{.ghcisession #queryOverlapTwoItems .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.7 0.9)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryTwoItemsZeroWidth .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.8 0.8)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+So if you query a zero-width arc right between two events, it returns only the
+second event (with a zero-width part).
+
+--------------------------------------------------
+
+~~~{.ghcisession #queryOneItemZeroWidth .queryexample tidalexpression='queryArc (fromMaybes [Nothing,Just \'a\', Nothing, Just \'c\', Just \'d\']) (Arc 0.75 0.75)' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}

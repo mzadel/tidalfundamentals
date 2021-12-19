@@ -208,7 +208,11 @@ diagramTableQueries = [
     ,("queryQuarterCycle", Q.example PE.queryQuarterCyclePatternExpr PE.queryQuarterCycleArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryEmptySpace", Q.example PE.queryEmptySpacePatternExpr PE.queryEmptySpaceArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOverlapOneItemExactly", Q.example PE.queryOverlapOneItemExactlyPatternExpr PE.queryOverlapOneItemExactlyArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("queryOverlapOneItemExactly2", Q.example PE.queryOverlapOneItemExactly2PatternExpr PE.queryOverlapOneItemExactly2ArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("queryOverlapTwoItemsExactly", Q.example PE.queryOverlapTwoItemsExactlyPatternExpr PE.queryOverlapTwoItemsExactlyArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOverlapTwoItems", Q.example PE.queryOverlapTwoItemsPatternExpr PE.queryOverlapTwoItemsArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("queryTwoItemsZeroWidth", Q.example PE.queryTwoItemsZeroWidthPatternExpr PE.queryTwoItemsZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("queryOneItemZeroWidth", Q.example PE.queryOneItemZeroWidthPatternExpr PE.queryOneItemZeroWidthArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
