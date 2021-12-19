@@ -87,8 +87,8 @@ queryDiagram events colourFunc =
     <> mconcat partdrawings
     <> mconcat wholedrawings
     where
-        wholedrawings = getZipList $ (queryResultWholeDrawing colourFunc) <$> (ZipList events)
-        partdrawings = getZipList $ (queryResultPartDrawing colourFunc) <$> (ZipList events)
+        wholedrawings = fmap (queryResultWholeDrawing colourFunc) events
+        partdrawings = fmap (queryResultPartDrawing colourFunc) events
         valuelabels = getZipList $ labelstyles <*> labelgeometries
         --
         getLabel = charToString . T.eventValue
