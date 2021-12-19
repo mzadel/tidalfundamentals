@@ -209,8 +209,6 @@ diagramTableQueries = [
     ,("queryEmptySpace", Q.example PE.queryEmptySpacePatternExpr PE.queryEmptySpaceArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOverlapOneItemExactly", Q.example PE.queryOverlapOneItemExactlyPatternExpr PE.queryOverlapOneItemExactlyArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ,("queryOverlapTwoItems", Q.example PE.queryOverlapTwoItemsPatternExpr PE.queryOverlapTwoItemsArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
-    ,("testQueryExample", Q.example PE.testQueryExamplePatternExpr PE.testQueryExampleArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
-    ,("testQueryZW", Q.example PE.testQueryZWPatternExpr PE.testQueryZWArcExpr colourCharsFunc # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
