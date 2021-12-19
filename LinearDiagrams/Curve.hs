@@ -40,11 +40,12 @@ curveDiagram ctsPattern ticksPerCycle =
             <> curveGeometry ctsPattern
         tickLocList = tickMarkLocations (1%ticksPerCycle) 1
 
-curveDiagramLabeledPoint :: T.Pattern Double -> T.Time -> String -> Diagram B
-curveDiagramLabeledPoint ctsPattern time labelText = (thedot <> label) # translate (scaledpos .-. origin)
+curveDiagramLabeledPoint :: (Double -> String) -> T.Pattern Double -> T.Time -> Diagram B
+curveDiagramLabeledPoint formatLabel ctsPattern time = (thedot <> label) # translate (scaledpos .-. origin)
     where
         pos = (fromRational time) ^& curveValueAtTime ctsPattern time
         scaledpos = pos # scaleY curveDiagramHeight
         thedot = circle 0.0075 # fc red # lw none
+        labelText = formatLabel $ curveValueAtTime ctsPattern time
         label = alignedText 0 0.5 labelText # fontSize eventLabelSize # translateX (fromRational eventLabelInset)
 

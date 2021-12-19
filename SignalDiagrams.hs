@@ -1,7 +1,7 @@
 
 module SignalDiagrams where
 
-import Shared (linearDiagramVerticalPadding,curveValueAtTime,arcMidpoint,showDoubleTruncated,showValueMapTruncatedDouble,lineOfText)
+import Shared (linearDiagramVerticalPadding,arcMidpoint,showDoubleTruncated,showValueMapTruncatedDouble,lineOfText)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified PatternExpressions as PE
@@ -13,21 +13,13 @@ import qualified Sound.Tidal.Context as T
 sigEvaluatesAtMiddle :: Diagram B
 sigEvaluatesAtMiddle =
     vsep linearDiagramVerticalPadding [
-        (C.curveDiagramLabeledPoint PE.sigEvaluatesAtMiddleFunctionExpr midpoint labeltext
+        (C.curveDiagramLabeledPoint show PE.sigEvaluatesAtMiddleFunctionExpr (arcMidpoint PE.sigEvaluatesAtMiddleArcExpr)
         <> C.curveDiagram PE.sigEvaluatesAtMiddleFunctionExpr 10)
         ,A.arcDiagram [PE.sigEvaluatesAtMiddleArcExpr]
         ]
-    where
-        midpoint = arcMidpoint PE.sigEvaluatesAtMiddleArcExpr
-        valueatlocation :: Double
-        valueatlocation = curveValueAtTime PE.sigEvaluatesAtMiddleFunctionExpr midpoint
-        labeltext = show valueatlocation
 
 curvePointFromArc :: T.Pattern Double -> T.Arc -> Diagram B
-curvePointFromArc pat thearc = C.curveDiagramLabeledPoint pat (arcMidpoint thearc) (showDoubleTruncated yval)
-    where
-        t = arcMidpoint thearc
-        yval = curveValueAtTime pat t
+curvePointFromArc pat thearc = C.curveDiagramLabeledPoint showDoubleTruncated pat (arcMidpoint thearc)
 
 sigToSetPanning :: Diagram B
 sigToSetPanning =
