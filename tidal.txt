@@ -929,7 +929,8 @@ pat
 ~~~
 
 So this is allowing the inner patterns to shine through the windows defined by
-the events they're contained in.
+the events they're contained in.  The wholes and the parts are cleaned up so
+that they're coincident for every event.
 
 `innerJoin` flattens the pattern but takes the structure from the inner pattern.
 
