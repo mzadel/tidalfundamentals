@@ -618,6 +618,28 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+Let's look into the details to see what the query is returning and where the
+floating point value is coming from.
+
+~~~{.ghcisession #querycontinuouspatternshowpoint .queryexamplecontinuous tidalexpression='queryArc sine (Arc 0.5 0.75)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+results = {{tidalexpression}}
+results
+:t results
+length results
+event : _ = results
+:t event
+whole event
+part event
+value event
+~~~
+
+So we see that querying a continuous pattern returns events with parts and
+values, but no wholes.
+
+The notation for continuous results includes tildes: `~½>¾~`.
+
 
 
 ## Pattern type
