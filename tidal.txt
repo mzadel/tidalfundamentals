@@ -794,11 +794,11 @@ import Sound.Tidal.Context
 ~~~
 
 (In the text output, notice that the "22" and the "42" entries correspond to
-the same whole event.  I'm taking this to mean that the value changes midway
-though the event, but the onset still happens at the "22" in this case.  [I
+the same whole event.  I understand this to mean that the value changes midway
+though the event, but the onset still happens at the "22" in this case.  I
 later confirmed with `oscdump` and a live tidal repl that that's what's
 happening -- the value that is lined up when the onset happens is the one that
-gets sent.  The change midway through the event does nothing.])
+gets sent.  The change midway through the event does nothing.)
 
 ~~~{.ghcisession .patternalgebraexample #leftPlusExample2 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60] :: Pattern Int' .diagram .insertdiagram}
 import Sound.Tidal.Context
