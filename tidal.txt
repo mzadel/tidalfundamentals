@@ -640,6 +640,25 @@ values, but no wholes.
 
 The notation for continuous results includes tildes: `~½>¾~`.
 
+Note too that the query samples the continuous function in the middle of the
+query arc.
+
+~~~{.ghcisession #querycontinuouspatternsamplesatmidpoint .queryexamplecontinuous tidalexpression='queryArc sine (Arc 0.3 0.5)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+queryArc sine (0.4 :: Arc)
+~~~
+
+If you want to sample a continuous pattern at exactly one point, use a zero-width arc.
+
+~~~{.ghcisession #querycontinuouspatternzwarc .queryexamplecontinuous tidalexpression='queryArc sine (Arc 0.22 0.22)' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+
 
 
 ## Pattern type
