@@ -18,32 +18,35 @@ patternAlgebraDiagram leftpat operatorString rightpat combinedpat =
         ,Lin.diagramFromWholes show combinedpat 1
         ]
 
+patternAlgebraDiagramInt :: T.Pattern Int -> String -> T.Pattern Int -> T.Pattern Int -> Diagram B
+patternAlgebraDiagramInt = patternAlgebraDiagram
+
 additionexample :: Diagram B
-additionexample = patternAlgebraDiagram PE.additionexampleLeftExpr PE.additionexampleOperatorStringExpr PE.additionexampleRightExpr PE.additionexampleExpr
+additionexample = patternAlgebraDiagramInt PE.additionexampleLeftExpr PE.additionexampleOperatorStringExpr PE.additionexampleRightExpr PE.additionexampleExpr
 
 leftPlusExample1 :: Diagram B
-leftPlusExample1 = patternAlgebraDiagram PE.leftPlusExample1LeftExpr PE.leftPlusExample1OperatorStringExpr PE.leftPlusExample1RightExpr PE.leftPlusExample1Expr
+leftPlusExample1 = patternAlgebraDiagramInt PE.leftPlusExample1LeftExpr PE.leftPlusExample1OperatorStringExpr PE.leftPlusExample1RightExpr PE.leftPlusExample1Expr
 leftPlusExample2 :: Diagram B
-leftPlusExample2 = patternAlgebraDiagram PE.leftPlusExample2LeftExpr PE.leftPlusExample2OperatorStringExpr PE.leftPlusExample2RightExpr PE.leftPlusExample2Expr
+leftPlusExample2 = patternAlgebraDiagramInt PE.leftPlusExample2LeftExpr PE.leftPlusExample2OperatorStringExpr PE.leftPlusExample2RightExpr PE.leftPlusExample2Expr
 leftPlusExample3 :: Diagram B
-leftPlusExample3 = patternAlgebraDiagram PE.leftPlusExample3LeftExpr PE.leftPlusExample3OperatorStringExpr PE.leftPlusExample3RightExpr PE.leftPlusExample3Expr
+leftPlusExample3 = patternAlgebraDiagramInt PE.leftPlusExample3LeftExpr PE.leftPlusExample3OperatorStringExpr PE.leftPlusExample3RightExpr PE.leftPlusExample3Expr
 
 rightPlusExample1 :: Diagram B
-rightPlusExample1 = patternAlgebraDiagram PE.rightPlusExample1LeftExpr PE.rightPlusExample1OperatorStringExpr PE.rightPlusExample1RightExpr PE.rightPlusExample1Expr
+rightPlusExample1 = patternAlgebraDiagramInt PE.rightPlusExample1LeftExpr PE.rightPlusExample1OperatorStringExpr PE.rightPlusExample1RightExpr PE.rightPlusExample1Expr
 rightPlusExample2 :: Diagram B
-rightPlusExample2 = patternAlgebraDiagram PE.rightPlusExample2LeftExpr PE.rightPlusExample2OperatorStringExpr PE.rightPlusExample2RightExpr PE.rightPlusExample2Expr
+rightPlusExample2 = patternAlgebraDiagramInt PE.rightPlusExample2LeftExpr PE.rightPlusExample2OperatorStringExpr PE.rightPlusExample2RightExpr PE.rightPlusExample2Expr
 rightPlusExample3 :: Diagram B
-rightPlusExample3 = patternAlgebraDiagram PE.rightPlusExample3LeftExpr PE.rightPlusExample3OperatorStringExpr PE.rightPlusExample3RightExpr PE.rightPlusExample3Expr
+rightPlusExample3 = patternAlgebraDiagramInt PE.rightPlusExample3LeftExpr PE.rightPlusExample3OperatorStringExpr PE.rightPlusExample3RightExpr PE.rightPlusExample3Expr
 
 bothPlusExample1 :: Diagram B
-bothPlusExample1 = patternAlgebraDiagram PE.bothPlusExample1LeftExpr PE.bothPlusExample1OperatorStringExpr PE.bothPlusExample1RightExpr PE.bothPlusExample1Expr
+bothPlusExample1 = patternAlgebraDiagramInt PE.bothPlusExample1LeftExpr PE.bothPlusExample1OperatorStringExpr PE.bothPlusExample1RightExpr PE.bothPlusExample1Expr
 bothPlusExample2 :: Diagram B
-bothPlusExample2 = patternAlgebraDiagram PE.bothPlusExample2LeftExpr PE.bothPlusExample2OperatorStringExpr PE.bothPlusExample2RightExpr PE.bothPlusExample2Expr
+bothPlusExample2 = patternAlgebraDiagramInt PE.bothPlusExample2LeftExpr PE.bothPlusExample2OperatorStringExpr PE.bothPlusExample2RightExpr PE.bothPlusExample2Expr
 bothPlusExample3 :: Diagram B
-bothPlusExample3 = patternAlgebraDiagram PE.bothPlusExample3LeftExpr PE.bothPlusExample3OperatorStringExpr PE.bothPlusExample3RightExpr PE.bothPlusExample3Expr
+bothPlusExample3 = patternAlgebraDiagramInt PE.bothPlusExample3LeftExpr PE.bothPlusExample3OperatorStringExpr PE.bothPlusExample3RightExpr PE.bothPlusExample3Expr
 
 justPlusExample1 :: Diagram B
-justPlusExample1 = patternAlgebraDiagram PE.justPlusExample1LeftExpr PE.justPlusExample1OperatorStringExpr PE.justPlusExample1RightExpr PE.justPlusExample1Expr
+justPlusExample1 = patternAlgebraDiagramInt PE.justPlusExample1LeftExpr PE.justPlusExample1OperatorStringExpr PE.justPlusExample1RightExpr PE.justPlusExample1Expr
 
 valueAlgebraMapDiagram :: Diagram B
 valueAlgebraMapDiagram =
