@@ -945,6 +945,14 @@ windowed by the outer events they're contained in.  This looks like the
 `unwrap` case, but the wholes from the inner pattern are preserved in the
 output events.
 
+We can emulate this with `queryArc` to help understand what `innerJoin` is doing:
+
+~~~{.ghcisession #innerjoinasqueryarc}
+import Sound.Tidal.Context
+--cut>>
+queryArc (fastFromList ['a','b','c']) (Arc 0 0.5) ++ queryArc (fastFromList ['j','k','l','m']) (Arc 0.5 1)
+~~~
+
 `outerJoin` flattens the pattern but takes the structure from the outer pattern.
 
 ~~~{.ghcisession #outerjoinexample tidalexpression='outerJoin $ fastFromList [ fastFromList [\'a\',\'b\',\'c\'], fastFromList [\'j\',\'k\',\'l\',\'m\'] ]' .diagram .insertdiagram}
