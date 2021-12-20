@@ -102,6 +102,14 @@ function getBlockTextWithReplacements(block)
     local tidalexpression = block.attributes["tidalexpression"]
 
     if tidalexpression ~= nil then
+
+        if shared.codeBlockClassesContain(block, "applicativeexample") then
+            local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+%]) +([%<%*%>]+) +(.+) +:: +(.+)")
+            thetext = string.gsub(thetext, "{{left}}", left, nil, true)
+            thetext = string.gsub(thetext, "{{right}}", right, nil, true)
+            thetext = string.gsub(thetext, "{{operator}}", operator, nil, true)
+        end
+
         tidalexpression = string.gsub(tidalexpression, "%%", "%%%%", nil, true)
         thetext = string.gsub(thetext, "{{tidalexpression}}", tidalexpression, nil, true)
     end
@@ -119,6 +127,7 @@ function writeHaskellDiagramPatterns()
     local fileptr = io.output("PatternExpressions.hs")
 
     io.write("module PatternExpressions where\n\n")
+    io.write("import Prelude hiding ((<*), (*>))\n")
     io.write("import Sound.Tidal.Context\n\n")
 
     for _, diagramname in ipairs(diagrams) do

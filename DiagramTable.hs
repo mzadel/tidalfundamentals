@@ -201,6 +201,9 @@ diagramTablePatternAlgebra = [
     ,("bothPlusExample2", PA.bothPlusExample2 # frame 0.05 # scale outputScaling)
     ,("bothPlusExample3", PA.bothPlusExample3 # frame 0.05 # scale outputScaling)
     ,("justPlusExample1", PA.justPlusExample1 # frame 0.05 # scale outputScaling)
+    ,("applicativeboth", Lin.diagramFromWholes show PE.applicativebothExpr 1 # frame 0.05 # scale outputScaling)
+    ,("applicativeleft", Lin.diagramFromWholes show PE.applicativeleftExpr 1 # frame 0.05 # scale outputScaling)
+    ,("applicativeright", Lin.diagramFromWholes show PE.applicativerightExpr 1 # frame 0.05 # scale outputScaling)
     ,("valueAlgebraMapDiagram", PA.valueAlgebraMapDiagram # frame 0.05 # scale outputScaling)
     ]
 

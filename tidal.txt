@@ -851,6 +851,58 @@ There are a bunch of operators that work in the same way documented
 at <https://tidalcycles.org/docs/patternlib/tutorials/pattern_structure>.
 
 
+## Applying a pattern of functions
+
+The above are examples of `Pattern`'s `Applicative` instance, which is a
+Haskell thing.  It allows you to apply a pattern of unary functions to a
+pattern of arguments.
+
+    instance Applicative Pattern where
+      -- | Repeat the given value once per cycle, forever
+      pure v = Pattern $ \(State a _) ->
+        map (\a' -> Event (Context []) (Just a') (sect a a') v) $ cycleArcsInArc a
+
+      (<*>) = applyPatToPatBoth
+
+
+~~~{.ghcisession #applicativeboth .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <*> pure 1 :: Pattern Double' .diagram .insertdiagram}
+import Prelude hiding ((<*), (*>))
+import Sound.Tidal.Context
+--cut>>
+a = {{left}}
+:t a
+b = {{right}}
+a {{operator}} b
+~~~
+
+There are also the operators `<*` and `*>`, which take the structure from the left and right, respectively.
+
+~~~{.ghcisession #applicativeleft .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <* pure 1 :: Pattern Double' .diagram .insertdiagram}
+--cut>>
+import Prelude hiding ((<*), (*>))
+import Sound.Tidal.Context
+a = {{left}}
+b = {{right}}
+a {{operator}} b
+~~~
+
+~~~{.ghcisession #applicativeright .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] *> pure 1 :: Pattern Double' .diagram .insertdiagram}
+import Prelude hiding ((<*), (*>))
+import Sound.Tidal.Context
+a = {{left}}
+b = {{right}}
+--cut>>
+a {{operator}} b
+~~~
+
+(Only the first event contains the whole's onset, so that's the one that'll get
+sent out via OSC.)
+
+These operators are the more general ones that are called into by `|+`, `+|`, etc.
+
+
+
+
 ## You don't need the s function to examine the internals
 
 You can omit the s function, which is an alias for sound (see `Params.hs`).
