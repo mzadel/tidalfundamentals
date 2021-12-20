@@ -749,7 +749,17 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+~~~{.ghcisession #numberpatternplus .intpatternexample tidalexpression='fastFromList [11,22,33,44] + 3' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
 
+~~~{.ghcisession #numberpatterntimes .intpatternexample tidalexpression='2 * fastFromList [11,22,33,44]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
 
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
