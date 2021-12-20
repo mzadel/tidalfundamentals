@@ -969,6 +969,17 @@ import Sound.Tidal.Context
 
 Note that the wholes come from the outer pattern in this case.
 
+--------------------------------------------------
+
+Finally, there's `squeezeJoin`, which compresses each of the inner patterns
+into the event they're contained in.
+
+~~~{.ghcisession #squeezejoinexample tidalexpression='squeezeJoin $ fastFromList [ fastFromList [\'a\',\'b\',\'c\'], fastFromList [\'j\',\'k\',\'l\',\'m\'] ]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
 
 ## You don't need the s function to examine the internals
 
