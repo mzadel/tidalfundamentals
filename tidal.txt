@@ -910,7 +910,9 @@ You can of course define patterns of patterns as well.
 ~~~{.ghcisession}
 import Sound.Tidal.Context
 --cut>>
-fastFromList [ fastFromList ['a','b','c'], fastFromList ['d','e'] ]
+pat = fastFromList [ fastFromList ['a','b','c'], fastFromList ['d','e'] ]
+pat
+:t pat
 ~~~
 
 The way to read this is that there's one event on `(0>½)` that contains the first pattern,
