@@ -600,6 +600,7 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+Note here how the event's extents are notated: `⅗-(¾>¾)-⅘`.
 
 ### Querying continuous patterns
 
