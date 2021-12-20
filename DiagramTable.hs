@@ -1,6 +1,7 @@
 
 module DiagramTable (diagramListForMainWith) where
 
+import Shared (showDoubleTruncated)
 import qualified PatternExpressions as PE
 import qualified CircularDiagrams as Cir
 import qualified LinearDiagrams.LinearDiagrams as Lin
@@ -188,6 +189,7 @@ diagramTablePatternAlgebra = [
     ,("numberpatternplus", Lin.diagramFromWholes show PE.numberpatternplusExpr 1 # frame 0.05 # scale outputScaling)
     ,("numberpatterntimes", Lin.diagramFromWholes show PE.numberpatterntimesExpr 1 # frame 0.05 # scale outputScaling)
     ,("numberpatternmod", Lin.diagramFromWholes show PE.numberpatternmodExpr 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatternsqrt", Lin.diagramFromWholes showDoubleTruncated PE.numberpatternsqrtExpr 1 # frame 0.05 # scale outputScaling)
     ,("leftPlusExample1", PA.leftPlusExample1 # frame 0.05 # scale outputScaling)
     ,("leftPlusExample2", PA.leftPlusExample2 # frame 0.05 # scale outputScaling)
     ,("leftPlusExample3", PA.leftPlusExample3 # frame 0.05 # scale outputScaling)
