@@ -235,6 +235,7 @@ diagramTableQueries = [
 diagramTableJoins :: [(String, Diagram B)]
 diagramTableJoins = [
     ("unwrapexample", Lin.diagramShowCharValue PE.unwrapexampleExpr 6 1 colourCharsFunc # frame 0.05 # scale outputScaling)
+    ,("innerjoinexample", Lin.diagramShowCharValue PE.innerjoinexampleExpr 6 1 colourCharsFunc # frame 0.05 # scale outputScaling)
     ]
 
 diagramListForMainWith :: [(String, Diagram B)]
