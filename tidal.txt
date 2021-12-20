@@ -658,8 +658,16 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+Tidal calls continuous patterns "analog" and discrete patterns "digital":
 
+    isAnalog :: Event a -> Bool
+    isAnalog (Event {whole = Nothing}) = True
+    isAnalog _ = False
 
+    isDigital :: Event a -> Bool
+    isDigital = not . isAnalog
+
+(from `Pattern.hs`)
 
 ## Pattern type
 
