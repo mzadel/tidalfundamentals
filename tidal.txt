@@ -903,6 +903,33 @@ These operators are the more general ones that are called into by `|+`, `+|`, et
 
 
 
+## Patterns of patterns
+
+You can of course define patterns of patterns as well.
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+fastFromList [ fastFromList ['a','b','c'], fastFromList ['d','e'] ]
+~~~
+
+The way to read this is that there's one event on `(0>½)` that contains the first pattern,
+and there's a second event on `(½>1)` that contains the second pattern.
+
+You can use `unwrap` if you want to flatten the patterns:
+
+~~~{.ghcisession #unwrapexample tidalexpression='unwrap $ fastFromList [ fastFromList [\'a\',\'b\',\'c\'], fastFromList [\'j\',\'k\',\'l\',\'m\'] ]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+pat
+:t pat
+~~~
+
+So this is allowing the inner patterns to shine through the windows defined by
+the events they're contained in.
+
+
 ## You don't need the s function to examine the internals
 
 You can omit the s function, which is an alias for sound (see `Params.hs`).

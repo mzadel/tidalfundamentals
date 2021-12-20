@@ -232,6 +232,11 @@ diagramTableQueries = [
     ,("querycontinuouspatternzwarc", Q.continuousPatternExampleShowPoint PE.querycontinuouspatternzwarcPatternExpr PE.querycontinuouspatternzwarcArcExpr # frame 0.05 # scale outputScaling)
     ]
 
+diagramTableJoins :: [(String, Diagram B)]
+diagramTableJoins = [
+    ("unwrapexample", Lin.diagramShowCharValue PE.unwrapexampleExpr 6 1 colourCharsFunc # frame 0.05 # scale outputScaling)
+    ]
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals ++ diagramTableQueries
+diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals ++ diagramTableQueries ++ diagramTableJoins
 
