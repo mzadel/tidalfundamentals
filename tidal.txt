@@ -773,6 +773,18 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+Neat.  What happens when we straight up add two patterns together?
+
+~~~{.ghcisession #additionexample .patternalgebraexample tidalexpression='fastFromList [1, 2, 3] + fastFromList [20, 40] :: Pattern Int' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+Tidal adds the patterns together by combining the events and values from both
+input patterns.
+
+There are other addition operators that combine the events in alternate ways.
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
 ~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40] :: Pattern Int'  .diagram .insertdiagram}

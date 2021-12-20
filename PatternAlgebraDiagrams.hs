@@ -18,6 +18,9 @@ patternAlgebraDiagram leftpat operatorString rightpat combinedpat =
         ,Lin.diagramFromWholes show combinedpat 1
         ]
 
+additionexample :: Diagram B
+additionexample = patternAlgebraDiagram PE.additionexampleLeftExpr PE.additionexampleOperatorStringExpr PE.additionexampleRightExpr PE.additionexampleExpr
+
 leftPlusExample1 :: Diagram B
 leftPlusExample1 = patternAlgebraDiagram PE.leftPlusExample1LeftExpr PE.leftPlusExample1OperatorStringExpr PE.leftPlusExample1RightExpr PE.leftPlusExample1Expr
 leftPlusExample2 :: Diagram B
