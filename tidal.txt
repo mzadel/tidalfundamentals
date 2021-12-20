@@ -670,7 +670,10 @@ Tidal calls continuous patterns "analog" and discrete patterns "digital":
 
 (from `Pattern.hs`)
 
-## Pattern type
+## Basic types (`Pattern.hs`)
+
+We've seen several examples of patterns, events and queries.  Hopefully that
+will have built up enough intuituion to make sense of the basic types.
 
 `Pattern` is defined in `Sound/Tidal/Pattern.hs`.
 
@@ -678,13 +681,9 @@ Tidal calls continuous patterns "analog" and discrete patterns "digital":
     data Pattern a = Pattern {query :: State -> [Event a]}
       deriving (Generic, Functor)
 
-So a pattern is something that can be queried, returning a list of events.
+A pattern is something that can be queried, returning a list of events.
 
-The idea is that a pattern divides a cycle evenly into event windows with data
-attached to each one.  You can query a time range of the pattern to see which
-event windows it overlaps.
-
-An arc goes from one time to another.  Time is expressed as a rational (i.e., a fraction)  (defined in `Sound/Tidal/Time.hs`)
+An `Arc` is an interval of time.  Time is expressed as a rational (i.e., a fraction)  (defined in `Sound/Tidal/Time.hs`)
 
     -- | Time is rational
     type Time = Rational
@@ -697,54 +696,9 @@ An arc goes from one time to another.  Time is expressed as a rational (i.e., a 
 
     type Arc = ArcF Time
 
-The reason it's called an arc is that a cycle is imagined to lie on a circle.  An arc is a portion of that circle.
+I think the reason it's called an arc is that a cycle is imagined to lie on a circle.  An arc is a portion of that circle.
 
-So we can create an arc of time:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-arcoftime = Arc 0.5 1.2
-arcoftime
-~~~
-
-And then query our pattern:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-a = s $ parseBP_E "m n o"
-arcoftime = Arc 0.5 1.2
-import qualified Data.Map.Strict as Map
-query a (State arcoftime Map.empty)
-~~~
-
-A smaller window that overlaps only the first event:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
-import qualified Data.Map.Strict as Map
-a = s $ parseBP_E "m n o"
---cut>>
-query a (State (Arc 0 1/6) Map.empty)
-:t query a (State (Arc 0 1/6) Map.empty)
-~~~
-
-So we're getting a list of events from the query.  Each event contains a `ValueMap`.
-
-## Event type
-
-If we just take the first event:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
-import qualified Data.Map.Strict as Map
-a = s $ parseBP_E "m n o"
---cut>>
-head $ query a $ State (Arc 0 1/6) Map.empty
-~~~
-
-Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.hs`):
+`Event`s are defined thusly (see `Sound/Tidal/Pattern.hs`):
 
     -- | An event is a value that's active during a timespan. If a whole
     -- is present, the part should be equal to or fit inside it.
@@ -757,69 +711,20 @@ Let's pull the event apart.  The event has this type (see `Sound/Tidal/Pattern.h
 
     type Event a = EventF (ArcF Time) a
 
-so
+So events are understood to be boxes on the timeline with a beginning and an
+end, which contain a value.  We also have the notion of looking at a subsection
+of an event, hence the `whole` and `part` distinction.  `whole` is `Maybe a`,
+so it might be `Nothing`, which means that it's from an analog (continuous)
+pattern.
 
-~~~{.ghcisession}
-import Sound.Tidal.Context
-import qualified Data.Map.Strict as Map
-a = s $ parseBP_E "m n o"
---cut>>
-firstevent = head $ query a $ State (Arc 0 1/6) Map.empty
-value firstevent
-whole firstevent
-part firstevent
-context firstevent
-~~~
+`value` is, of course, the value that the event contains.
 
-The value is from the string we passed into the initial string expression (`s $ parseBP_E "m n o"`)
+The context is apparently the position within the source code.  I guess this is
+used when interpreting expressions in a live coding context.
 
-The whole is the entire span of the event that our little window overlaps.
-(The whole event goes from 0 to one third, our window goes from zero to one
-sixth.)
-
-The context is apparently the position within the sourcecode, I guess used when
-interpreting expressions in a live coding context.
-
-So if we overlap the first two events and get the second event:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
-import qualified Data.Map.Strict as Map
-a = s $ parseBP_E "m n o"
---cut>>
-firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
-firstevent
-whole firstevent
-part firstevent
-secondevent
-whole secondevent
-part secondevent
-~~~
-
-So it looks like the way to interpret (⅓>½)-⅔ is
-
- - (⅓>½) is the part, where the query window overlaps with the event window
- - ⅓ to ⅔ is the whole event window
- - and (⅓>½)-⅔ is a representation that combines both the partial window from the query and the whole event window
-
-And then s: "n" is the key-value pair from the `ValueMap`.
-
-There are some functions to query the window start / ends:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
-import qualified Data.Map.Strict as Map
-a = s $ parseBP_E "m n o"
-firstevent:secondevent:others = query a $ State (Arc (1/6) (3/6)) Map.empty
---cut>>
-wholeStart firstevent
-wholeStop firstevent
-eventPartStart firstevent
-eventPartStop firstevent
-eventValue firstevent
-~~~
-
-I'm not sure if these functions are typically used.  They're probably internal.
+There are some utility functions to access an event's fields in `Pattern.hs`:
+`isAnalog`, `isDigital`, `wholeStart`, `wholeStop`, `eventPartStart`,
+`eventPartStop`, etc.
 
 
 ## You don't need the s function to examine the internals
