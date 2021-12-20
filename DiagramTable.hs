@@ -184,11 +184,11 @@ diagramTableLinear = [
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]
 diagramTablePatternAlgebra = [
-    ("numberpatternmin", Lin.diagramFromWholes show PE.numberpatternminExpr 1 # frame 0.05 # scale outputScaling)
-    ,("numberpatternmax", Lin.diagramFromWholes show PE.numberpatternmaxExpr 1 # frame 0.05 # scale outputScaling)
-    ,("numberpatternplus", Lin.diagramFromWholes show PE.numberpatternplusExpr 1 # frame 0.05 # scale outputScaling)
-    ,("numberpatterntimes", Lin.diagramFromWholes show PE.numberpatterntimesExpr 1 # frame 0.05 # scale outputScaling)
-    ,("numberpatternmod", Lin.diagramFromWholes show PE.numberpatternmodExpr 1 # frame 0.05 # scale outputScaling)
+    ("numberpatternmin", Lin.diagramFromWholes show (PE.numberpatternminExpr :: T.Pattern Int) 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatternmax", Lin.diagramFromWholes show (PE.numberpatternmaxExpr :: T.Pattern Int) 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatternplus", Lin.diagramFromWholes show (PE.numberpatternplusExpr :: T.Pattern Int) 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatterntimes", Lin.diagramFromWholes show (PE.numberpatterntimesExpr :: T.Pattern Int) 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatternmod", Lin.diagramFromWholes show (PE.numberpatternmodExpr :: T.Pattern Int) 1 # frame 0.05 # scale outputScaling)
     ,("numberpatternsqrt", Lin.diagramFromWholes showDoubleTruncated PE.numberpatternsqrtExpr 1 # frame 0.05 # scale outputScaling)
     ,("additionexample", PA.additionexample # frame 0.05 # scale outputScaling)
     ,("leftPlusExample1", PA.leftPlusExample1 # frame 0.05 # scale outputScaling)
