@@ -775,7 +775,7 @@ import Sound.Tidal.Context
 
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40] :: Pattern Double'  .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40] :: Pattern Int'  .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
@@ -788,13 +788,13 @@ later confirmed with `oscdump` and a live tidal repl that that's what's
 happening -- the value that is lined up when the onset happens is the one that
 gets sent.  The change midway through the event does nothing.])
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample2 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60] :: Pattern Double' .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample2 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60] :: Pattern Int' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
 ~~~
 
-~~~{.ghcisession .patternalgebraexample #leftPlusExample3 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60, 80] :: Pattern Double' .diagram .insertdiagram}
+~~~{.ghcisession .patternalgebraexample #leftPlusExample3 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60, 80] :: Pattern Int' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 {{tidalexpression}}
@@ -804,33 +804,33 @@ import Sound.Tidal.Context
 
 The `+|` operator does addition, but takes the events from the right argument:
 
-~~~{.patternalgebraexample #rightPlusExample1 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample1 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample2 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40, 60] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample2 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40, 60] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #rightPlusExample3 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40, 60, 80] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #rightPlusExample3 tidalexpression='fastFromList [1, 2, 3] +| fastFromList [20, 40, 60, 80] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
 
 The `|+|` operator does addition, but takes the events from both arguments:
 
-~~~{.patternalgebraexample #bothPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #bothPlusExample2 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40, 60] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample2 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40, 60] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
-~~~{.patternalgebraexample #bothPlusExample3 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40, 60, 80] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #bothPlusExample3 tidalexpression='fastFromList [1, 2, 3] |+| fastFromList [20, 40, 60, 80] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------
 
 If you use `+`, it's like `|+|`:
 
-~~~{.patternalgebraexample #justPlusExample1 tidalexpression='fastFromList [1, 2, 3] + fastFromList [20, 40, 60, 80] :: Pattern Double' .diagram .insertdiagram}
+~~~{.patternalgebraexample #justPlusExample1 tidalexpression='fastFromList [1, 2, 3] + fastFromList [20, 40, 60, 80] :: Pattern Int' .diagram .insertdiagram}
 ~~~
 
 --------------------------------------------------

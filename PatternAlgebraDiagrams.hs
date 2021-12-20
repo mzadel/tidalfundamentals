@@ -8,7 +8,7 @@ import qualified PatternExpressions as PE
 import qualified LinearDiagrams.LinearDiagrams as Lin
 import qualified Sound.Tidal.Context as T
 
-patternAlgebraDiagram :: T.Pattern Double -> String -> T.Pattern Double -> T.Pattern Double -> Diagram B
+patternAlgebraDiagram :: (Show a) => T.Pattern a -> String -> T.Pattern a -> T.Pattern a -> Diagram B
 patternAlgebraDiagram leftpat operatorString rightpat combinedpat =
     vsep linearDiagramVerticalPadding [
         Lin.diagramFromWholes show (leftpat) 1
