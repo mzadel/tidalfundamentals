@@ -944,6 +944,17 @@ windowed by the outer events they're contained in.  This looks like the
 `unwrap` case, but the wholes from the inner pattern are preserved in the
 output events.
 
+`outerJoin` flattens the pattern but takes the structure from the outer pattern.
+
+~~~{.ghcisession #outerjoinexample tidalexpression='outerJoin $ fastFromList [ fastFromList [\'a\',\'b\',\'c\'], fastFromList [\'j\',\'k\',\'l\',\'m\'] ]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+Note that the wholes come from the outer pattern in this case.
+
+
 ## You don't need the s function to examine the internals
 
 You can omit the s function, which is an alias for sound (see `Params.hs`).
