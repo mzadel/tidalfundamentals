@@ -33,6 +33,10 @@ function handleDiagramBlock(block)
         tidalexpression = "s $ " .. tidalexpression
     end
 
+    if shared.arrayContains(block.classes,"intpatternexample") then
+        tidalexpression = tidalexpression .. " :: Pattern Int"
+    end
+
     if shared.arrayContains(block.classes,"patternalgebraexample") then
         local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+) +([%|%+]+) +(.+) +:: +(.+)")
 

@@ -183,7 +183,9 @@ diagramTableLinear = [
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]
 diagramTablePatternAlgebra = [
-    ("leftPlusExample1", PA.leftPlusExample1 # frame 0.05 # scale outputScaling)
+    ("numberpatternmin", Lin.diagramFromWholes show PE.numberpatternminExpr 1 # frame 0.05 # scale outputScaling)
+    ,("numberpatternmax", Lin.diagramFromWholes show PE.numberpatternmaxExpr 1 # frame 0.05 # scale outputScaling)
+    ,("leftPlusExample1", PA.leftPlusExample1 # frame 0.05 # scale outputScaling)
     ,("leftPlusExample2", PA.leftPlusExample2 # frame 0.05 # scale outputScaling)
     ,("leftPlusExample3", PA.leftPlusExample3 # frame 0.05 # scale outputScaling)
     ,("rightPlusExample1", PA.rightPlusExample1 # frame 0.05 # scale outputScaling)

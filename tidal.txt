@@ -733,6 +733,24 @@ There's an "algebra" of patterns where you can combine them with various
 operations, and it'll combine the individual events in some appropriate and
 natural way.
 
+### Patterns as numbers
+
+You can perform many operations on patterns as though they were numbers:
+
+~~~{.ghcisession #numberpatternmin .intpatternexample tidalexpression='min 27 $ fastFromList [11,22,33,44]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+~~~{.ghcisession #numberpatternmax .intpatternexample tidalexpression='max 27 $ fastFromList [11,22,33,44]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+
+
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
 ~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double'  .diagram .insertdiagram}
