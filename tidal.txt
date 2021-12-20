@@ -761,6 +761,12 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
+~~~{.ghcisession #numberpatternmod .intpatternexample tidalexpression='mod (fastFromList [11,22,33,44]) 4' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
 The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
 
 ~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='parseBP_E "1 2 3" |+ parseBP_E "20 40" :: Pattern Double'  .diagram .insertdiagram}
