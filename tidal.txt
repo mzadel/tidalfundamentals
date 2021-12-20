@@ -727,13 +727,7 @@ There are some utility functions to access an event's fields in `Pattern.hs`:
 `eventPartStop`, etc.
 
 
-## Pattern algebra
-
-There's an "algebra" of patterns where you can combine them with various
-operations, and it'll combine the individual events in some appropriate and
-natural way.
-
-### Patterns as numbers
+## Patterns as numbers
 
 You can perform many operations on patterns as though they were numbers:
 
