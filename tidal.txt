@@ -901,6 +901,21 @@ sent out via OSC.)
 These operators are the more general ones that are called into by `|+`, `+|`, etc.
 
 
+## The (#) operator
+
+You see the operator `(#)` in tidal examples a lot, such as `sound "bd*8" # pan
+rand`.  It's an alias for `(|>)`, which is one of the pattern union operators.
+From `Core.hs`:
+
+    -- Backward compatibility - structure from left, values from right.
+    (#) :: Unionable b => Pattern b -> Pattern b -> Pattern b
+    (#) = (|>)
+
+    (|> ) :: Unionable a => Pattern a -> Pattern a -> Pattern a
+    a |>  b = flip union <$> a <* b
+
+So it takes the events from the left pattern, and does the `ValueMap` union
+with the values from the pattern on the right.
 
 
 ## Patterns of patterns
