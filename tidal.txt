@@ -1100,15 +1100,15 @@ turn on implicit string handling with `:set -XOverloadedStrings`.  This will be
 already turned on in tidal proper.  For the examples here I'll include
 `parseBP_E` explicitly for the sake of understanding and driving the point home.
 
+See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for
+further notes on the syntax more examples.
+
 ~~~{.ghcisession #basicpattern tidalexpression='"a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 parseBP_E {{tidalexpression}}
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
-
-See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for notes
-on the syntax of the following examples.
 
 --------------------------------------------------
 
