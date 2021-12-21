@@ -1069,25 +1069,6 @@ You can put a long function expression in a text file with a `.hs` extension
 and load it in a ghci session using `:load` and `:reload` (`:l` and `:r`).
 
 
-## You don't need the s function to examine the internals
-
-You can omit the s function, which is an alias for sound (see `Params.hs`).
-But is seems to only accept certain letters then:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-parseBP_E "t r s"
-~~~
-
-I guess `s` somehow makes the string mini-language accept more tokens.  But anyway, this works:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-parseBP_E "a e g"
-~~~
-
 ## Mini-Notation
 
 You can use the output as above, or `drawLine`:
