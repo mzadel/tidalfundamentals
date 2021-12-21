@@ -1103,12 +1103,34 @@ already turned on in tidal proper.  For the examples here I'll include
 See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for
 further notes on the syntax more examples.
 
+--------------------------------------------------
+
+So the most basic pattern just lists the event values in a string.  They're
+compressed into one cycle, like with `fastFromList`.
+
 ~~~{.ghcisession #basicpattern tidalexpression='"a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 parseBP_E {{tidalexpression}}
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
+
+Some things to note here: the type of the values is inferred from the outer
+type annotation.  To wit:
+
+~~~{.ghcisession tidalexpression='parseBP_E "1 2 3"'}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}} :: Pattern Double
+:t {{tidalexpression}} :: Pattern Double
+{{tidalexpression}} :: Pattern Char
+:t {{tidalexpression}} :: Pattern Char
+{{tidalexpression}} :: Pattern Int
+:t {{tidalexpression}} :: Pattern Int
+~~~
+
+Also, `drawLine` expects a pattern of type `Pattern Char`.  So you can't use it
+to show patterns of strings, for example.
 
 --------------------------------------------------
 
