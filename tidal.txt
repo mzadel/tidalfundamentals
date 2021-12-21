@@ -865,7 +865,7 @@ pattern of arguments.
       (<*>) = applyPatToPatBoth
 
 
-~~~{.ghcisession #applicativeboth .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <*> pure 1 :: Pattern Double' .diagram .insertdiagram}
+~~~{.ghcisession #applicativeboth .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <*> fastFromList [1, 2] :: Pattern Double' .diagram .insertdiagram}
 import Prelude hiding ((<*), (*>))
 import Sound.Tidal.Context
 --cut>>
@@ -877,7 +877,7 @@ a {{operator}} b
 
 There are also the operators `<*` and `*>`, which take the structure from the left and right, respectively.
 
-~~~{.ghcisession #applicativeleft .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <* pure 1 :: Pattern Double' .diagram .insertdiagram}
+~~~{.ghcisession #applicativeleft .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] <* fastFromList [1, 2] :: Pattern Double' .diagram .insertdiagram}
 --cut>>
 import Prelude hiding ((<*), (*>))
 import Sound.Tidal.Context
@@ -886,7 +886,7 @@ b = {{right}}
 a {{operator}} b
 ~~~
 
-~~~{.ghcisession #applicativeright .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] *> pure 1 :: Pattern Double' .diagram .insertdiagram}
+~~~{.ghcisession #applicativeright .applicativeexample tidalexpression='fastFromList [ (2.0*), exp, (max 7) ] *> fastFromList [1, 2] :: Pattern Double' .diagram .insertdiagram}
 import Prelude hiding ((<*), (*>))
 import Sound.Tidal.Context
 a = {{left}}
