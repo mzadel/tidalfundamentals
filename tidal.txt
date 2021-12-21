@@ -1086,7 +1086,19 @@ and load it in a ghci session using `:load` and `:reload` (`:l` and `:r`).
 
 ## Mini-Notation
 
-You can use the output as above, or `drawLine`:
+So this is sort of the main event.  Tidal includes a "mini-notation" for
+succinctly specifying patterns as text strings.  Most of the examples you see
+will start with this format.
+
+It's functionality that sits on top of Sound.Tidal.Pattern and
+Sound.Tidal.Core, so I felt it was less fundamental and left it until now.
+It's defined in `ParseBP.hs`.
+
+So as we saw in 'Starting to look at some expressions' above, expressions like
+`s "bd ~ bd ~"` don't work in ghci by default.  You need to add `parseBP_E` or
+turn on implicit string handling with `:set -XOverloadedStrings`.  This will be
+already turned on in tidal proper.  For the examples here I'll include
+`parseBP_E` explicitly for the sake of understanding and driving the point home.
 
 ~~~{.ghcisession #basicpattern tidalexpression='"a b c"' .diagram .insertdiagram}
 import Sound.Tidal.Context
