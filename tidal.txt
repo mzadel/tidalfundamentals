@@ -1666,3 +1666,28 @@ OSC.
 See <http://tidalcycles.org/docs/reference/sampling/#segment> for an example of
 `segment` which is similar to this.
 
+## Deconstructing longer expressions
+
+We can use the following to check how the expressions are being parenthesized.
+
+    ghci -ddump-splices -XTemplateHaskell -ghci-script tidal-1.7.8/BootTidal.hs
+    ...
+    tidal> $([| s "1 2 3 4" # pan sine # amp square # speed tri |])
+    <interactive>:17:3-55: Splicing expression
+        [| s "1 2 3 4" # pan sine # amp square # speed tri |]
+      ======>
+        (((s "1 2 3 4" # pan sine) # amp square) # speed tri)
+    ...
+
+So it looks like (#) is left associative.
+
+    tidal> $([| slow 3 $ s "1 2 3 4" # pan sine # amp square # speed tri |])
+    <interactive>:24:3-64: Splicing expression
+        [| slow 3 $ s "1 2 3 4" # pan sine # amp square # speed tri |]
+      ======>
+        (slow 3 $ (((s "1 2 3 4" # pan sine) # amp square) # speed tri))
+    ...
+
+And using `slow` in this way operates on everything to its right (which I guess
+is to be expected due to the `$`).
+
