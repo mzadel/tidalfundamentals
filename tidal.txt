@@ -1405,28 +1405,6 @@ that using `speed 1.5` sends the OSC messages that you'd expect.  So the
 scheduler is doing the right thing when it's sending the messages out even
 thought they look surprising in the event list.)
 
-## Layering parameter patterns to build up an event stream
-
-So one reason this is interesting is that you can create individual patterns
-for several parameters and then combine them into one stream of events.
-
-    tidal> putStrLn $ showAll (Arc 0 3) ((s $ "bd sd hh") |+ (pan $ slow 3 $ "0.2 0.5 0.7"))
-    [...](0>⅓)|pan: 0.2f, s: "bd"
-    [...](⅓>⅔)|pan: 0.2f, s: "sd"
-    [...](⅔>1)|pan: 0.2f, s: "hh"
-    [...](1>1⅓)|pan: 0.5f, s: "bd"
-    [...](1⅓>1⅔)|pan: 0.5f, s: "sd"
-    [...](1⅔>2)|pan: 0.5f, s: "hh"
-    [...](2>2⅓)|pan: 0.7f, s: "bd"
-    [...](2⅓>2⅔)|pan: 0.7f, s: "sd"
-    [...](2⅔>3)|pan: 0.7f, s: "hh"
-
-(I manually edited out the context in the square brackets for legibility.  The
-`tidal` prompt comes from running `ghci` with `BootTidal.hs`---see below.)
-
-~~~{.patternalgebraexample #valueAlgebraMapDiagram tidalexpression='(s $ parseBP_E "bd sd hh") |+ (pan $ slow 3 $ parseBP_E "0.2 0.5 0.7") :: Pattern ValueMap' .diagram .insertdiagram}
-~~~
-
 ## `ControlPattern` and `ValueMap`
 
 Tidal examples often start with something like `s $ "sd bd sd bd"`.  If we look
@@ -1513,6 +1491,28 @@ This is combining a string value with key "s" and a float value with key "n".
     e56dd58d.6868e000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.750000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "sd"
 
 So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through several of them.
+
+## Layering parameter patterns to build up an event stream
+
+So one reason this is interesting is that you can create individual patterns
+for several parameters and then combine them into one stream of events.
+
+    tidal> putStrLn $ showAll (Arc 0 3) ((s $ "bd sd hh") |+ (pan $ slow 3 $ "0.2 0.5 0.7"))
+    [...](0>⅓)|pan: 0.2f, s: "bd"
+    [...](⅓>⅔)|pan: 0.2f, s: "sd"
+    [...](⅔>1)|pan: 0.2f, s: "hh"
+    [...](1>1⅓)|pan: 0.5f, s: "bd"
+    [...](1⅓>1⅔)|pan: 0.5f, s: "sd"
+    [...](1⅔>2)|pan: 0.5f, s: "hh"
+    [...](2>2⅓)|pan: 0.7f, s: "bd"
+    [...](2⅓>2⅔)|pan: 0.7f, s: "sd"
+    [...](2⅔>3)|pan: 0.7f, s: "hh"
+
+(I manually edited out the context in the square brackets for legibility.  The
+`tidal` prompt comes from running `ghci` with `BootTidal.hs`---see below.)
+
+~~~{.patternalgebraexample #valueAlgebraMapDiagram tidalexpression='(s $ parseBP_E "bd sd hh") |+ (pan $ slow 3 $ parseBP_E "0.2 0.5 0.7") :: Pattern ValueMap' .diagram .insertdiagram}
+~~~
 
 ## Booting Tidal from ghci
 
