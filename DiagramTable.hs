@@ -17,19 +17,6 @@ import Data.Map (Map,fromList,(!))
 outputScaling :: Double
 outputScaling = 600
 
-colourFunc :: T.Event T.ValueMap -> Int
-colourFunc e = table ! (T.svalue $ T.eventValue e ! "s")
-    where
-        table :: Map String Int
-        table = fromList [
-             ("a", 0)
-            ,("b", 2)
-            ,("c", 1)
-            ,("d", 7)
-            ,("e", 3)
-            ,("f", 4)
-            ,("bd", 0)]
-
 colourStringsFunc :: T.Event String -> Int
 colourStringsFunc e = table ! T.eventValue e
     where
@@ -178,9 +165,9 @@ diagramTableLinear = [
     ,("euclideanrhythm"
     ,(Lin.diagramShowCharValue (T.parseBP_E PE.euclideanrhythmExpr :: T.Pattern Char) 7 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
-    ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.slowoneandahalfExpr 2 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"
-    ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfoneeighthticksExpr 8 3 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue PE.slowoneandahalfoneeighthticksExpr 8 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]

@@ -1342,18 +1342,19 @@ drawLine $ parseBP_E {{tidalexpression}}
 
 Interestingly, `slow` seems to query results on cycle boundaries:
 
-~~~{.ghcisession #slowoneandahalf .spatternexample tidalexpression='slow 1.5 $ parseBP_E "a a b c"' .diagram .insertdiagram}
+~~~{.ghcisession #slowoneandahalf tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
-s $ {{tidalexpression}}
-drawLine $ {{tidalexpression}}
+pat = {{tidalexpression}}
+pat
+drawLine pat
 ~~~
 
 (I'm using `queryArc` and `part` to make the diagrams, so it shows up there as well.)
 
 Using `queryArc` to ask for the events:
 
-~~~{.ghcisession #slowoneandahalfoneeighthticks tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"' .diagram}
+~~~{.ghcisession #slowoneandahalfoneeighthticks tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram}
 import Sound.Tidal.Context
 --cut>>
 queryArc ({{tidalexpression}}) (Arc 0 3)
@@ -1361,23 +1362,23 @@ queryArc ({{tidalexpression}}) (Arc 0 3)
 
 Pulling this apart (manually) and sorting (manually) we get
 
-    (0>⅜)|s: "a"
-    (⅜>¾)|s: "a"
-    (¾>1)-1⅛|s: "b"
-    ¾-(1>1⅛)|s: "b"
-    (1⅛>1½)|s: "c"
-    (1½>1⅞)|s: "a"
-    (1⅞>2)-2¼|s: "a"
-    1⅞-(2>2¼)|s: "a"
-    (2¼>2⅝)|s: "b"
-    (2⅝>3)|s: "c"
+    (0>⅜)|'a',
+    (⅜>¾)|'a',
+    (¾>1)-1⅛|'b',
+    ¾-(1>1⅛)|'b',
+    (1⅛>1½)|'c',
+    (1½>1⅞)|'a',
+    (1⅞>2)-2¼|'a',
+    1⅞-(2>2¼)|'a',
+    (2¼>2⅝)|'b',
+    (2⅝>3)|'c'
 
 ![](slowoneandahalfoneeighthticks.svg)
 
 So it looks like the query is giving back two parts for the first "b" event since it crosses a cycle boundary
 
- - (¾>1)-1⅛|s: "b"
- - ¾-(1>1⅛)|s: "b"
+ - (¾>1)-1⅛|'b'
+ - ¾-(1>1⅛)|'b'
 
 but note that for both `Event`s the `whole` is the same: (¾>1⅛).  (*This* is
 why I take the time to understand how to read the output of these functions...)
@@ -1390,11 +1391,11 @@ too much right now.  (That'll teach me - use round numbers!)
 
 I just found `showAll`, which gives the same info
 
-~~~{.ghcisession tidalexpression='s $ slow 1.5 $ parseBP_E "a a b c"'}
+~~~{.ghcisession tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char'}
 import Sound.Tidal.Context
 --cut>>
 import Sound.Tidal.Show
-putStrLn $ showAll (Arc 0 3) $ {{tidalexpression}}
+putStrLn $ showAll (Arc 0 3) $ ({{tidalexpression}})
 ~~~
 
 Meh, I should just drop it.

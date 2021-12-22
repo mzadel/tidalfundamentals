@@ -29,10 +29,6 @@ function handleDiagramBlock(block)
 
     local tidalexpression = block.attributes["tidalexpression"]
 
-    if shared.arrayContains(block.classes,"spatternexample") then
-        tidalexpression = "s $ " .. tidalexpression
-    end
-
     if shared.arrayContains(block.classes,"intpatternexample") then
         tidalexpression = tidalexpression .. " :: Pattern Int"
     end
