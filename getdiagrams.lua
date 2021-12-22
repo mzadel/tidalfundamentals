@@ -53,21 +53,17 @@ function handleDiagramBlock(block)
     end
 
     if shared.arrayContains(block.classes,"signalsetsparameter") then
-        local leftexpression, operator, rightexpression = string.match(tidalexpression, "%((.+)%) ([%|%+]+) %((.+)%)")
-        local key, segmentedcurve, func = string.match(leftexpression, '(%a+) %$ (segment %d+ %$ (%a+))')
+        local leftexpression, operator, rightexpression = string.match(tidalexpression, "(.+) (%#) (.+)")
+        local key, segmentedcurve, func = string.match(rightexpression, '(%a+) %$ (segment %d+ (%a+))')
 
-        rightexpression = string.gsub(rightexpression, "s $ ", "s $ parseBP_E ", nil, true)
-
-        exp[block.identifier .. "Key"] = key
         exp[block.identifier .. "SegmentedCurve"] = segmentedcurve .. " :: Pattern Double"
         exp[block.identifier .. "SegmentedCurveString"] = '"' .. segmentedcurve .. '"'
         exp[block.identifier .. "Function"] = func .. " :: Pattern Double"
-        exp[block.identifier .. "OperatorString"] = '"' .. operator .. '"'
-        exp[block.identifier .. "Right"] = rightexpression
 
         exp[block.identifier .. "String"] = '"' .. string.gsub(tidalexpression, '"', '\\"', nil, true) .. '"'
 
-        tidalexpression = string.gsub(tidalexpression, "s $ ", "s $ parseBP_E ", nil, true)
+        leftexpression = string.gsub(leftexpression, "s \"", "s $ parseBP_E \"", nil, true)
+        tidalexpression = "(" .. leftexpression .. ") " .. operator .. " " .. rightexpression
     end
 
     if shared.arrayContains(block.classes,"queryexample") then

@@ -1599,17 +1599,19 @@ Use this to prevent the handshake messages from showing up:
 Tidal also has continuous patterns, like `sine`:
 
 
-~~~{.tidalsession}
-putStrLn $ showAll (Arc 0 0) $ pan sine
-putStrLn $ showAll (Arc 0.1 0.1) $ pan sine
-putStrLn $ showAll (Arc 0.2 0.2) $ pan sine
-putStrLn $ showAll (Arc 0.25 0.25) $ pan sine
-putStrLn $ showAll (Arc 0.5 0.5) $ pan sine
-putStrLn $ showAll (Arc 0.75 0.75) $ pan sine
-putStrLn $ showAll (Arc 1.0 1.0) $ pan sine
-putStrLn $ showAll (Arc 1.25 1.25) $ pan sine
-putStrLn $ showAll (Arc 1.5 1.5) $ pan sine
-putStrLn $ showAll (Arc 1.75 1.75) $ pan sine
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+queryArc (pan sine) (0 :: Arc)
+queryArc (pan sine) (0.1 :: Arc)
+queryArc (pan sine) (0.2 :: Arc)
+queryArc (pan sine) (0.25 :: Arc)
+queryArc (pan sine) (0.5 :: Arc)
+queryArc (pan sine) (0.75 :: Arc)
+queryArc (pan sine) (1.0 :: Arc)
+queryArc (pan sine) (1.25 :: Arc)
+queryArc (pan sine) (1.5 :: Arc)
+queryArc (pan sine) (1.75 :: Arc)
 ~~~
 
 So it varies continuously.
@@ -1621,14 +1623,17 @@ These continuous patterns are implemented via `sig` in `Core.hs`
     -- | Takes a function from time to values, and turns it into a 'Pattern'.
     sig :: (Time -> a) -> Pattern a
 
-When you query over an arc, it apparently gives back the whole arc as the
-event extents.
+When you query over an arc, it gives back the whole arc as the event part
+extents.  It has no whole.
 
 ~~~{.tidalsession}
-queryArc (pan sine) (Arc 0.5 2)
+e = head $ queryArc (pan sine) (Arc 0.5 2)
+whole e
+part e
+value e
 ~~~
 
-NB: `sig` evaluates the continuous function in the *middle* of the query arc!
+NB: `sig` evaluates the continuous function in the *middle* of the query arc:
 
 ~~~{.tidalsession #sigEvaluatesAtMiddle .signalsamplingexample tidalexpression='queryArc (pan sine) (Arc 0.5 0.7)' .diagram .insertdiagram}
 {{tidalexpression}}
@@ -1640,27 +1645,16 @@ queryArc (pan sine) (Arc 0.6 0.6)
 I want to try taking the panning value for each event of a pattern from a
 second continuous signal.
 
-This doesn't do what you (I) might expect, given pattern algebra:
-
 ~~~{.tidalsession}
-(s $ "a b c d") + (pan $ sine)
+s "a b c d" # pan sine
 ~~~
 
-since
+It's sampling the sine in the middle of each event.
 
-~~~{.tidalsession}
-pure sine
-pan $ sine
-~~~
-
-(I thought it might be misguided to try to do this with pattern algebra in the
-first place since pattern algebra seems to assume discrete patterns, but it
-seems that this is one way to get values out of continuous patterns.)
-
-You need to use the `segment` function to first sample the continuous pattern
+You can use the `segment` function to first sample the continuous pattern
 before applying it to the notes:
 
-~~~{.tidalsession #sigToSetPanning .signalsetsparameter tidalexpression='(pan $ segment 7 $ sine) +| (s $ "a b c d")' .diagram .insertdiagram}
+~~~{.tidalsession #sigToSetPanning .signalsetsparameter tidalexpression='s "a b c d" # (pan $ segment 7 sine)' .diagram .insertdiagram}
 {{tidalexpression}}
 filterEvents eventHasOnset $ {{tidalexpression}}
 ~~~
@@ -1669,16 +1663,6 @@ I confirmed with `oscdump` that this is effectively only applying the panning
 value at each note onset.  The events without onsets don't get sent out over
 OSC.
 
-So you need to turn the continuous ("analog") signal into a discrete
-("digital") one before you can use `+|`.  Also note that here I used the plus
-that takes the events from the right argument so that I get notes out, and not
-one note per segment of the sampled sine wave.
-
 See <http://tidalcycles.org/docs/reference/sampling/#segment> for an example of
-`segment` which is close to this.
-
-(I looked into the code for `segment` but it was kind of hard to understand at
-this point.  It calls into `tParam`, which is a general internal helper
-function; `tParam` creates a pattern of patterns and then flattens
-(`innerJoin`s) it.)
+`segment` which is similar to this.
 
