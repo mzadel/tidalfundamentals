@@ -1115,8 +1115,8 @@ parseBP_E {{tidalexpression}} :: Pattern Char
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
-Some things to note here: the type of the values is inferred from the outer
-type annotation.  To wit:
+There are some things to note here.  The type of the values is inferred from
+the outer type annotation.  To wit:
 
 ~~~{.ghcisession tidalexpression='parseBP_E "1 2 3"'}
 import Sound.Tidal.Context
@@ -1127,12 +1127,32 @@ import Sound.Tidal.Context
 {{tidalexpression}} :: Pattern Int
 ~~~
 
+If you don't give a type hint, it'll fall back to a default type for the
+values.
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+:set +t
+--cut>>
+parseBP_E "e f g"
+~~~
+
+If you omit the type hint some characters just don't work.
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+:set +t
+--cut>>
+parseBP_E "j k l" :: Pattern Char
+parseBP_E "j k l"
+~~~
+
 Also, `drawLine` expects a pattern of type `Pattern Char`.  So you can't use it
 to show patterns of strings, for example.
 
 --------------------------------------------------
 
-Tilde is a rest:
+Onwards with more mini-notation.  Tilde is a rest:
 
 ~~~{.ghcisession #tildeisarest tidalexpression='"b ~ b ~"' .diagram}
 import Sound.Tidal.Context
