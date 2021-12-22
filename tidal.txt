@@ -1121,12 +1121,10 @@ type annotation.  To wit:
 ~~~{.ghcisession tidalexpression='parseBP_E "1 2 3"'}
 import Sound.Tidal.Context
 --cut>>
+:set +t
 {{tidalexpression}} :: Pattern Double
-:t {{tidalexpression}} :: Pattern Double
 {{tidalexpression}} :: Pattern Char
-:t {{tidalexpression}} :: Pattern Char
 {{tidalexpression}} :: Pattern Int
-:t {{tidalexpression}} :: Pattern Int
 ~~~
 
 Also, `drawLine` expects a pattern of type `Pattern Char`.  So you can't use it
