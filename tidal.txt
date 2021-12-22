@@ -1340,7 +1340,8 @@ drawLine $ parseBP_E {{tidalexpression}}
 
 ## Querying across cycle boundaries
 
-Interestingly, `slow` seems to query results on cycle boundaries:
+Interestingly, `slow 1.5` shows that it seems to split queries on cycle
+boundaries:
 
 ~~~{.ghcisession #slowoneandahalf tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram .insertdiagram}
 import Sound.Tidal.Context
@@ -1380,8 +1381,7 @@ So it looks like the query is giving back two parts for the first "b" event sinc
  - (¾>1)-1⅛|'b'
  - ¾-(1>1⅛)|'b'
 
-but note that for both `Event`s the `whole` is the same: (¾>1⅛).  (*This* is
-why I take the time to understand how to read the output of these functions...)
+but note that for both `Event`s the `whole` is the same: (¾>1⅛).
 I think it'll still only play the one note even though the result of `queryArc`
 seems 'wrong' here.
 
