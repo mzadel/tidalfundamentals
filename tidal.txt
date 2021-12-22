@@ -1482,9 +1482,7 @@ From  [`SuperDirt/classes/DirtEvent.sc`](https://github.com/musikinformatik/Supe
 
 So the key `s` refers to the synth or sample to use.
 
-The `s` that we have been using is an alias for `sound`, which I guess selects
-a sound sample from the set of named samples.  It's defined in
-`src/Sound/Tidal/Params.hs`.
+`s` is an alias for `sound`.  It's defined in `src/Sound/Tidal/Params.hs`.
 
     s :: Pattern String -> ControlPattern
     s = sound
@@ -1492,72 +1490,29 @@ a sound sample from the set of named samples.  It's defined in
     sound :: Pattern String -> ControlPattern
     sound = grp [mS "s", mF "n"]
 
-So `sound` contains a string "s" parameter and a float "n" parameter.
-I believe it's the sound name and the note/sample number.
-(So for e.g. bass drum samples, there are several bass drums to choose from.)
+This is combining a string value with key "s" and a float value with key "n".
 
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-:t sound
-:t s
-:t sound . parseBP_E
-sound $ parseBP_E "a b c d"
-:t sound $ parseBP_E "a b c d"
-~~~
+`d1 $ s "sd bd hh"` sends this over OSC:
 
-There's also `n` (`src/Sound/Tidal/Params.hs`):
+    e56dd4d3.2f855800 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 79.000000 "delta" 0.592592 "orbit" 0 "s" "sd"
+    e56dd4d3.c7397800 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 79.333336 "delta" 0.592593 "orbit" 0 "s" "bd"
+    e56dd4d4.5eeda000 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 79.666664 "delta" 0.592593 "orbit" 0 "s" "hh"
+    e56dd4d4.f6a1c800 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 80.000000 "delta" 0.592593 "orbit" 0 "s" "sd"
+    e56dd4d5.8e55f000 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 80.333336 "delta" 0.592592 "orbit" 0 "s" "bd"
+    e56dd4d6.260a1000 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 80.666664 "delta" 0.592593 "orbit" 0 "s" "hh"
 
-    -- | The note or sample number to choose for a synth or sampleset
-    n :: Pattern Note -> ControlPattern
-    n = pN "n"
+`d1 $ s "sd sd:1 sd:2 sd:3"` sends this over OSC:
 
-(I started to chase these functions around but it got kind of hairy for my
-level of understanding.  I'll have to live with trying to understand things
-from the code comments.)
+    e56dd58a.4bf71800 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 182.000000 "delta" 0.444445 "orbit" 0 "s" "sd"
+    e56dd58a.bdbe3800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 182.250000 "delta" 0.444445 "n" 1.000000 "orbit" 0 "s" "sd"
+    e56dd58b.2f855800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 182.500000 "delta" 0.444444 "n" 2.000000 "orbit" 0 "s" "sd"
+    e56dd58b.a14c7000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 182.750000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "sd"
+    e56dd58c.13139000 /dirt/play sssfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.000000 "delta" 0.444444 "orbit" 0 "s" "sd"
+    e56dd58c.84daa800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.250000 "delta" 0.444445 "n" 1.000000 "orbit" 0 "s" "sd"
+    e56dd58c.f6a1c800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.500000 "delta" 0.444444 "n" 2.000000 "orbit" 0 "s" "sd"
+    e56dd58d.6868e000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.750000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "sd"
 
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-:t n . parseBP_E
-n $ parseBP_E "1 2 3 4"
-:t n $ parseBP_E "1 2 3 4"
-~~~
-
-(I think `unNote` is the field name that you would call to extract the float
-value from a note.)
-
-So I think what you can do is combine `sound` and `n` patterns into one
-`ControlPattern`.  So starting with these expressions:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-s $ parseBP_E "a b c d"
-:t s $ parseBP_E "a b c d"
-n $ parseBP_E "1 2 3 4"
-:t n $ parseBP_E "1 2 3 4"
-~~~
-
-here are two ways to do the set the sample number for each event:
-
-~~~{.ghcisession}
-import Sound.Tidal.Context
---cut>>
-s $ parseBP_E "a:1 b:2 c:3 d:4"
-:t s $ parseBP_E "a:1 b:2 c:3 d:4"
-(s $ parseBP_E "a b c d") |> (n $ parseBP_E "1 2 3 4")
-:t (s $ parseBP_E "a b c d") |> (n $ parseBP_E "1 2 3 4")
-~~~
-
-It seems to me that these are equivalent since `type ControlPattern = Pattern ValueMap`.
-I verified that they are equivalent looking at the OSC messages that get sent
-out---they're the same in both cases.
-
-    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.000000 "delta" 0.444444 "n" 1.000000 "orbit" 0 "s" "a"
-    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.250000 "delta" 0.444445 "n" 2.000000 "orbit" 0 "s" "b"
-    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.500000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "c"
-    /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 13.750000 "delta" 0.444444 "n" 4.000000 "orbit" 0 "s" "d"
+So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through several of them.
 
 ## Booting Tidal from ghci
 
