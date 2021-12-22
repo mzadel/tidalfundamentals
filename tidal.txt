@@ -1427,24 +1427,70 @@ for several parameters and then combine them into one stream of events.
 ~~~{.patternalgebraexample #valueAlgebraMapDiagram tidalexpression='(s $ parseBP_E "bd sd hh") |+ (pan $ slow 3 $ parseBP_E "0.2 0.5 0.7") :: Pattern ValueMap' .diagram .insertdiagram}
 ~~~
 
-## More pattern types
+## `ControlPattern` and `ValueMap`
+
+Tidal examples often start with something like `s $ "sd bd sd bd"`.  If we look
+at its type:
+
+~~~{.ghcisession tidalexpression='s $ parseBP_E "sd bd sd bd"'}
+import Sound.Tidal.Context
+--cut>>
+pat = {{tidalexpression}}
+pat
+:t pat
+~~~
+
+A `ControlPattern` is a pattern that contains events whose values are maps with
+key/value pairs.  It is defined in `src/Sound/Tidal/Pattern.hs`
+
+    type ControlPattern = Pattern ValueMap
+
+    type ValueMap = Map.Map String Value
+
+    data Value = VS { svalue :: String   }
+               | VF { fvalue :: Double   }
+               | VN { nvalue :: Note     }
+               ...
+
+So each event in the pattern has a value of type `ValueMap`.  As I understand
+it, the idea is that the various keys in the `ValueMap` get inserted into the
+outgoing OSC message.  The particular keys to use are defined by SuperDirt, so
+this is the point where we need to factor in how SuperDirt works.
+
+From  [`SuperDirt/classes/DirtEvent.sc`](https://github.com/musikinformatik/SuperDirt/blob/master/classes/DirtEvent.sc):
+
+    DirtEvent {
+        ...
+
+        play {
+            event.parent = orbit.defaultParentEvent;
+            event.use {
+                // s and n stand for synth/sample and note/number
+                ~s ?? { this.splitName };
+                ...
+        }
+        ...
+    }
+
+	splitName {
+		var s, n;
+		#s, n = ~sound.asString.split($:);
+		~s = s.asSymbol;
+		~n = if(n.notNil) { n.asFloat } { 0.0 };
+	}
+
+
+So the key `s` refers to the synth or sample to use.
 
 The `s` that we have been using is an alias for `sound`, which I guess selects
 a sound sample from the set of named samples.  It's defined in
 `src/Sound/Tidal/Params.hs`.
 
-    sound :: Pattern String -> ControlPattern
-    sound = grp [mS "s", mF "n"]
-
     s :: Pattern String -> ControlPattern
     s = sound
 
-A `ControlPattern` is a pattern that contains events with a map of values in
-them.  It is defined in `src/Sound/Tidal/Pattern.hs`
-
-    type ControlPattern = Pattern ValueMap
-
-    type ValueMap = Map.Map String Value
+    sound :: Pattern String -> ControlPattern
+    sound = grp [mS "s", mF "n"]
 
 So `sound` contains a string "s" parameter and a float "n" parameter.
 I believe it's the sound name and the note/sample number.
