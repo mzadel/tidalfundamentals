@@ -1404,44 +1404,6 @@ that using `speed 1.5` sends the OSC messages that you'd expect.  So the
 scheduler is doing the right thing when it's sending the messages out even
 thought they look surprising in the event list.)
 
-## Pattern types
-
-`Pattern` has a type parameter that specifies the kind of data contained in
-each event:
-
-    Prelude Sound.Tidal.Context> :k Pattern
-    Pattern :: * -> *
-
-    -- | A datatype representing events taking place over time
-    data Pattern a = Pattern {query :: State -> [Event a]}
-
-The basic `parseBP_E` function goes from a string to a pattern without a
-concrete type variable:
-
-~~~{.ghcisession tidalexpression='parseBP_E "a b c d"'}
-import Sound.Tidal.Context
---cut>>
-:t parseBP_E
-{{tidalexpression}}
-:t {{tidalexpression}}
-~~~
-
-
-
-You can define a pattern containing events which contain various basic types by
-giving the expression the concrete type:
-
-~~~{.ghcisession tidalexpression='parseBP_E "1 2 3"'}
-import Sound.Tidal.Context
---cut>>
-{{tidalexpression}} :: Pattern Double
-:t {{tidalexpression}} :: Pattern Double
-{{tidalexpression}} :: Pattern Char
-:t {{tidalexpression}} :: Pattern Char
-{{tidalexpression}} :: Pattern Int
-:t {{tidalexpression}} :: Pattern Int
-~~~
-
 ## Layering parameter patterns to build up an event stream
 
 So one reason this is interesting is that you can create individual patterns
