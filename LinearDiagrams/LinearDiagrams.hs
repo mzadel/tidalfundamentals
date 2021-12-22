@@ -1,5 +1,5 @@
 
-module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramFromWholes) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramWithLanesShowChar,diagramFromWholes) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -71,6 +71,9 @@ diagramWithLanesLabeledFromSValue = diagramWithLanes getLabel
     where
         getLabel :: T.Event T.ValueMap -> String
         getLabel e = T.svalue $ T.eventValue e M.! "s"
+
+diagramWithLanesShowChar :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> (T.Event Char -> Int) -> Diagram B
+diagramWithLanesShowChar = diagramWithLanes (charToString . T.eventValue)
 
 diagramFromWholes :: (a -> String) -> T.Pattern a -> Rational -> Diagram B
 diagramFromWholes formatLabel tidalPattern queryEnd =

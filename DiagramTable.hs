@@ -49,6 +49,7 @@ colourCharsFunc e = table ! T.eventValue e
             ,('c', 1)
             ,('d', 7)
             ,('e', 3)
+            ,('f', 4)
             ,('j', 6)
             ,('k', 4)
             ,('l', 5)
@@ -73,27 +74,27 @@ laneCharsFunc e = table ! T.eventValue e
 constColour :: Int -> T.Event a -> Int
 constColour colourindex _ = colourindex
 
-laneFunc :: T.Event T.ValueMap -> Int
-laneFunc e = table ! (T.svalue $ T.eventValue e ! "s")
+laneFunc :: T.Event Char -> Int
+laneFunc e = table ! T.eventValue e
     where
-        table :: Map String Int
+        table :: Map Char Int
         table = fromList [
-             ("a", 0)
-            ,("b", 0)
-            ,("c", 0)
-            ,("d", 1)
-            ,("e", 1)]
+             ('a', 0)
+            ,('b', 0)
+            ,('c', 0)
+            ,('d', 1)
+            ,('e', 1)]
 
-laneFunc2 :: T.Event T.ValueMap -> Int
-laneFunc2 e = table ! (T.svalue $ T.eventValue e ! "s")
+laneFunc2 :: T.Event Char -> Int
+laneFunc2 e = table ! T.eventValue e
     where
-        table :: Map String Int
+        table :: Map Char Int
         table = fromList [
-             ("a", 1)
-            ,("b", 1)
-            ,("c", 1)
-            ,("d", 0)
-            ,("e", 0)]
+             ('a', 1)
+            ,('b', 1)
+            ,('c', 1)
+            ,('d', 0)
+            ,('e', 0)]
 
 basicsTable :: [(String, Diagram B)]
 basicsTable = [
@@ -143,39 +144,39 @@ basicsTable = [
     ,(Lin.diagramShowCharValue PE.rotRwithfastGapExpr 8 1 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
-patternTable :: [(String, (T.Pattern T.ValueMap, Integer))]
+patternTable :: [(String, (T.Pattern Char, Integer))]
 patternTable = [
-    ("basicpattern", (T.s $ T.parseBP_E PE.basicpatternExpr, 3))
-    ,("tildeisarest", (PE.tildeisarestExpr, 4))
-    ,("underscoreelongates", (PE.underscoreelongatesExpr, 3))
-    ,("atelongates", (PE.atelongatesExpr, 4))
-    ,("repeateventasterisk", (PE.repeateventasteriskExpr, 4))
-    ,("repeateventbang", (PE.repeateventbangExpr, 3))
-    ,("squarebrackets", (PE.squarebracketsExpr, 4))
-    ,("thedot", (PE.thedotExpr, 4))
+    ("basicpattern", (T.parseBP_E PE.basicpatternExpr :: T.Pattern Char, 3))
+    ,("tildeisarest", (T.parseBP_E PE.tildeisarestExpr :: T.Pattern Char, 4))
+    ,("underscoreelongates", (T.parseBP_E PE.underscoreelongatesExpr :: T.Pattern Char, 3))
+    ,("atelongates", (T.parseBP_E PE.atelongatesExpr :: T.Pattern Char, 4))
+    ,("repeateventasterisk", (T.parseBP_E PE.repeateventasteriskExpr :: T.Pattern Char, 4))
+    ,("repeateventbang", (T.parseBP_E PE.repeateventbangExpr :: T.Pattern Char, 3))
+    ,("squarebrackets", (T.parseBP_E PE.squarebracketsExpr :: T.Pattern Char, 4))
+    ,("thedot", (T.parseBP_E PE.thedotExpr :: T.Pattern Char, 4))
     ]
 
-diagramEntry :: (String, (T.Pattern T.ValueMap, Integer)) -> (String, Diagram B)
+diagramEntry :: (String, (T.Pattern Char, Integer)) -> (String, Diagram B)
 diagramEntry (label, (pat, numticks)) = (label, diagram)
     where
-        diagram = Cir.diagramLabeledFromSValue pat numticks colourFunc # frame 0.05 # scale outputScaling
+        diagram = Cir.diagramShowCharValue pat numticks colourCharsFunc # frame 0.05 # scale outputScaling
 
 diagramTableLinear :: [(String, Diagram B)]
 diagramTableLinear = [
     ("commaforparallel"
-    ,(Lin.diagramWithLanesLabeledFromSValue PE.commaforparallelExpr 4 1 laneFunc colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesShowChar (T.parseBP_E PE.commaforparallelExpr :: T.Pattern Char) 4 1 laneFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("polymetricbraces"
-    ,(Lin.diagramWithLanesLabeledFromSValue PE.polymetricbracesExpr 3 3 laneFunc colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesShowChar (T.parseBP_E PE.polymetricbracesExpr :: T.Pattern Char) 3 3 laneFunc colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("polymetricbracesotherorder"
-    ,(Lin.diagramWithLanesLabeledFromSValue PE.polymetricbracesotherorderExpr 2 3 laneFunc2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramWithLanesShowChar (T.parseBP_E PE.polymetricbracesotherorderExpr :: T.Pattern Char) 2 3 laneFunc2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyeight"
-    ,(Lin.diagramLabeledFromSValue PE.polymetricdividebyeightExpr 8 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue (T.parseBP_E PE.polymetricdividebyeightExpr :: T.Pattern Char) 8 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("polymetricdividebyseven"
-    ,(Lin.diagramLabeledFromSValue PE.polymetricdividebysevenExpr 7 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue (T.parseBP_E PE.polymetricdividebysevenExpr :: T.Pattern Char) 7 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("anglebrackets"
-    ,(Lin.diagramLabeledFromSValue PE.anglebracketsExpr 3 4 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue (T.parseBP_E PE.anglebracketsExpr :: T.Pattern Char) 3 4 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("euclideanrhythm"
-    ,(Lin.diagramLabeledFromSValue PE.euclideanrhythmExpr 7 2 colourFunc) # frame 0.05 # scale outputScaling)
+    ,(Lin.diagramShowCharValue (T.parseBP_E PE.euclideanrhythmExpr :: T.Pattern Char) 7 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
     ,(Lin.diagramLabeledFromSValue PE.slowoneandahalfExpr 2 3 colourFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalfoneeighthticks"

@@ -1,7 +1,8 @@
 
-module CircularDiagrams (diagramLabeledFromSValue,diagramShowValue) where
+module CircularDiagrams (diagramLabeledFromSValue,diagramShowValue,diagramShowCharValue) where
 
 import Shared
+import LinearDiagrams.Shared (charToString)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow (arrowFromLocatedTrail)
@@ -109,4 +110,7 @@ diagramLabeledFromSValue = diagram getLabel
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> (T.Event a -> Int) -> Diagram B
 diagramShowValue = diagram (show . T.eventValue)
+
+diagramShowCharValue :: T.Pattern Char -> Integer -> (T.Event Char -> Int) -> Diagram B
+diagramShowCharValue = diagram (charToString . T.eventValue)
 
