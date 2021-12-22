@@ -38,7 +38,7 @@ function handleDiagramBlock(block)
     end
 
     if shared.arrayContains(block.classes,"patternalgebraexample") then
-        local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+) +([%|%+]+) +(.+) +:: +(.+)")
+        local left, operator, right, patterntypesignature = string.match(tidalexpression, "(.+) +([%|%+%#]+) +(.+) +:: +(.+)")
 
         exp[block.identifier .. "OperatorString"] = '"' .. operator .. '"'
         exp[block.identifier .. "Left"] = left .. ' :: ' .. patterntypesignature
