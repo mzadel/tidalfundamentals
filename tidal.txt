@@ -1473,18 +1473,12 @@ So for e.g. snare drum samples, there are several snare drums to choose from, an
 So one reason this is interesting is that you can create individual patterns
 for several parameters and then combine them into one stream of events.
 
-    Prelude Sound.Tidal.Context> putStrLn $ showAll (Arc 0 3) $ (s $ parseBP_E "bd sd hh") # (slow 3 $ pan $ parseBP_E "0.2 0.5 0.7")
-    [...](0>⅓)|pan: 0.2f, s: "bd"
-    [...](⅓>⅔)|pan: 0.2f, s: "sd"
-    [...](⅔>1)|pan: 0.2f, s: "hh"
-    [...](1>1⅓)|pan: 0.5f, s: "bd"
-    [...](1⅓>1⅔)|pan: 0.5f, s: "sd"
-    [...](1⅔>2)|pan: 0.5f, s: "hh"
-    [...](2>2⅓)|pan: 0.7f, s: "bd"
-    [...](2⅓>2⅔)|pan: 0.7f, s: "sd"
-    [...](2⅔>3)|pan: 0.7f, s: "hh"
-
-(I manually edited out the context in the square brackets for legibility.)
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+stripContext = setContext $ Context []
+putStrLn $ showAll (Arc 0 3) $ stripContext $ (s $ parseBP_E "bd sd hh") # (slow 3 $ pan $ parseBP_E "0.2 0.5 0.7")
+~~~
 
 ~~~{.patternalgebraexample #valueAlgebraMapDiagram tidalexpression='(s $ parseBP_E "bd sd hh") # (slow 3 $ pan $ parseBP_E "0.2 0.5 0.7") :: Pattern ValueMap' .diagram .insertdiagram}
 ~~~
