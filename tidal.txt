@@ -1401,6 +1401,7 @@ key/value pairs.  It is defined in `src/Sound/Tidal/Pattern.hs`
 
     type ValueMap = Map.Map String Value
 
+    -- | Polymorphic values
     data Value = VS { svalue :: String   }
                | VF { fvalue :: Double   }
                | VN { nvalue :: Note     }
