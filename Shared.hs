@@ -3,7 +3,6 @@ module Shared where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet (Brightness,d3Colors2)
 import Data.Ratio
 import qualified Data.Map as M (toList)
 import GHC.Float (formatRealFloat, FFFormat(FFGeneric, FFFixed))
@@ -31,9 +30,6 @@ linearDiagramVerticalPadding = 0.01
 
 tickMarkLocations :: Rational -> Rational -> [Rational]
 tickMarkLocations tickDivision endTickLoc = [0,tickDivision..endTickLoc]
-
-style :: Brightness -> Int -> Diagram B -> Diagram B
-style brightness colourindex = lw none $ fc $ d3Colors2 brightness colourindex
 
 curveValueAtTime :: T.Pattern a -> T.Time -> a
 curveValueAtTime ctspattern t = T.eventValue $ head events

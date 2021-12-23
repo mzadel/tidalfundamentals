@@ -6,7 +6,7 @@ import LinearDiagrams.Shared (charToString)
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import Diagrams.TwoD.Arrow (arrowFromLocatedTrail)
-import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
+import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M ((!))
@@ -98,9 +98,9 @@ diagram formatLabel tidalPattern numTicks colourFunc =
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
         wedgeStyles :: ZipList (Diagram B -> Diagram B)
-        wedgeStyles = style Dark <$> colours
+        wedgeStyles = (lw none . fc . d3Colors2 Dark) <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = style Light <$> colours
+        labelStyles = (lw none . fc . d3Colors2 Light) <$> colours
 
 diagramLabeledFromSValue :: T.ControlPattern -> Integer -> (T.Event T.ValueMap -> Int) -> Diagram B
 diagramLabeledFromSValue = diagram getLabel

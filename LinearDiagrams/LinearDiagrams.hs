@@ -5,7 +5,7 @@ import Shared
 import LinearDiagrams.Shared
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
-import Data.Colour.Palette.ColorSet (Brightness(Light,Dark))
+import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
 import qualified Data.Map as M ((!))
@@ -45,9 +45,9 @@ diagramWithLanes formatLabel tidalPattern ticksPerCycle queryEnd laneFunc colour
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
         boxStyles :: ZipList (Diagram B -> Diagram B)
-        boxStyles = style Dark <$> colours
+        boxStyles = (lw none . fc . d3Colors2 Dark) <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
-        labelStyles = style Light <$> colours
+        labelStyles = (lw none . fc . d3Colors2 Light) <$> colours
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLane <$> lanes
 
