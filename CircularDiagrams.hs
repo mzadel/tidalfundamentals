@@ -1,5 +1,5 @@
 
-module CircularDiagrams (diagramLabeledFromSValue,diagramShowValue,diagramShowCharValue) where
+module CircularDiagrams (diagramShowValue,diagramShowCharValue) where
 
 import Shared
 import LinearDiagrams.Shared (charToString)
@@ -9,7 +9,6 @@ import Diagrams.TwoD.Arrow (arrowFromLocatedTrail)
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import qualified Data.Map as M ((!))
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 radiusOfUnitCircumfrenceCircle :: Double
@@ -101,12 +100,6 @@ diagram formatLabel tidalPattern numTicks colourFunc =
         wedgeStyles = (lw none . fc . d3Colors2 Dark) <$> colours
         labelStyles :: ZipList (Diagram B -> Diagram B)
         labelStyles = (lw none . fc . d3Colors2 Light) <$> colours
-
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramLabeledFromSValue = diagram getLabel
-    where
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e M.! "s"
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> (T.Event a -> Int) -> Diagram B
 diagramShowValue = diagram (show . T.eventValue)

@@ -1,5 +1,5 @@
 
-module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramLabeledFromSValue,diagramShowCharValue,diagramWithLanesLabeledFromSValue,diagramWithLanesShowChar,diagramFromWholes) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramShowCharValue,diagramWithLanesShowChar,diagramFromWholes) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -8,7 +8,6 @@ import Diagrams.Backend.SVG.CmdLine
 import Data.Colour.Palette.ColorSet (Brightness(Light,Dark),d3Colors2)
 import qualified Sound.Tidal.Context as T
 import Data.Ratio
-import qualified Data.Map as M ((!))
 import Control.Applicative (ZipList(ZipList,getZipList))
 
 diagramShowValue :: (Show a) => T.Pattern a -> Integer -> Rational -> (T.Event a -> Int) -> Diagram B
@@ -51,11 +50,6 @@ diagramWithLanes formatLabel tidalPattern ticksPerCycle queryEnd laneFunc colour
         laneTranslations :: ZipList (Diagram B -> Diagram B)
         laneTranslations = moveToLane <$> lanes
 
-diagramLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramLabeledFromSValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanesLabeledFromSValue tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
-    where
-        laneFunc _ = 0
-
 diagramShowCharValue :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> Diagram B
 diagramShowCharValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWithLanes showFunction tidalPattern ticksPerCycle queryEnd laneFunc colourFunc
     where
@@ -65,12 +59,6 @@ diagramShowCharValue tidalPattern ticksPerCycle queryEnd colourFunc = diagramWit
 -- lanes are numbered from zero, starting at the top
 moveToLane :: Int -> Diagram B -> Diagram B
 moveToLane lane = translateY ((fromIntegral $ -lane) * eventWidth)
-
-diagramWithLanesLabeledFromSValue :: T.ControlPattern -> Integer -> Rational -> (T.Event T.ValueMap -> Int) -> (T.Event T.ValueMap -> Int) -> Diagram B
-diagramWithLanesLabeledFromSValue = diagramWithLanes getLabel
-    where
-        getLabel :: T.Event T.ValueMap -> String
-        getLabel e = T.svalue $ T.eventValue e M.! "s"
 
 diagramWithLanesShowChar :: T.Pattern Char -> Integer -> Rational -> (T.Event Char -> Int) -> (T.Event Char -> Int) -> Diagram B
 diagramWithLanesShowChar = diagramWithLanes (charToString . T.eventValue)
