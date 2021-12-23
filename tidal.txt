@@ -1487,7 +1487,7 @@ This is a little more succinct to express in Tidal proper.  You can write it as
 
     tidal> s "bd sd hh" # (slow 3 $ pan "0.2 0.5 0.7")
 
-or probably better
+or
 
     tidal> s "bd sd hh" # pan "{0.2 0.5 0.7}%1"
 
