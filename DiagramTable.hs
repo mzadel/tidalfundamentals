@@ -166,8 +166,6 @@ diagramTableLinear = [
     ,(Lin.diagramShowCharValue (T.parseBP_E PE.euclideanrhythmExpr :: T.Pattern Char) 7 2 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ,("slowoneandahalf"
     ,(Lin.diagramShowCharValue PE.slowoneandahalfExpr 2 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
-    ,("slowoneandahalfoneeighthticks"
-    ,(Lin.diagramShowCharValue PE.slowoneandahalfoneeighthticksExpr 8 3 colourCharsFunc) # frame 0.05 # scale outputScaling)
     ]
 
 diagramTablePatternAlgebra :: [(String, Diagram B)]

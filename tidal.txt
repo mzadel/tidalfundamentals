@@ -1338,72 +1338,48 @@ parseBP_E {{tidalexpression}} :: Pattern Char
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
-## Querying across cycle boundaries
+## Querying events crossing cycle boundaries
 
-Interestingly, `slow 1.5` shows that it seems to split queries on cycle
-boundaries:
+Interestingly, querying a `slow 1.5` expression shows that it apparently splits
+events at cycle boundaries:
 
 ~~~{.ghcisession #slowoneandahalf tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 pat = {{tidalexpression}}
-pat
 drawLine pat
+stripContext = setContext $ Context []
+putStrLn $ showAll (Arc 0 3) (stripContext pat)
 ~~~
 
-(I'm using `queryArc` and `part` to make the diagrams, so it shows up there as well.)
+(`stripContext` is copied from `TestUtils.hs`.)
 
-Using `queryArc` to ask for the events:
-
-~~~{.ghcisession #slowoneandahalfoneeighthticks tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram}
-import Sound.Tidal.Context
---cut>>
-queryArc ({{tidalexpression}}) (Arc 0 3)
-~~~
-
-Pulling this apart (manually) and sorting (manually) we get
-
-    (0>⅜)|'a',
-    (⅜>¾)|'a',
-    (¾>1)-1⅛|'b',
-    ¾-(1>1⅛)|'b',
-    (1⅛>1½)|'c',
-    (1½>1⅞)|'a',
-    (1⅞>2)-2¼|'a',
-    1⅞-(2>2¼)|'a',
-    (2¼>2⅝)|'b',
-    (2⅝>3)|'c'
-
-![](slowoneandahalfoneeighthticks.svg)
-
-So it looks like the query is giving back two parts for the first "b" event since it crosses a cycle boundary
+Events that straddle a cycle boundary show up as two events with different
+parts but the same whole.  For example, we have
 
  - (¾>1)-1⅛|'b'
  - ¾-(1>1⅛)|'b'
 
-but note that for both `Event`s the `whole` is the same: (¾>1⅛).
-I think it'll still only play the one note even though the result of `queryArc`
-seems 'wrong' here.
+Both events' whole is the same: (¾>1⅛).
 
-So query windows seem to be split at cycle boundaries.
-I'm going to chalk this up to an implementation detail and not worry about it
-too much right now.  (That'll teach me - use round numbers!)
+I'm not sure if this is intentional or if it's an artifact of how I'm doing
+this.
 
-I just found `showAll`, which gives the same info
+I don't think it's important in practice since I would assume the scheduler
+sends out the event that contains the whole's onset and ignores the other one.
+I confirmed using using a tidal repl (BootTidal.hs) and `oscdump` that using
+`speed 1.5` sends the OSC messages that you'd expect.
+
+The way I found to work around this is to use `defragParts` and `sort`:
 
 ~~~{.ghcisession tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char'}
 import Sound.Tidal.Context
+pat = {{tidalexpression}}
+stripContext = setContext $ Context []
 --cut>>
-import Sound.Tidal.Show
-putStrLn $ showAll (Arc 0 3) $ ({{tidalexpression}})
+import Data.List (sort)
+mapM_ print $ sort $ defragParts $ queryArc (stripContext pat) (Arc 0 3)
 ~~~
-
-Meh, I should just drop it.
-
-(Actually, I confirmed using using a tidal repl (BootTidal.hs) and `oscdump`
-that using `speed 1.5` sends the OSC messages that you'd expect.  So the
-scheduler is doing the right thing when it's sending the messages out even
-thought they look surprising in the event list.)
 
 ## `ControlPattern` and `ValueMap`
 
