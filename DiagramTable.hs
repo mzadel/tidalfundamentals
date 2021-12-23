@@ -190,6 +190,7 @@ diagramTablePatternAlgebra = [
     ,("applicativeboth", Lin.diagramFromWholes showDoubleTruncated (PE.applicativebothExpr :: T.Pattern Double) 1 # frame 0.05 # scale outputScaling)
     ,("applicativeleft", Lin.diagramFromWholes showDoubleTruncated (PE.applicativeleftExpr :: T.Pattern Double) 1 # frame 0.05 # scale outputScaling)
     ,("applicativeright", Lin.diagramFromWholes showDoubleTruncated (PE.applicativerightExpr :: T.Pattern Double) 1 # frame 0.05 # scale outputScaling)
+    ,("filtervaluesexample", Lin.diagramFromWholes show PE.filtervaluesexampleExpr 1 # frame 0.05 # scale outputScaling)
     ,("valueAlgebraMapDiagram", PA.valueAlgebraMapDiagram # frame 0.05 # scale outputScaling)
     ]
 

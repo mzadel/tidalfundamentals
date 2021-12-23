@@ -901,6 +901,28 @@ sent out via OSC.)
 These operators are the more general ones that are called into by `|+`, `+|`, etc.
 
 
+## Mapping over a pattern
+
+You can map a function over a `Pattern`.  It'll apply the function to that
+pattern's events.
+
+~~~{.ghcisession}
+import Sound.Tidal.Context
+--cut>>
+fmap abs fastFromList [ 2, -3, 1, -1, 4 ]
+fmap ((+3) . (*2)) fastFromList [ 1, 2, 3, 4 ]
+~~~
+
+There are also various filter functions defined in `Pattern.hs`.
+
+~~~{.ghcisession #filtervaluesexample .intpatternexample tidalexpression='filterValues (> 0) $ fastFromList [ 2, -3, 1, -1, 4 ]' .diagram .insertdiagram}
+import Sound.Tidal.Context
+--cut>>
+{{tidalexpression}}
+~~~
+
+See `filterJust`, `filterWhen`, `filterOnsets`, `filterEvents`, etc.
+
 ## The (#) operator
 
 You see the operator `(#)` in tidal examples a lot, such as `sound "bd*8" # pan
