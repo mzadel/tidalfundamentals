@@ -1679,7 +1679,9 @@ We can use the following to check how the expressions are being parenthesized.
         (((s "1 2 3 4" # pan sine) # amp square) # speed tri)
     ...
 
-So it looks like (#) is left associative.
+So it looks like (#) is left associative.  Function application always binds
+more tightly than operators, so that's why we don't need brackets between the
+`#`s.
 
     tidal> $([| slow 3 $ s "1 2 3 4" # pan sine # amp square # speed tri |])
     <interactive>:24:3-64: Splicing expression
