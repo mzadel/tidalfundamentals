@@ -1343,7 +1343,7 @@ drawLine $ parseBP_E {{tidalexpression}}
 Interestingly, querying a `slow 1.5` expression shows that it apparently splits
 events at cycle boundaries:
 
-~~~{.ghcisession #slowoneandahalf tidalexpression='slow 1.5 $ parseBP_E "a a b c" :: Pattern Char' .diagram .insertdiagram}
+~~~{.ghcisession #slowoneandahalf tidalexpression='slow 1.5 $ fastFromList [\'a\', \'a\', \'b\', \'c\'] :: Pattern Char' .diagram .insertdiagram}
 import Sound.Tidal.Context
 --cut>>
 pat = {{tidalexpression}}
