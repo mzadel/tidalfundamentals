@@ -1613,8 +1613,8 @@ queryArc (pan sine) (Arc 0.6 0.6)
 
 ### Setting event parameters from a continuous pattern
 
-I want to try taking the panning value for each event of a pattern from a
-second continuous signal.
+To take the panning value for each event of a pattern from a
+second continuous signal you can do this:
 
 ~~~{.tidalsession}
 s "a b c d" # pan sine
@@ -1622,7 +1622,7 @@ s "a b c d" # pan sine
 
 It's sampling the sine in the middle of each event.
 
-You can use the `segment` function to first sample the continuous pattern
+You can also use the `segment` function to first sample the continuous pattern
 before applying it to the notes:
 
 ~~~{.tidalsession #sigToSetPanning .signalsetsparameter tidalexpression='s "a b c d" # (pan $ segment 7 sine)' .diagram .insertdiagram}
