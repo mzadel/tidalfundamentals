@@ -16,9 +16,22 @@ header-includes: |
   </style>
 ---
 
-These are the notes I made when trying to first understand tidal's data model.
+## Introduction
+
+These are the notes I made when trying to first understand how Tidal works.
+
 This isn't about making sound!  It's about trying to fundamentally understand
-the expressions and values to have a good basis going forward.
+the expressions and values to have a good basis going forward, and about
+getting started writing your own Tidal libraries.  If you're a musician and you
+just want to make music with Tidal, you don't need this information.
+
+This document ended up being more elaborate than I'd originally intended.  It
+gives an overview of Tidal's types and core APIs, shows how to run it as a
+library from ghci, and explores some of its concepts.  I think the main
+contributions here are a relatively thorough survey of the core code, the
+working code examples to try and to modify, and the diagrams.  Hopefully it
+will be helpful for developers trying to understand Tidal.
+
 
 ## Installing the tidal library in haskell
 
