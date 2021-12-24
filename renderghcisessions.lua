@@ -74,6 +74,10 @@ local function trimExample(text)
     return string.sub(text,getTrimStart(text),getTrimEnd(text))
 end
 
+local function scrubText(text)
+    return string.gsub(text,"/Users/%a+/","/.../")
+end
+
 function CodeBlock(block)
 
     if whitelistexists and not shared.codeBlockClassesContain(block, "whitelist") then
@@ -86,6 +90,8 @@ function CodeBlock(block)
         local ghcioutput = readGHCiOutput(block)
         thetext = trimExample(convertCarriageReturnsToNewlines(stripBackspaces(stripEscapeSequences(ghcioutput))))
     end
+
+    thetext = scrubText(thetext)
 
     local returnvalues = {}
 
