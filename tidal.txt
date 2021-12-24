@@ -790,7 +790,7 @@ import Sound.Tidal.Context
 (In the text output, notice that the "22" and the "42" entries correspond to
 the same whole event.  I understand this to mean that the value changes midway
 though the event, but the onset still happens at the "22" in this case.  I
-later confirmed with `oscdump` and a live Tidal repl that that's what's
+later confirmed with `oscdump` and a live Tidal REPL that that's what's
 happening -- the value that is lined up when the onset happens is the one that
 gets sent.  The change midway through the event does nothing.)
 
@@ -1381,7 +1381,7 @@ this.
 
 I don't think it's important in practice since I would assume the scheduler
 sends out the event that contains the whole's onset and ignores the other one.
-I confirmed using using a Tidal repl (BootTidal.hs) and `oscdump` that using
+I confirmed using using a Tidal REPL (BootTidal.hs) and `oscdump` that using
 `speed 1.5` sends the OSC messages that you'd expect.
 
 The way I found to work around this is to use `defragParts` and `sort`:
@@ -1536,7 +1536,7 @@ You can use `oscdump` from `liblo` to see what messages are coming in:
 
     $ ./oscdump 57120
 
-Then in the Tidal repl:
+Then in the Tidal REPL:
 
     $ ghci -ghci-script BootTidal.hs
     GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
