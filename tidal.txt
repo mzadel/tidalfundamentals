@@ -1608,7 +1608,7 @@ These continuous patterns are implemented via `sig` in `Core.hs`
     -- | Takes a function from time to values, and turns it into a 'Pattern'.
     sig :: (Time -> a) -> Pattern a
 
-When you query over an arc, it gives back the whole arc as the event part
+When you query over an arc, it gives back the entire arc as the event part
 extents.  It has no whole.
 
 ~~~{.tidalsession}
