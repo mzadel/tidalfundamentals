@@ -186,7 +186,7 @@ extents in time and can carry an arbitrary kind of data.  From `Pattern.hs`:
     type Event a = EventF (ArcF Time) a
 
 
-The most basic pattern you can make is using `pure`:
+The most basic pattern is made via `pure`:
 
 ~~~{.ghcisession #purecycle tidalexpression='pure "eventcontents" :: Pattern String' .diagram .insertdiagram}
 import Sound.Tidal.Context
