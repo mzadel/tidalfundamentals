@@ -1720,3 +1720,27 @@ There's lots more to explore in `UI.hs`.  It's documented on
 [hackage](https://hackage.haskell.org/package/tidal-1.7.9/docs/Sound-Tidal-UI.html).
 
 
+## `BootTidal.hs`
+
+The `BootTidal.hs` starts up Tidal and sets up several of the convenience
+aliases that make it easier to write code live.
+
+`tidal` here refers to the variable that's returned by `startTidal`.
+
+    p = streamReplace tidal
+    ...
+    hush = streamHush tidal
+    mute = streamMute tidal
+    unmute = streamUnmute tidal
+    ...
+    solo = streamSolo tidal
+    ...
+    setcps = asap . cps
+    getcps = streamGetcps tidal
+    ...
+    d1 = p 1 . (|< orbit 0)
+    d2 = p 2 . (|< orbit 1)
+    d3 = p 3 . (|< orbit 2)
+    ...
+
+
