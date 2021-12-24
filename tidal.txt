@@ -1280,8 +1280,6 @@ parseBP_E {{tidalexpression}} :: Pattern Char
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
-I'm officially feeling this.
-
 The first expression's output orders the interleaved events by onset time.
 
 ![](commaforparallel.svg)
