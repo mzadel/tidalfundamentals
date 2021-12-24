@@ -1374,7 +1374,7 @@ parts but the same whole.  For example, we have
  - (¾>1)-1⅛|'b'
  - ¾-(1>1⅛)|'b'
 
-Both events' whole is the same: (¾>1⅛).
+Both events' wholes are the same: (¾>1⅛).
 
 I'm not sure if this is intentional or if it's an artifact of how I'm doing
 this.
