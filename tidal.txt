@@ -33,7 +33,7 @@ working code examples to try and to modify, and the diagrams.  Hopefully it
 will be helpful for developers trying to understand Tidal.
 
 
-## Installing the tidal library in haskell
+## Installing the Tidal library in haskell
 
 MacOS | Tidal Cycles<br/>
 <https://tidalcycles.org/docs/getting-started/macos_install>
@@ -90,9 +90,9 @@ You can blow away `~/.stack` to reset your install for
 fixing installation problems.
 
 `--no-library-stripping` is important, since it's needed to import
-tidal inside a `ghci` sessoin.
+Tidal inside a `ghci` sessoin.
 
-### Installing diagrams (optional, not needed for tidal)
+### Installing diagrams (optional, not needed for Tidal)
 
 I also installed `diagrams` for making the diagrams.  (You don't need
 to do this.)
@@ -117,7 +117,7 @@ detail, though.)
 
 
 
-## Sanity checking the basic tidal install
+## Sanity checking the basic Tidal install
 
     $ ghci
     GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
@@ -774,7 +774,7 @@ import Sound.Tidal.Context
 ~~~
 
 Tidal adds the patterns together by combining the events and values from both
-input patterns.  Internally, tidal does the addition via `applyPatToPatBoth` in `Pattern.hs`.
+input patterns.  Internally, Tidal does the addition via `applyPatToPatBoth` in `Pattern.hs`.
 
 There are other addition operators that combine the events in alternate ways
 that call `applyPatToPatLeft` and `applyPatToPatRight` instead.
@@ -790,7 +790,7 @@ import Sound.Tidal.Context
 (In the text output, notice that the "22" and the "42" entries correspond to
 the same whole event.  I understand this to mean that the value changes midway
 though the event, but the onset still happens at the "22" in this case.  I
-later confirmed with `oscdump` and a live tidal repl that that's what's
+later confirmed with `oscdump` and a live Tidal repl that that's what's
 happening -- the value that is lined up when the onset happens is the one that
 gets sent.  The change midway through the event does nothing.)
 
@@ -919,7 +919,7 @@ See `filterJust`, `filterWhen`, `filterOnsets`, `filterEvents`, etc.
 
 ## The (#) operator
 
-You see the operator `(#)` in tidal examples a lot, such as `sound "bd*8" # pan
+You see the operator `(#)` in Tidal examples a lot, such as `sound "bd*8" # pan
 rand`.  It's an alias for `(|>)`, which is one of the pattern union operators.
 From `Core.hs`:
 
@@ -1113,7 +1113,7 @@ It's defined in `ParseBP.hs`.
 So as we saw in 'Starting to look at some expressions' above, expressions like
 `s "bd ~ bd ~"` don't work in ghci by default.  You need to add `parseBP_E` or
 turn on implicit string handling with `:set -XOverloadedStrings`.  This will be
-already turned on in tidal proper.  For the examples here I'll include
+already turned on in Tidal proper.  For the examples here I'll include
 `parseBP_E` explicitly for the sake of understanding and driving the point home.
 
 See <https://tidalcycles.org/docs/patternlib/tutorials/mini_notation> for
@@ -1381,7 +1381,7 @@ this.
 
 I don't think it's important in practice since I would assume the scheduler
 sends out the event that contains the whole's onset and ignores the other one.
-I confirmed using using a tidal repl (BootTidal.hs) and `oscdump` that using
+I confirmed using using a Tidal repl (BootTidal.hs) and `oscdump` that using
 `speed 1.5` sends the OSC messages that you'd expect.
 
 The way I found to work around this is to use `defragParts` and `sort`:
@@ -1509,7 +1509,7 @@ or
 
 ## Booting Tidal from ghci
 
-You can actually boot a live tidal from ghci and get a prompt:
+You can actually boot a live Tidal from ghci and get a prompt:
 
     $ ghci
     GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
@@ -1536,7 +1536,7 @@ You can use `oscdump` from `liblo` to see what messages are coming in:
 
     $ ./oscdump 57120
 
-Then in the tidal repl:
+Then in the Tidal repl:
 
     $ ghci -ghci-script BootTidal.hs
     GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
