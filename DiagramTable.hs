@@ -227,6 +227,18 @@ diagramTableJoins = [
     ,("squeezejoinexample", Lin.diagramShowCharValue PE.squeezejoinexampleExpr 2 1 colourCharsFunc # frame 0.05 # scale outputScaling)
     ]
 
+lanesFromPanning :: T.Event T.ValueMap -> Int
+lanesFromPanning e = case T.fvalue (T.value e ! "pan") of
+    0.0 -> 0
+    1.0 -> 1
+    _ -> 2
+
+diagramTableUI :: [(String, Diagram B)]
+diagramTableUI = [
+    ("juxexample", Lin.diagramWithLanesFromWholes show PE.juxexampleExpr 1 lanesFromPanning # frame 0.05 # scale outputScaling)
+    ,("shuffleexample", Lin.diagramFromWholes show PE.shuffleexampleExpr 3 # frame 0.05 # scale outputScaling)
+    ]
+
 diagramListForMainWith :: [(String, Diagram B)]
-diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals ++ diagramTableQueries ++ diagramTableJoins
+diagramListForMainWith = basicsTable ++ (map diagramEntry patternTable) ++ diagramTableLinear ++ diagramTablePatternAlgebra ++ diagramTableSignals ++ diagramTableQueries ++ diagramTableJoins ++ diagramTableUI
 

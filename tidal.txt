@@ -1686,3 +1686,37 @@ more tightly than operators, so that's why we don't need brackets between the
 And using `slow` in this way operates on everything to its right (which I guess
 is to be expected due to the `$`).
 
+## `UI.hs`
+
+`UI.hs` contains the higher-level pattern manipulation functions.  I'm not
+super interested in documenting all of these, but I'll review a few for
+completeness.
+
+"`rand` generates a continuous pattern of (pseudo-)random numbers between `0`
+and `1`."
+
+~~~{.tidalsession tidalexpression='sound "bd*8" # pan rand'}
+--cut>>
+{{tidalexpression}}
+~~~
+
+The infamous `jux` takes a function and a pattern; it puts one copy of the
+pattern in the left channel, and another copy of the pattern in the right
+channel with the function applied.
+
+~~~{.tidalsession #juxexample .spatternexample tidalexpression='jux rev $ s "sd bd oh ch"' .diagram .insertdiagram}
+--cut>>
+{{tidalexpression}}
+~~~
+
+`shuffle` divides a cycle up and randomly permutes the parts.
+
+~~~{.tidalsession #shuffleexample .spatternexample tidalexpression='shuffle 4 $ s "sd bd oh ch"' .diagram .insertdiagram}
+--cut>>
+{{tidalexpression}}
+~~~
+
+There's lots more to explore in `UI.hs`.  It's documented on
+[hackage](https://hackage.haskell.org/package/tidal-1.7.9/docs/Sound-Tidal-UI.html).
+
+

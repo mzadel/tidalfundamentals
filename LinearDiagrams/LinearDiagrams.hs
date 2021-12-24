@@ -1,5 +1,5 @@
 
-module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramShowCharValue,diagramWithLanesShowChar,diagramFromWholes) where
+module LinearDiagrams.LinearDiagrams (diagramShowValue,diagramWithLanesShowValue,diagramShowCharValue,diagramWithLanesShowChar,diagramFromWholes,diagramWithLanesFromWholes) where
 
 import Shared
 import LinearDiagrams.Shared
@@ -64,18 +64,24 @@ diagramWithLanesShowChar :: T.Pattern Char -> Integer -> Rational -> (T.Event Ch
 diagramWithLanesShowChar = diagramWithLanes (charToString . T.eventValue)
 
 diagramFromWholes :: (a -> String) -> T.Pattern a -> Rational -> Diagram B
-diagramFromWholes formatLabel tidalPattern queryEnd =
+diagramFromWholes formatLabel tidalPattern queryEnd = diagramWithLanesFromWholes formatLabel tidalPattern queryEnd laneFunc
+    where
+        laneFunc = const 0
+
+diagramWithLanesFromWholes :: (a -> String) -> T.Pattern a -> Rational -> (T.Event a -> Int) -> Diagram B
+diagramWithLanesFromWholes formatLabel tidalPattern queryEnd laneFunc =
     mconcat patterneventlabels <> mconcat patternevents
     where
         events = T.queryArc tidalPattern (T.Arc 0 queryEnd)
         eventswithonsets = ZipList $ filter T.eventHasOnset events
         --
-        patternevents = getZipList $ boxgeometries
-        patterneventlabels = getZipList $ labelgeometries
+        patternevents = getZipList $ laneTranslations <*> boxgeometries
+        patterneventlabels = getZipList $ laneTranslations <*> labelgeometries
         --
         getLabel = formatLabel . T.eventValue
         --
         labels = getLabel <$> eventswithonsets
+        lanes = laneFunc <$> eventswithonsets
         starts = T.wholeStart <$> eventswithonsets
         stops = T.wholeStop <$> eventswithonsets
         --
@@ -83,4 +89,6 @@ diagramFromWholes formatLabel tidalPattern queryEnd =
         boxgeometries = boxGeometry <$> starts <*> stops
         labelgeometries :: ZipList (Diagram B)
         labelgeometries = labelGeometry <$> labels <*> starts
+        laneTranslations :: ZipList (Diagram B -> Diagram B)
+        laneTranslations = moveToLane <$> lanes
 

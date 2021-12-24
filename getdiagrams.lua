@@ -79,6 +79,10 @@ function handleDiagramBlock(block)
         tidalexpression = "queryArc (" .. pat .. " :: Pattern Double) (" .. arc .. ")"
     end
 
+    if shared.arrayContains(block.classes,"spatternexample") then
+        tidalexpression = string.gsub(tidalexpression, "s \"", "s $ parseBP_E \"", nil, true)
+    end
+
     if tidalexpression ~= nil then
         exp[block.identifier] = tidalexpression
     end
