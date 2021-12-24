@@ -1736,6 +1736,12 @@ aliases that make it easier to write code live.
     ...
 
 
+## Conclusion
+
+So that's it.  Hopefully that was helpful if you're trying to understand
+Tidal's codebase or to use it from ghci.  Now I'm off to make some music!
+
+
 ## See also
 
 Live code with Tidal Cycles | Tidal Cycles<br/>
