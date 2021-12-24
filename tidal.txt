@@ -33,7 +33,7 @@ working code examples to try and to modify, and the diagrams.  Hopefully it
 will be helpful for developers trying to understand Tidal.
 
 
-## Installing the Tidal library in haskell
+## Installing the Tidal library in Haskell
 
 MacOS | Tidal Cycles<br/>
 <https://tidalcycles.org/docs/getting-started/macos_install>
@@ -57,7 +57,7 @@ the installation instructions on
 SuperCollider, SuperDirt and a compatible text editor, which are all
 required for a typical install.
 
-I initially had linker errors when compiling haskell code.  What I
+I initially had linker errors when compiling Haskell code.  What I
 had to do was uninstall ghc and cabal, uninstall all of my homebrew
 programs, reinstall ghc and cabal, and then it worked.  (It was fine
 to reinstall homebrew for me since there was a lot of cruft left
@@ -90,7 +90,7 @@ You can blow away `~/.stack` to reset your install for
 fixing installation problems.
 
 `--no-library-stripping` is important, since it's needed to import
-Tidal inside a `ghci` sessoin.
+Tidal inside a `ghci` session.
 
 ### Installing diagrams (optional, not needed for Tidal)
 
@@ -145,7 +145,7 @@ import Sound.Tidal.Context
 s $ parseBP_E "bd bd bd"
 ~~~
 
-You can turn on the implict string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see Waldmann article below).
+You can turn on the implicit string handling with `{-# language OverloadedStrings #-}`, or the equivalent `:set -XOverloadedStrings` in `ghci` (see Waldmann article below).
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
@@ -667,7 +667,7 @@ Tidal calls continuous patterns "analog" and discrete patterns "digital":
 ## Basic types (`Pattern.hs`)
 
 We've seen several examples of patterns, events and queries.  Hopefully that
-will have built up enough intuituion to make sense of the basic types.
+will have built up enough intuition to make sense of the basic types.
 
 `Pattern` is defined in `Sound/Tidal/Pattern.hs`.
 
@@ -1168,7 +1168,7 @@ to show patterns of strings, for example.
 
 --------------------------------------------------
 
-Onwards with more mini-notation.  Tilde is a rest:
+Onward with more mini-notation.  Tilde is a rest:
 
 ~~~{.ghcisession #tildeisarest tidalexpression='"b ~ b ~"' .diagram}
 import Sound.Tidal.Context
