@@ -1,7 +1,7 @@
 ---
-title: 'Learning Tidal'
+title: 'Learning Tidal Fundamentals'
 author: 'Mark Zadel'
-date: 'October 2021'
+date: 'December 2021'
 
 fontsize: 12pt
 monobackgroundcolor: 'LightGrey'
