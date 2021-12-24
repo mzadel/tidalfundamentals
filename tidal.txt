@@ -1655,7 +1655,7 @@ See <http://tidalcycles.org/docs/reference/sampling/#segment> for an example of
 
 We can use the following to check how the expressions are being parenthesized.
 
-    ghci -ddump-splices -XTemplateHaskell -ghci-script tidal-1.7.8/BootTidal.hs
+    ghci -ddump-splices -XTemplateHaskell -ghci-script BootTidal.hs
     ...
     tidal> $([| s "1 2 3 4" # pan sine # amp square # speed tri |])
     <interactive>:17:3-55: Splicing expression
