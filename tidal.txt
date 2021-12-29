@@ -1400,10 +1400,10 @@ mapM_ print $ sort $ defragParts $ queryArc (stripContext pat) (Arc 0 3)
 
 ## `ControlPattern` and `ValueMap`
 
-Tidal examples often start with something like `s $ "sd bd sd bd"`.  If we look
+Tidal examples often start with something like `s $ "bd sd bd sd"`.  If we look
 at its type:
 
-~~~{.ghcisession tidalexpression='s $ parseBP_E "sd bd sd bd"'}
+~~~{.ghcisession tidalexpression='s $ parseBP_E "bd sd bd sd"'}
 import Sound.Tidal.Context
 --cut>>
 pat = {{tidalexpression}}
