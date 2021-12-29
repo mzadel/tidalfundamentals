@@ -191,6 +191,9 @@ import Sound.Tidal.Context
 So this is a pattern that has one event per cycle, and the event's contents are
 the string `"eventcontents"`.
 
+A cycle is some amount of time, like a bar, or say four bars of music.  You can
+set it to whatever you want, but it's the basic sync period for a loop.
+
 --------------------------------------------------
 
 You can make an empty pattern with `silence` (`Core.hs`), which is just an
