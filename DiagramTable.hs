@@ -12,76 +12,76 @@ import qualified QueryDiagrams as Q
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 import qualified Sound.Tidal.Context as T
-import Data.Map (Map,fromList,(!))
+import Data.Map ((!))
 
 outputScaling :: Double
 outputScaling = 600
 
 colourStringsFunc :: T.Event String -> Int
-colourStringsFunc e = table ! T.eventValue e
+colourStringsFunc e = colour
     where
-        table :: Map String Int
-        table = fromList [
-             ("phi", 1)
-            ,("psi", 2)
-            ,("tau", 3)]
+        colour = case T.eventValue e of
+            "phi" -> 1
+            "psi" -> 2
+            "tau" -> 3
+            _ -> 0
 
 colourCharsFunc :: T.Event Char -> Int
-colourCharsFunc e = table ! T.eventValue e
+colourCharsFunc e = colour
     where
-        table :: Map Char Int
-        table = fromList [
-             ('a', 0)
-            ,('b', 2)
-            ,('c', 1)
-            ,('d', 7)
-            ,('e', 3)
-            ,('f', 4)
-            ,('j', 6)
-            ,('k', 4)
-            ,('l', 5)
-            ,('m', 8)
-            ,('n', 9)]
+        colour = case T.eventValue e of
+            'a' -> 0
+            'b' -> 2
+            'c' -> 1
+            'd' -> 7
+            'e' -> 3
+            'f' -> 4
+            'j' -> 6
+            'k' -> 4
+            'l' -> 5
+            'm' -> 8
+            'n' -> 9
+            _ -> 0
 
 laneCharsFunc :: T.Event Char -> Int
-laneCharsFunc e = table ! T.eventValue e
+laneCharsFunc e = lane
     where
-        table :: Map Char Int
-        table = fromList [
-             ('a', 0)
-            ,('b', 0)
-            ,('c', 0)
-            ,('d', 0)
-            ,('j', 1)
-            ,('k', 1)
-            ,('l', 1)
-            ,('m', 2)
-            ,('n', 2)]
+        lane = case T.eventValue e of
+            'a' -> 0
+            'b' -> 0
+            'c' -> 0
+            'd' -> 0
+            'j' -> 1
+            'k' -> 1
+            'l' -> 1
+            'm' -> 2
+            'n' -> 2
+            _ -> 0
 
 constColour :: Int -> T.Event a -> Int
 constColour colourindex _ = colourindex
 
 laneFunc :: T.Event Char -> Int
-laneFunc e = table ! T.eventValue e
+laneFunc e = lane
     where
-        table :: Map Char Int
-        table = fromList [
-             ('a', 0)
-            ,('b', 0)
-            ,('c', 0)
-            ,('d', 1)
-            ,('e', 1)]
+        lane = case T.eventValue e of
+            'a' -> 0
+            'b' -> 0
+            'c' -> 0
+            'd' -> 1
+            'e' -> 1
+            _ -> 0
 
 laneFunc2 :: T.Event Char -> Int
-laneFunc2 e = table ! T.eventValue e
+laneFunc2 e = lane
     where
-        table :: Map Char Int
-        table = fromList [
-             ('a', 1)
-            ,('b', 1)
-            ,('c', 1)
-            ,('d', 0)
-            ,('e', 0)]
+        lane = case T.eventValue e of
+            'a' -> 1
+            'b' -> 1
+            'c' -> 1
+            'd' -> 0
+            'e' -> 0
+            _ -> 0
 
 basicsTable :: [(String, Diagram B)]
 basicsTable = [
