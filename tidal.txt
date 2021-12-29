@@ -18,7 +18,8 @@ header-includes: |
 
 ## Introduction
 
-These are the notes I made when trying to first understand how Tidal works.
+These are the notes I made when trying to first understand how [Tidal
+Cycles](https://tidalcycles.org/) works.
 
 This isn't about making sound!  It's about trying to fundamentally understand
 the expressions and values to have a good basis going forward, and about
