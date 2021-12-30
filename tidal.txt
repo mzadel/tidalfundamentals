@@ -999,7 +999,7 @@ import Sound.Tidal.Context
 {{tidalexpression}}
 ~~~
 
-Note that the wholes come from the outer pattern in this case.
+Note that the wholes come from the outer pattern.
 
 --------------------------------------------------
 
