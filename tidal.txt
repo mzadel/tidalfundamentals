@@ -1367,7 +1367,7 @@ putStrLn $ showAll (Arc 0 3) (stripContext pat)
 (`stripContext` is copied from `TestUtils.hs`.)
 
 Events that straddle a cycle boundary show up as two events with different
-parts but the same whole.  For example, we have
+parts but the same whole.  In this example, we have
 
  - (¾>1)-1⅛|'b'
  - ¾-(1>1⅛)|'b'
@@ -1379,7 +1379,7 @@ this.
 
 I don't think it's important in practice since I would assume the scheduler
 sends out the event that contains the whole's onset and ignores the other one.
-I confirmed using using a Tidal REPL (BootTidal.hs) and `oscdump` that using
+I confirmed using a Tidal REPL (BootTidal.hs) and `oscdump` that using
 `speed 1.5` sends the OSC messages that you'd expect.
 
 The way I found to work around this is to use `defragParts` and `sort`:
