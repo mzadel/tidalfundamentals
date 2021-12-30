@@ -1108,8 +1108,8 @@ So this is sort of the main event.  Tidal includes a "mini-notation" for
 succinctly specifying patterns as text strings.  Most of the examples you see
 will start with this format.
 
-It's functionality that sits on top of Sound.Tidal.Pattern and
-Sound.Tidal.Core, so I felt it was less fundamental and left it until now.
+It's functionality that sits on top of `Sound.Tidal.Pattern` and
+`Sound.Tidal.Core`, so I felt it was less fundamental and left it until now.
 It's defined in `ParseBP.hs`.
 
 So as we saw in 'Starting to look at some expressions' above, expressions like
@@ -1179,7 +1179,7 @@ parseBP_E {{tidalexpression}} :: Pattern Char
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
-So the dot in the `drawLine` output is the rest.
+So a dot in the `drawLine` output is a rest.
 
 ![](tildeisarest.svg)
 
@@ -1194,7 +1194,7 @@ parseBP_E {{tidalexpression}} :: Pattern Char
 drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
-The hyphen means that the a note is held for an extra division.
+A hyphen in the `drawLine` output means that a note is held for an extra division.
 
 ![](underscoreelongates.svg)
 
@@ -1221,7 +1221,6 @@ drawLine $ parseBP_E {{tidalexpression}}
 ~~~
 
 So instead of getting the cycle divided into three, it's divided into four.
-
 The 'a' events have duration 1/4.
 
 --------------------------------------------------
@@ -1266,7 +1265,6 @@ drawLine $ parseBP_E {{tidalexpression}}
 
 --------------------------------------------------
 
-So this is where I think it starts to get interesting.
 Use a comma to play two patterns in parallel.  Apparently you need the square brackets as well.
 
 ~~~{.ghcisession #commaforparallel tidalexpression='"[a b c , d e]"' .diagram}
@@ -1308,13 +1306,11 @@ So in this second version, the 'a b c' events have a longer duration:
 putting the "d e" first divides the cycle in two, and so the "a b c" pattern
 repeats every 1.5 cycles.
 
-The vertical bar in the text output seems to show a one-cycle duration.
-
 --------------------------------------------------
 
 You can set the length of the polymetric sequence with `%`.
 
-This expression divides the cycle into eight
+This expression divides the cycle into eight:
 
 ~~~{.ghcisession #polymetricdividebyeight tidalexpression='"{a b c d e}%8"' .diagram .insertdiagram}
 import Sound.Tidal.Context
