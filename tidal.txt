@@ -918,23 +918,6 @@ import Sound.Tidal.Context
 
 See `filterJust`, `filterWhen`, `filterOnsets`, `filterEvents`, etc.
 
-## The (#) operator
-
-You see the operator `(#)` in Tidal examples a lot, such as `sound "bd*8" # pan
-rand`.  It's an alias for `(|>)`, which is one of the pattern union operators.
-From `Core.hs`:
-
-    -- Backward compatibility - structure from left, values from right.
-    (#) :: Unionable b => Pattern b -> Pattern b -> Pattern b
-    (#) = (|>)
-
-    (|> ) :: Unionable a => Pattern a -> Pattern a -> Pattern a
-    a |>  b = flip union <$> a <* b
-
-So it takes the events from the left pattern, and does the `ValueMap` union
-with the values from the pattern on the right.
-
-
 ## Patterns of patterns
 
 You can of course define patterns of patterns as well.
@@ -1480,6 +1463,23 @@ This is combining a string value with key "s" and a float value with key "n".
     e56dd58d.6868e000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.750000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "sd"
 
 So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through the first four of them.
+
+## The (#) operator
+
+You see the operator `(#)` in Tidal examples a lot, such as `sound "bd*8" # pan
+rand`.  It's an alias for `(|>)`, which is one of the pattern union operators.
+From `Core.hs`:
+
+    -- Backward compatibility - structure from left, values from right.
+    (#) :: Unionable b => Pattern b -> Pattern b -> Pattern b
+    (#) = (|>)
+
+    (|> ) :: Unionable a => Pattern a -> Pattern a -> Pattern a
+    a |>  b = flip union <$> a <* b
+
+So it takes the events from the left pattern, and does the `ValueMap` union
+with the values from the pattern on the right.
+
 
 ## Layering parameter patterns to build up an event stream
 
