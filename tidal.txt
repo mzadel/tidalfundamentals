@@ -1449,7 +1449,7 @@ From  [`SuperDirt/classes/DirtEvent.sc`](https://github.com/musikinformatik/Supe
 
 So the key `s` refers to the synth or sample to use.
 
-`s` is an alias for `sound`.  It's defined in `src/Sound/Tidal/Params.hs`.
+The Tidal function `s` is an alias for `sound`.  It's defined in `src/Sound/Tidal/Params.hs`.
 
     s :: Pattern String -> ControlPattern
     s = sound
@@ -1479,7 +1479,7 @@ This is combining a string value with key "s" and a float value with key "n".
     e56dd58c.f6a1c800 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.500000 "delta" 0.444444 "n" 2.000000 "orbit" 0 "s" "sd"
     e56dd58d.6868e000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 183.750000 "delta" 0.444445 "n" 3.000000 "orbit" 0 "s" "sd"
 
-So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through several of them.
+So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through the first four of them.
 
 ## Layering parameter patterns to build up an event stream
 
