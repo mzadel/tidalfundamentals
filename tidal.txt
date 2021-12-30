@@ -780,7 +780,7 @@ input patterns.  Internally, Tidal does the addition via `applyPatToPatBoth` in 
 There are other addition operators that combine the events in alternate ways
 that call `applyPatToPatLeft` and `applyPatToPatRight` instead.
 
-The `(|+)` operator is addition, taking structure from the left (`src/Sound/Tidal/Core.hs`).
+The `(|+)` operator is addition, taking structure (i.e., the wholes) from the left (`src/Sound/Tidal/Core.hs`).
 
 ~~~{.ghcisession .patternalgebraexample #leftPlusExample1 tidalexpression='fastFromList [1, 2, 3] |+ fastFromList [20, 40] :: Pattern Int'  .diagram .insertdiagram}
 import Sound.Tidal.Context
