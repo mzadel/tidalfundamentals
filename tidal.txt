@@ -1530,7 +1530,7 @@ Either run `ghci` and then `:script BootTidal.hs`, or run
 
 ## Inspecting OSC
 
-You can use `oscdump` from `liblo` to see what messages are coming in:
+You can use `oscdump` from `liblo` to see what messages are being sent out:
 
     $ ./oscdump 57120
 
@@ -1570,7 +1570,7 @@ Another example:
     e520f859.2854de7e /dirt/handshake
     e520f859.8b909000 /dirt/play sssfsfsfsfsiss "_id_" "1" "cps" 0.562500 "cycle" 120.666664 "delta" 0.592593 "n" 3.000000 "orbit" 0 "s" "bd"
 
-So this would be a good way to understand how patterns are played and what's
+So this is a good way of sanity checking how patterns are played and what's
 the result of combining patterns.
 
 Use this to prevent the handshake messages from showing up:
