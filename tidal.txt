@@ -1483,8 +1483,8 @@ So for e.g. snare drum samples, there are several snare drums to choose from, an
 
 ## Layering parameter patterns to build up an event stream
 
-So one reason this is interesting is that you can create individual patterns
-for several parameters and then combine them into one stream of events.
+So one reason `ControlPattern`s are interesting is that you can create individual patterns
+for different parameters and then combine them into one stream of events.
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
