@@ -1651,7 +1651,7 @@ See <http://tidalcycles.org/docs/reference/sampling/#segment> for an example of
 
 ## Deconstructing longer expressions
 
-We can use the following to check how the expressions are being parenthesized.
+We can use the following to check how the expressions are being parenthesized:
 
     ghci -ddump-splices -XTemplateHaskell -ghci-script BootTidal.hs
     ...
