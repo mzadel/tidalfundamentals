@@ -1018,7 +1018,7 @@ import Sound.Tidal.Context
 Since patterns basically only provide a query function, you can write one
 yourself instead of using the API we've explored so far.
 
-Here's a degenerate example:
+Here's a trivial example:
 
 ~~~{.ghcisession}
 import Sound.Tidal.Context
@@ -1093,8 +1093,9 @@ The part for each event must fit inside its whole.
 
 These functions are executed every time the pattern is queried.  They
 shouldn't be computationally expensive so they can be rendered in real time.
-Also, it seems that you can't always rely on them being lazily evaluated (there
-must be some strictness somewhere).  Using `[0..]` above instead of `[0,1..5]`
+Also, it seems that you can't rely on them being lazily evaluated (there
+seems to be be some strictness somewhere during evaluation).
+Using `[0..]` above instead of `[0,1..5]`
 hung ghci for me.
 
 You can put a long function expression in a text file with a `.hs` extension
