@@ -44,10 +44,10 @@ MacOS | Tidal Cycles<br/>
 I tried installing a few different times in a few different ways, and
 the method I preferred was the following:
 
- - used `ghcup` (<https://www.haskell.org/ghcup/>)
-     - installed `ghc` with `ghcup`
-     - added `$HOME/.ghcup/bin:$HOME/.ghcup/ghc/8.10.7/bin` to `$PATH` in `.bashrc`
-     - installed `cabal` with `ghcup`
+ - Use `ghcup` (<https://www.haskell.org/ghcup/>)
+     - Install `ghc` with `ghcup`
+     - Add `$HOME/.ghcup/bin:$HOME/.ghcup/ghc/8.10.7/bin` to `$PATH` in `.bashrc`
+     - Install `cabal` with `ghcup`
      - `cabal update`
      - `cabal install tidal --lib`
 
@@ -65,9 +65,6 @@ to reinstall homebrew for me since there was a lot of cruft left
 around that I'd just kept upgrading over several years and OS
 versions.)
 
-Even with the linker errors, I could still use `runhaskell` to run
-the code.
-
 The `--lib` part is important.  That makes it possible to run `import
 Sound.Tidal.Context` in `ghci`.
 
@@ -79,10 +76,10 @@ scratch if you're trying to debug install problems.
 You can also use stack:
 
  - Run `stack setup`
-     - Will download the latest LTS version of GHC
+     - This will download the latest LTS version of GHC
      - The LTS resolver version can be checked in `~/.stack/global-project/stack.yaml`: `resolver: lts-18.13`
      - Go to <https://www.stackage.org> and click on LTS at the top to check the most recent stable version
-     - Ends up in `~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc`
+     - It ends up in `~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc`
          - See `stack path`
      - Invoke as `stack ghc` or `stack ghci`
  - `stack install --no-library-stripping tidal`
@@ -98,12 +95,12 @@ Tidal inside a `ghci` session.
 I also installed `diagrams` for making the diagrams.  (You don't need
 to do this.)
 
- - with cabal
+ - With cabal
      - `cabal install diagrams-core --lib`
      - `cabal install diagrams-lib --lib`
      - `cabal install diagrams-svg --lib`
      - `cabal install palette --lib`
- - with stack
+ - With stack
      - change your stack install to a nightly instead of LTS.  The
        LTS one doesn't include diagrams for some reason.
      - `stack install --no-library-stripping diagrams-core`
@@ -112,7 +109,7 @@ to do this.)
      - `stack install --no-library-stripping palette`
 
 I couldn't install the top-level `diagrams` library since I don't
-think it worked with the `--lib` flag.  (I might have to confirm that
+think it worked with the `--lib` flag.  (I would have to confirm that
 detail, though.)
 
 
