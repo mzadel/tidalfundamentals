@@ -1758,4 +1758,15 @@ tidal: Pattern language for improvised music<br/>
 <https://hackage.haskell.org/package/tidal>
 
 
+## Document Version
+
+This document was built from the following git commit:<br/>
+{{describegitref_HEAD}}.
+
+**Version history**
+
+{{describegitref_v1}}<br/>
+
+ - Initial release
+
 
