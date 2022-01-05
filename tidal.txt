@@ -1126,6 +1126,7 @@ import Sound.Tidal.Context
 {{tidalexpression}} :: Pattern Double
 {{tidalexpression}} :: Pattern Char
 {{tidalexpression}} :: Pattern Int
+parseBP_E "1 0 0 1" :: Pattern Bool
 ~~~
 
 If you don't give a type hint, it'll fall back to a default type for the
