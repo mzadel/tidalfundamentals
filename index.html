@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Mark Zadel" />
+  <title>Learning Tidal Fundamentals</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 12pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      background-color: LightGrey;
+      padding: .2em .4em;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      background-color: LightGrey;
+      padding: 1em;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style>
+  body {
+    max-width: 60em;
+  }
+  img {
+    max-width: none;
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Learning Tidal Fundamentals</h1>
+<p class="author">Mark Zadel</p>
+<p class="date">December 2021</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installing-the-tidal-library-in-haskell">Installing the Tidal library in Haskell</a>
+<ul>
+<li><a href="#install-via-cabal">Install via cabal</a></li>
+<li><a href="#alternative-install-via-stack">Alternative: install via stack</a></li>
+<li><a href="#installing-diagrams-optional-not-needed-for-tidal">Installing diagrams (optional, not needed for Tidal)</a></li>
+</ul></li>
+<li><a href="#sanity-checking-the-basic-tidal-install">Sanity checking the basic Tidal install</a></li>
+<li><a href="#starting-to-look-at-some-expressions">Starting to look at some expressions</a></li>
+<li><a href="#core.hs"><code>Core.hs</code></a></li>
+<li><a href="#queries">Queries</a>
+<ul>
+<li><a href="#querying-continuous-patterns">Querying continuous patterns</a></li>
+</ul></li>
+<li><a href="#basic-types-pattern.hs">Basic types (<code>Pattern.hs</code>)</a></li>
+<li><a href="#patterns-as-numbers">Patterns as numbers</a></li>
+<li><a href="#pattern-algebra">Pattern Algebra</a></li>
+<li><a href="#applying-a-pattern-of-functions">Applying a pattern of functions</a></li>
+<li><a href="#mapping-over-a-pattern">Mapping over a pattern</a></li>
+<li><a href="#patterns-of-patterns">Patterns of patterns</a></li>
+<li><a href="#manually-defining-the-query-function">Manually defining the query function</a></li>
+<li><a href="#mini-notation">Mini-Notation</a></li>
+<li><a href="#querying-events-crossing-cycle-boundaries">Querying events crossing cycle boundaries</a></li>
+<li><a href="#controlpattern-and-valuemap"><code>ControlPattern</code> and <code>ValueMap</code></a></li>
+<li><a href="#the-operator">The (#) operator</a></li>
+<li><a href="#layering-parameter-patterns-to-build-up-an-event-stream">Layering parameter patterns to build up an event stream</a></li>
+<li><a href="#booting-tidal-from-ghci">Booting Tidal from ghci</a></li>
+<li><a href="#inspecting-osc">Inspecting OSC</a></li>
+<li><a href="#continuous-patterns">Continuous patterns</a>
+<ul>
+<li><a href="#setting-event-parameters-from-a-continuous-pattern">Setting event parameters from a continuous pattern</a></li>
+</ul></li>
+<li><a href="#deconstructing-longer-expressions">Deconstructing longer expressions</a></li>
+<li><a href="#ui.hs"><code>UI.hs</code></a></li>
+<li><a href="#boottidal.hs"><code>BootTidal.hs</code></a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#see-also">See also</a></li>
+<li><a href="#document-version">Document Version</a></li>
+</ul>
+</nav>
+<h2 id="introduction">Introduction</h2>
+<p>These are the notes I made when trying to first understand how <a href="https://tidalcycles.org/">Tidal Cycles</a> works.</p>
+<p>This isn’t about making sound! It’s about trying to fundamentally understand the expressions and values to have a good basis going forward, and about getting started writing your own Tidal libraries. If you’re a musician and you just want to make music with Tidal, you don’t need this information.</p>
+<p>This document ended up being more elaborate than I’d originally intended. It gives an overview of Tidal’s types and core APIs, shows how to run it as a library from ghci, and explores some of its concepts. I think the main contributions here are a relatively thorough survey of the core code, the working code examples to try and to modify, and the diagrams. Hopefully it will be helpful for developers trying to understand Tidal.</p>
+<h2 id="installing-the-tidal-library-in-haskell">Installing the Tidal library in Haskell</h2>
+<p>MacOS | Tidal Cycles<br/> <a href="https://tidalcycles.org/docs/getting-started/macos_install" class="uri">https://tidalcycles.org/docs/getting-started/macos_install</a></p>
+<h3 id="install-via-cabal">Install via cabal</h3>
+<p>I tried installing a few different times in a few different ways, and the method I preferred was the following:</p>
+<ul>
+<li>Use <code>ghcup</code> (<a href="https://www.haskell.org/ghcup/" class="uri">https://www.haskell.org/ghcup/</a>)
+<ul>
+<li>Install <code>ghc</code> with <code>ghcup</code></li>
+<li>Add <code>$HOME/.ghcup/bin:$HOME/.ghcup/ghc/8.10.7/bin</code> to <code>$PATH</code> in <code>.bashrc</code></li>
+<li>Install <code>cabal</code> with <code>ghcup</code></li>
+<li><code>cabal update</code></li>
+<li><code>cabal install tidal --lib</code></li>
+</ul></li>
+</ul>
+<p>NB: THIS IS NOT SUFFICIENT TO MAKE SOUND!! I’m only interested in executing expressions and inspecting types at this stage. Look at the installation instructions on <a href="https://tidalcycles.org">tidalcycles.org</a> for installing SuperCollider, SuperDirt and a compatible text editor, which are all required for a typical install.</p>
+<p>I initially had linker errors when compiling Haskell code. What I had to do was uninstall ghc and cabal, uninstall all of my homebrew programs, reinstall ghc and cabal, and then it worked. (It was fine to reinstall homebrew for me since there was a lot of cruft left around that I’d just kept upgrading over several years and OS versions.)</p>
+<p>The <code>--lib</code> part is important. That makes it possible to run <code>import Sound.Tidal.Context</code> in <code>ghci</code>.</p>
+<p>You can delete <code>.ghc</code>, <code>.ghcup</code> and <code>.cabal</code> to start over from scratch if you’re trying to debug install problems.</p>
+<h3 id="alternative-install-via-stack">Alternative: install via stack</h3>
+<p>You can also use stack:</p>
+<ul>
+<li>Run <code>stack setup</code>
+<ul>
+<li>This will download the latest LTS version of GHC</li>
+<li>The LTS resolver version can be checked in <code>~/.stack/global-project/stack.yaml</code>: <code>resolver: lts-18.13</code></li>
+<li>Go to <a href="https://www.stackage.org" class="uri">https://www.stackage.org</a> and click on LTS at the top to check the most recent stable version</li>
+<li>It ends up in <code>~/.stack/programs/x86_64-osx/ghc-8.10.7/bin/ghc</code>
+<ul>
+<li>See <code>stack path</code></li>
+</ul></li>
+<li>Invoke as <code>stack ghc</code> or <code>stack ghci</code></li>
+</ul></li>
+<li><code>stack install --no-library-stripping tidal</code></li>
+</ul>
+<p>You can blow away <code>~/.stack</code> to reset your install for fixing installation problems.</p>
+<p><code>--no-library-stripping</code> is important, since it’s needed to import Tidal inside a <code>ghci</code> session.</p>
+<h3 id="installing-diagrams-optional-not-needed-for-tidal">Installing diagrams (optional, not needed for Tidal)</h3>
+<p>I also installed <code>diagrams</code> for making the diagrams. (You don’t need to do this.)</p>
+<ul>
+<li>With cabal
+<ul>
+<li><code>cabal install diagrams-core --lib</code></li>
+<li><code>cabal install diagrams-lib --lib</code></li>
+<li><code>cabal install diagrams-svg --lib</code></li>
+<li><code>cabal install palette --lib</code></li>
+</ul></li>
+<li>With stack
+<ul>
+<li>change your stack install to a nightly instead of LTS. The LTS one doesn’t include diagrams for some reason.</li>
+<li><code>stack install --no-library-stripping diagrams-core</code></li>
+<li><code>stack install --no-library-stripping diagrams-lib</code></li>
+<li><code>stack install --no-library-stripping diagrams-svg</code></li>
+<li><code>stack install --no-library-stripping palette</code></li>
+</ul></li>
+</ul>
+<p>I couldn’t install the top-level <code>diagrams</code> library since I don’t think it worked with the <code>--lib</code> flag. (I would have to confirm that detail, though.)</p>
+<h2 id="sanity-checking-the-basic-tidal-install">Sanity checking the basic Tidal install</h2>
+<pre><code>$ ghci
+GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+Prelude&gt; import Sound.Tidal.Context
+Prelude Sound.Tidal.Context&gt; tidal_version
+&quot;1.7.8&quot;</code></pre>
+<h2 id="starting-to-look-at-some-expressions">Starting to look at some expressions</h2>
+<p>This seems to work in the online examples but not in ghci:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; s $ &quot;bd bd bd&quot;
+
+&lt;interactive&gt;:3:5: error:
+    • Couldn&#39;t match expected type ‘Pattern String’
+                  with actual type ‘[Char]’
+    • In the second argument of ‘($)’, namely ‘&quot;bd bd bd&quot;’
+      In the expression: s $ &quot;bd bd bd&quot;
+      In an equation for ‘it’: it = s $ &quot;bd bd bd&quot;
+</code></pre>
+<p>It needs <code>parseBP_E</code>, which is automatically, silently added when running from the text editor. In a normal <code>ghci</code>:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; s $ parseBP_E &quot;bd bd bd&quot;
+(0&gt;⅓)|s: &quot;bd&quot;
+(⅓&gt;⅔)|s: &quot;bd&quot;
+(⅔&gt;1)|s: &quot;bd&quot;
+</code></pre>
+<p>You can turn on the implicit string handling with <code>{-# language OverloadedStrings #-}</code>, or the equivalent <code>:set -XOverloadedStrings</code> in <code>ghci</code> (see Waldmann article below).</p>
+<pre><code>GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+Prelude&gt; import Sound.Tidal.Context
+Prelude Sound.Tidal.Context&gt; :set -XOverloadedStrings
+Prelude Sound.Tidal.Context&gt; s $ &quot;bd bd bd&quot;
+(0&gt;⅓)|s: &quot;bd&quot;
+(⅓&gt;⅔)|s: &quot;bd&quot;
+(⅔&gt;1)|s: &quot;bd&quot;
+</code></pre>
+<p><code>OverloadedStrings</code> is described at <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html" class="uri">https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/overloaded_strings.html</a> . I’d prefer not to use it right now since I’m explicitly trying to figure out the types and to understand the core definitions.</p>
+<h2 id="core.hs"><code>Core.hs</code></h2>
+<p>The basic functions for making patterns are in <code>Pattern.hs</code>, <code>Core.hs</code> and <code>UI.hs</code> (as far as I can tell).</p>
+<p>Almost all the examples you see start from Tidal’s pattern mini-language (like <code>s $ "a b c"</code>), but that’s not necessary for making patterns and it’s outside the core functionality. I’m going to start by surveying some of the basic API in <code>Core.hs</code>.</p>
+<p>There is API documentation online starting at <a href="https://tidalcycles.org/docs/patternlib/tour/concatenation" class="uri">https://tidalcycles.org/docs/patternlib/tour/concatenation</a>. (See “Small Reference” at the left.)</p>
+<p>A pattern is something you can query to get a list of events. Events have extents in time and can carry an arbitrary kind of data. From <code>Pattern.hs</code>:</p>
+<pre><code>data Pattern a = Pattern {query :: State -&gt; [Event a]}
+
+type Event a = EventF (ArcF Time) a</code></pre>
+<p>The most basic pattern is made via <code>pure</code>:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pure &quot;eventcontents&quot; :: Pattern String
+(0&gt;1)|&quot;eventcontents&quot;
+</code></pre>
+<p><img src="purecycle.svg" /></p>
+<p>So this is a pattern that has one event per cycle, and the event’s contents are the string <code>"eventcontents"</code>.</p>
+<p>A cycle is some amount of time, like a bar, or say four bars of music. You can set it to whatever you want, but it’s the basic sync period for a loop.</p>
+<hr />
+<p>You can make an empty pattern with <code>silence</code> (<code>Core.hs</code>), which is just an alias for <code>empty</code> (<code>Pattern.hs</code>).</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; silence
+
+Prelude Sound.Tidal.Context&gt; :t silence
+silence :: Pattern a
+</code></pre>
+<p>(There are no events to print.)</p>
+<hr />
+<p>You can use <code>fromList</code> (<code>Core.hs</code>) to make a pattern where each list item corresponds to an event with length one cycle:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fromList [&quot;phi&quot;, &quot;psi&quot; , &quot;tau&quot;]
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;1)|&quot;phi&quot;
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 3) pat
+[](0&gt;1)|&quot;phi&quot;
+[](1&gt;2)|&quot;psi&quot;
+[](2&gt;3)|&quot;tau&quot;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern [Char]
+</code></pre>
+<p><img src="fromListExample.svg" /></p>
+<p><code>showAll</code> from <code>Show.hs</code> takes an <code>Arc</code> argument, so we can print the pattern over more than one cycle.</p>
+<hr />
+<p>Use <code>fastFromList</code> (<code>Core.hs</code>) to make a pattern that squeezes each list item into one cycle:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fastFromList [&quot;phi&quot;, &quot;psi&quot; , &quot;tau&quot;]
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;⅓)|&quot;phi&quot;
+(⅓&gt;⅔)|&quot;psi&quot;
+(⅔&gt;1)|&quot;tau&quot;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern [Char]
+</code></pre>
+<p><img src="fastFromListExample.svg" /></p>
+<p>We can also draw the pattern on a circle to reflect its cyclical nature:</p>
+<p><img src="fastFromListExampleCircular.svg" /></p>
+<p><code>listToPat</code> is a synonym from <code>fastFromList</code>.</p>
+<hr />
+<p><code>fromMaybes</code> allows you to put gaps in the pattern:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fromMaybes [Just &quot;phi&quot;, Nothing, Just &quot;tau&quot;]
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;⅓)|&quot;phi&quot;
+(⅔&gt;1)|&quot;tau&quot;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern [Char]
+</code></pre>
+<p><img src="fromMaybesExample.svg" /></p>
+<hr />
+<p><code>append</code> alternates between cycles of two patterns.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = append (fromList [&#39;a&#39;, &#39;j&#39;]) (fromList [&#39;c&#39;, &#39;k&#39;])
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 8) pat
+[](0&gt;1)|&#39;a&#39;
+[](1&gt;2)|&#39;c&#39;
+[](2&gt;3)|&#39;j&#39;
+[](3&gt;4)|&#39;k&#39;
+[](4&gt;5)|&#39;a&#39;
+[](5&gt;6)|&#39;c&#39;
+[](6&gt;7)|&#39;j&#39;
+[](7&gt;8)|&#39;k&#39;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern Char
+</code></pre>
+<p><img src="appendExample.svg" /></p>
+<hr />
+<p><code>cat</code> alternates between cycles of several patterns.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = cat [fromList [&#39;a&#39;, &#39;j&#39;], fromList [&#39;c&#39;, &#39;k&#39;], fromList [&#39;e&#39;, &#39;l&#39;]]
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 8) pat
+[](0&gt;1)|&#39;a&#39;
+[](1&gt;2)|&#39;c&#39;
+[](2&gt;3)|&#39;e&#39;
+[](3&gt;4)|&#39;j&#39;
+[](4&gt;5)|&#39;k&#39;
+[](5&gt;6)|&#39;l&#39;
+[](6&gt;7)|&#39;a&#39;
+[](7&gt;8)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern Char
+</code></pre>
+<p><img src="catExample.svg" /></p>
+<p><code>slowCat</code> and <code>slowcat</code> (lowercase) are aliases for <code>cat</code>.</p>
+<hr />
+<p><code>fastCat</code> (also <code>fastcat</code>), works like <code>cat</code> but squeezes all the patterns into one cycle</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fastCat [fromList [&#39;a&#39;, &#39;j&#39;], fromList [&#39;c&#39;, &#39;k&#39;], fromList [&#39;e&#39;, &#39;l&#39;]]
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 3) pat
+[](0&gt;⅓)|&#39;a&#39;
+[](⅓&gt;⅔)|&#39;c&#39;
+[](⅔&gt;1)|&#39;e&#39;
+[](1&gt;1⅓)|&#39;j&#39;
+[](1⅓&gt;1⅔)|&#39;k&#39;
+[](1⅔&gt;2)|&#39;l&#39;
+[](2&gt;2⅓)|&#39;a&#39;
+[](2⅓&gt;2⅔)|&#39;c&#39;
+[](2⅔&gt;3)|&#39;e&#39;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern Char
+</code></pre>
+<p><img src="fastCatExample.svg" /></p>
+<hr />
+<p><code>timeCat</code> takes patterns and squeezes them into parts of a cycle. The time argument for each pattern is its relative duration.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; timeCat [(1, fastFromList [&#39;a&#39;, &#39;b&#39;]), (2, fastFromList [&#39;c&#39;, &#39;d&#39;, &#39;e&#39;])]
+  (0&gt;⅙)|&#39;a&#39;
+  (⅙&gt;⅓)|&#39;b&#39;
+ (⅓&gt;⁵₉)|&#39;c&#39;
+(⁵₉&gt;⁷₉)|&#39;d&#39;
+ (⁷₉&gt;1)|&#39;e&#39;
+</code></pre>
+<p><img src="timeCatExample.svg" /></p>
+<p>You could imagine using this for creating events of arbitrary lengths.</p>
+<hr />
+<p><code>overlay</code> superimposes two patterns, playing them in parallel.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; overlay (fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]) (fastFromList [&#39;j&#39;, &#39;k&#39;, &#39;l&#39;])
+(0&gt;¼)|&#39;a&#39;
+(0&gt;⅓)|&#39;j&#39;
+(¼&gt;½)|&#39;b&#39;
+(⅓&gt;⅔)|&#39;k&#39;
+(½&gt;¾)|&#39;c&#39;
+(⅔&gt;1)|&#39;l&#39;
+(¾&gt;1)|&#39;d&#39;
+</code></pre>
+<p><img src="overlayExample.svg" /></p>
+<hr />
+<p><code>stack</code> superimposes a list of patterns.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; stack [pure &#39;a&#39;, fastFromList [&#39;j&#39;, &#39;k&#39;, &#39;l&#39;], fromList [&#39;m&#39;, &#39;n&#39;]]
+(0&gt;⅓)|&#39;j&#39;
+(0&gt;1)|&#39;a&#39;
+(0&gt;1)|&#39;m&#39;
+(⅓&gt;⅔)|&#39;k&#39;
+(⅔&gt;1)|&#39;l&#39;
+</code></pre>
+<p><img src="stackExample.svg" /></p>
+<hr />
+<p><code>fast</code> speeds things up</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fast 3 $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+  (0&gt;⅑)|&#39;a&#39;
+ (⅑&gt;²₉)|&#39;b&#39;
+ (²₉&gt;⅓)|&#39;c&#39;
+ (⅓&gt;⁴₉)|&#39;a&#39;
+(⁴₉&gt;⁵₉)|&#39;b&#39;
+ (⁵₉&gt;⅔)|&#39;c&#39;
+ (⅔&gt;⁷₉)|&#39;a&#39;
+(⁷₉&gt;⁸₉)|&#39;b&#39;
+ (⁸₉&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ fast 3 $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[7 cycles]
+|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc|abcabcabc
+</code></pre>
+<p><img src="fastfunction.svg" /></p>
+<p><code>drawLine</code> is a utility function from <code>Show.hs</code> that renders out a <code>Pattern Char</code> as ascii art. It only works on char patterns!</p>
+<hr />
+<p><code>slow</code> elongates (i.e., slows down) a pattern</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; slow 2 $ fastFromList [&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+(0&gt;½)|&#39;a&#39;
+(½&gt;1)|&#39;a&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ slow 2 $ fastFromList [&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[26 cycles]
+|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc|aa|bc
+</code></pre>
+<p><img src="slowfunction.svg" /></p>
+<hr />
+<p><code>fastGap</code> speeds things up but aligns to the cycle</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastGap 3 $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+ (0&gt;⅑)|&#39;a&#39;
+(⅑&gt;²₉)|&#39;b&#39;
+(²₉&gt;⅓)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ fastGap 3 $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[7 cycles]
+|abc......|abc......|abc......|abc......|abc......|abc......|abc......
+</code></pre>
+<p><img src="fastgapfunction.svg" /></p>
+<hr />
+<p><code>compress</code> squeezes a pattern into a given arc of time</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; compress (1/4,1/2) $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+   (¼&gt;⅓)|&#39;a&#39;
+(⅓&gt;5/12)|&#39;b&#39;
+(5/12&gt;½)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ compress (1/4,1/2) $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[6 cycles]
+|...abc......|...abc......|...abc......|...abc......|...abc......|...abc......
+</code></pre>
+<p><img src="compressfunction.svg" /></p>
+<hr />
+<p><code>zoom</code> zooms in on a portion of a pattern. It maps the zoomed portion to the duration of the input pattern.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; zoom (1/4,3/4) $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+-1½-(0&gt;⅙)|&#39;a&#39;
+    (⅙&gt;⅚)|&#39;b&#39;
+ (⅚&gt;1)-1½|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ zoom (1/4,3/4) $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[11 cycles]
+|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c|a----c
+</code></pre>
+<p><img src="zoomfunction.svg" /></p>
+<p>(I don’t know why the “b” event isn’t shown in the <code>drawLine</code> output above.)</p>
+<hr />
+<p><code>rev</code> reverses each cycle of a pattern</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; rev $ slow 2 $ fromMaybes [Just &#39;a&#39;, Nothing, Just &#39;b&#39;, Nothing, Nothing, Just &#39;c&#39;]
+(0&gt;⅓)|&#39;b&#39;
+(⅔&gt;1)|&#39;a&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ rev $ slow 2 $ fromMaybes [Just &#39;a&#39;, Nothing, Just &#39;b&#39;, Nothing, Nothing, Just &#39;c&#39;]
+
+[19 cycles]
+|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a|c..|b.a
+</code></pre>
+<p>Input (<code>slow 2 $ fromMaybes [Just 'a', Nothing, Just 'b', Nothing, Nothing, Just 'c']</code>):</p>
+<p><img src="revfunctioninput.svg" /></p>
+<p>Output (<code>rev $ slow 2 $ fromMaybes [Just 'a', Nothing, Just 'b', Nothing, Nothing, Just 'c']</code>):</p>
+<p><img src="revfunctionoutput.svg" /></p>
+<hr />
+<p><code>every</code> applies a function to the input pattern, but only every <code>n</code> cycles.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; every 3 rev $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+(0&gt;⅓)|&#39;c&#39;
+(⅓&gt;⅔)|&#39;b&#39;
+(⅔&gt;1)|&#39;a&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ every 3 rev $ fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+[19 cycles]
+|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba
+</code></pre>
+<p><img src="everyfunction.svg" /></p>
+<p>The ‘<code>n</code> cycles’ argument is actually of type <code>Pattern Int</code>, so you can vary the argument over time like this:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+Prelude Sound.Tidal.Context&gt; ints = slow 6 $ cat [2, 3]
+Prelude Sound.Tidal.Context&gt; drawLine $ every ints rev pat
+
+[19 cycles]
+|cba|abc|cba|abc|cba|abc|cba|abc|abc|cba|abc|abc|cba|abc|cba|abc|cba|abc|cba
+</code></pre>
+<p>For the first six cycles the pattern is reversed every two repetitions; for the second six cycles the pattern is reversed every three.</p>
+<hr />
+<p><code>when</code> applies a function when the given predicate function returns true. The predicate is fed the current cycle number.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; drawLine $ when (\x -&gt; (x+2) `mod` 3 == 0) rev (fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;])
+
+[19 cycles]
+|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc|cba|abc|abc
+</code></pre>
+<p><img src="whenfunction.svg" /></p>
+<hr />
+<p><code>rotR</code> shifts a pattern forward in time by a certain number of cycles.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; drawLine $ rotR (1%3) (fastFromList [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+
+[19 cycles]
+|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab|cab
+</code></pre>
+<p><img src="rotRexample.svg" /></p>
+<p>You can use <code>rotR</code> and <code>fastGap</code> to manually put an event at a particular point in time with a particular duration.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; rotR (3%8) (fastGap 4 (pure &#39;a&#39;))
+(⅜&gt;⅝)|&#39;a&#39;
+</code></pre>
+<p><img src="rotRwithfastGap.svg" /></p>
+<h2 id="queries">Queries</h2>
+<p>Patterns can be queried over a time range, returning a list of events. The scheduler does this repeatedly over small time slices to decide when to send OSC (<a href="https://en.wikipedia.org/wiki/Open_Sound_Control">Open Sound Control</a>) messages to SuperCollider. We can use this to check how our pattern will be rendered.</p>
+<p>Each <code>Pattern</code> implements <code>query</code>:</p>
+<pre><code>data Pattern a = Pattern {query :: State -&gt; [Event a]}
+
+data State = State {arc :: Arc,
+                    controls :: ValueMap
+                   }</code></pre>
+<p>You pass in a <code>State</code>, but for our purposes we’ll always leave <code>controls</code> empty. (I understand it to be the current values of any external MIDI controllers, which we don’t need.) That means <code>query</code> essentially goes from an <code>Arc</code> of time to a list of <code>Event</code>s; that’s exactly what <code>queryArc</code> does:</p>
+<pre><code>queryArc :: Pattern a -&gt; Arc -&gt; [Event a]
+queryArc p a = query p $ State a Map.empty</code></pre>
+<p>The events that are returned have a <code>whole</code> and a <code>part</code>, which we’ll get into later.</p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0 1)
+[[](⅕&gt;⅖)|&#39;a&#39;,[](⅗&gt;⅘)|&#39;c&#39;,[](⅘&gt;1)|&#39;d&#39;]
+</code></pre>
+<p><img src="queryFullCycle.svg" /></p>
+<p>In this example, each of the output events has a <code>whole</code>, and that <code>whole</code> is the same as its <code>part</code>.</p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0 0.5)
+[[](⅕&gt;⅖)|&#39;a&#39;]
+</code></pre>
+<p><img src="queryHalfCycle.svg" /></p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0 0.25)
+[[](⅕&gt;¼)-⅖|&#39;a&#39;]
+</code></pre>
+<p><img src="queryQuarterCycle.svg" /></p>
+<p>So we see here that the output <code>Event</code>’s <code>whole</code> is the entire extent of the input event that intersects with the query <code>Arc</code>; the <code>part</code> is the intersection of the query <code>Arc</code> and the overlapping input event.</p>
+<p>We see <code>(⅕&gt;¼)-⅖</code> in the ghci output. The way to read this is</p>
+<ul>
+<li><code>(⅕&gt;¼)</code> is the part, where the query window overlaps with the input event window,</li>
+<li><code>⅕</code> to <code>⅖</code> is the whole, and</li>
+<li><code>(⅕&gt;¼)-⅖</code> is a representation that combines both the part and the whole</li>
+</ul>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0 0.2)
+[]
+</code></pre>
+<p><img src="queryEmptySpace.svg" /></p>
+<p>Querying an arc that doesn’t overlap any pattern events returns an empty list. Note here that the right edge of the query arc touches the first pattern event.</p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.6 0.8)
+[[](⅗&gt;⅘)|&#39;c&#39;]
+</code></pre>
+<p><img src="queryOverlapOneItemExactly.svg" /></p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.8 1.0)
+[[](⅘&gt;1)|&#39;d&#39;]
+</code></pre>
+<p><img src="queryOverlapOneItemExactly2.svg" /></p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.6 1.0)
+[[](⅗&gt;⅘)|&#39;c&#39;,[](⅘&gt;1)|&#39;d&#39;]
+</code></pre>
+<p><img src="queryOverlapTwoItemsExactly.svg" /></p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.7 0.9)
+[[]⅗-(7/10&gt;⅘)|&#39;c&#39;,[](⅘&gt;9/10)-1|&#39;d&#39;]
+</code></pre>
+<p><img src="queryOverlapTwoItems.svg" /></p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.8 0.8)
+[[](⅘&gt;⅘)-1|&#39;d&#39;]
+</code></pre>
+<p><img src="queryTwoItemsZeroWidth.svg" /></p>
+<p>So if you query a zero-width arc right between two events, it returns only the second event (with a zero-width part).</p>
+<hr />
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fromMaybes [Nothing,Just &#39;a&#39;, Nothing, Just &#39;c&#39;, Just &#39;d&#39;]) (Arc 0.75 0.75)
+[[]⅗-(¾&gt;¾)-⅘|&#39;c&#39;]
+</code></pre>
+<p><img src="queryOneItemZeroWidth.svg" /></p>
+<p>Note here how the event’s extents are notated: <code>⅗-(¾&gt;¾)-⅘</code>.</p>
+<h3 id="querying-continuous-patterns">Querying continuous patterns</h3>
+<p>Tidal also has a concept of a continuous pattern.</p>
+<p><img src="simplesine.svg" /></p>
+<p>(This is <code>sine</code> from <code>Core.hs</code>.)</p>
+<p>These patterns accept <code>query</code> like any other pattern.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc sine (Arc 0.5 0.75)
+[[]~½&gt;¾~|0.14644660940672627]
+</code></pre>
+<p><img src="querycontinuouspattern.svg" /></p>
+<p>Let’s look into the details to see what the query is returning and where the floating point value is coming from.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; results = queryArc sine (Arc 0.5 0.75)
+Prelude Sound.Tidal.Context&gt; results
+[[]~½&gt;¾~|0.14644660940672627]
+Prelude Sound.Tidal.Context&gt; :t results
+results :: Fractional a =&gt; [Event a]
+Prelude Sound.Tidal.Context&gt; length results
+1
+Prelude Sound.Tidal.Context&gt; event : _ = results
+Prelude Sound.Tidal.Context&gt; :t event
+event :: Fractional a =&gt; Event a
+Prelude Sound.Tidal.Context&gt; whole event
+Nothing
+Prelude Sound.Tidal.Context&gt; part event
+½&gt;¾
+Prelude Sound.Tidal.Context&gt; value event
+0.14644660940672627
+</code></pre>
+<p><img src="querycontinuouspatternshowpoint.svg" /></p>
+<p>So we see that querying a continuous pattern returns events with parts and values, but no wholes.</p>
+<p>The notation for continuous results includes tildes: <code>~½&gt;¾~</code>.</p>
+<p>Note too that the query samples the continuous function in the middle of the query arc.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc sine (Arc 0.3 0.5)
+[[]~3/10&gt;½~|0.7938926261462367]
+Prelude Sound.Tidal.Context&gt; queryArc sine (0.4 :: Arc)
+[[]~⅖&gt;⅖~|0.7938926261462367]
+</code></pre>
+<p><img src="querycontinuouspatternsamplesatmidpoint.svg" /></p>
+<p>If you want to sample a continuous pattern at exactly one point, use a zero-width arc.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc sine (Arc 0.22 0.22)
+[[]~11/50&gt;11/50~|0.9911436253643443]
+</code></pre>
+<p><img src="querycontinuouspatternzwarc.svg" /></p>
+<p>Tidal calls continuous patterns “analog” and discrete patterns “digital”:</p>
+<pre><code>isAnalog :: Event a -&gt; Bool
+isAnalog (Event {whole = Nothing}) = True
+isAnalog _ = False
+
+isDigital :: Event a -&gt; Bool
+isDigital = not . isAnalog</code></pre>
+<p>(from <code>Pattern.hs</code>)</p>
+<h2 id="basic-types-pattern.hs">Basic types (<code>Pattern.hs</code>)</h2>
+<p>We’ve seen several examples of patterns, events and queries. Hopefully that will have built up enough intuition to make sense of the basic types.</p>
+<p><code>Pattern</code> is defined in <code>Sound/Tidal/Pattern.hs</code>.</p>
+<pre><code>-- | A datatype representing events taking place over time
+data Pattern a = Pattern {query :: State -&gt; [Event a]}
+  deriving (Generic, Functor)</code></pre>
+<p>A pattern is something that can be queried, returning a list of events.</p>
+<p>An <code>Arc</code> is an interval of time. Time is expressed as a rational (i.e., a fraction) (defined in <code>Sound/Tidal/Time.hs</code>)</p>
+<pre><code>-- | Time is rational
+type Time = Rational
+
+-- | An arc of time, with a start time (or onset) and a stop time (or offset)
+data ArcF a = Arc
+  { start :: a
+  , stop :: a
+  } deriving (Eq, Ord, Functor, Show, Generic)
+
+type Arc = ArcF Time</code></pre>
+<p>I think the reason it’s called an arc is that a cycle is imagined to lie on a circle. An arc is a portion of that circle.</p>
+<p><code>Event</code>s are defined thusly (see <code>Sound/Tidal/Pattern.hs</code>):</p>
+<pre><code>-- | An event is a value that&#39;s active during a timespan. If a whole
+-- is present, the part should be equal to or fit inside it.
+data EventF a b = Event
+  { context :: Context
+  , whole :: Maybe a
+  , part :: a
+  , value :: b
+  } deriving (Eq, Ord, Functor, Generic)
+
+type Event a = EventF (ArcF Time) a</code></pre>
+<p>So events are understood to be boxes on the timeline with a beginning and an end, which contain a value. We also have the notion of looking at a subsection of an event, hence the <code>whole</code> and <code>part</code> distinction. <code>whole</code> is <code>Maybe a</code>, so it might be <code>Nothing</code>, which means that it’s from an analog (continuous) pattern.</p>
+<p><code>value</code> is, of course, the value that the event contains.</p>
+<p>The context is apparently the position within the source code. I guess this is used when interpreting expressions in a live coding context.</p>
+<p>There are some utility functions to access an event’s fields in <code>Pattern.hs</code>: <code>isAnalog</code>, <code>isDigital</code>, <code>wholeStart</code>, <code>wholeStop</code>, <code>eventPartStart</code>, <code>eventPartStop</code>, etc.</p>
+<h2 id="patterns-as-numbers">Patterns as numbers</h2>
+<p>You can perform many operations on patterns as though they were numbers:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; min 27 $ fastFromList [11,22,33,44]
+(0&gt;¼)|11
+(¼&gt;½)|22
+(½&gt;¾)|27
+(¾&gt;1)|27
+</code></pre>
+<p><img src="numberpatternmin.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; max 27 $ fastFromList [11,22,33,44]
+(0&gt;¼)|27
+(¼&gt;½)|27
+(½&gt;¾)|33
+(¾&gt;1)|44
+</code></pre>
+<p><img src="numberpatternmax.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastFromList [11,22,33,44] + 3
+(0&gt;¼)|14
+(¼&gt;½)|25
+(½&gt;¾)|36
+(¾&gt;1)|47
+</code></pre>
+<p><img src="numberpatternplus.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; 2 * fastFromList [11,22,33,44]
+(0&gt;¼)|22
+(¼&gt;½)|44
+(½&gt;¾)|66
+(¾&gt;1)|88
+</code></pre>
+<p><img src="numberpatterntimes.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; mod (fastFromList [11,22,33,44]) 4
+(0&gt;¼)|3
+(¼&gt;½)|2
+(½&gt;¾)|1
+(¾&gt;1)|0
+</code></pre>
+<p><img src="numberpatternmod.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; sqrt $ fastFromList [2,9,16,100]
+(0&gt;¼)|1.4142135623730951
+(¼&gt;½)|3.0
+(½&gt;¾)|4.0
+(¾&gt;1)|10.0
+</code></pre>
+<p><img src="numberpatternsqrt.svg" /></p>
+<p>Neat.</p>
+<h2 id="pattern-algebra">Pattern Algebra</h2>
+<p>What happens when we straight up add two patterns together?</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastFromList [1, 2, 3] + fastFromList [20, 40] :: Pattern Int
+(0&gt;⅓)|21
+(⅓&gt;½)|22
+(½&gt;⅔)|42
+(⅔&gt;1)|43
+</code></pre>
+<p><img src="additionexample.svg" /></p>
+<p>Tidal adds the patterns together by combining the events and values from both input patterns. Internally, Tidal does the addition via <code>applyPatToPatBoth</code> in <code>Pattern.hs</code>.</p>
+<p>There are other addition operators that combine the events in alternate ways that call <code>applyPatToPatLeft</code> and <code>applyPatToPatRight</code> instead.</p>
+<p>The <code>(|+)</code> operator is addition, taking structure (i.e., the wholes) from the left (<code>src/Sound/Tidal/Core.hs</code>).</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastFromList [1, 2, 3] |+ fastFromList [20, 40] :: Pattern Int
+  (0&gt;⅓)|21
+(⅓&gt;½)-⅔|22
+⅓-(½&gt;⅔)|42
+  (⅔&gt;1)|43
+</code></pre>
+<p><img src="leftPlusExample1.svg" /></p>
+<p>(In the text output, notice that the “22” and the “42” entries correspond to the same whole event. I understand this to mean that the value changes midway though the event, but the onset still happens at the “22” in this case. I later confirmed with <code>oscdump</code> and a live Tidal REPL that that’s what’s happening – the value that is lined up when the onset happens is the one that gets sent. The change midway through the event does nothing.)</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60] :: Pattern Int
+(0&gt;⅓)|21
+(⅓&gt;⅔)|42
+(⅔&gt;1)|63
+</code></pre>
+<p><img src="leftPlusExample2.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fastFromList [1, 2, 3] |+ fastFromList [20, 40, 60, 80] :: Pattern Int
+(0&gt;¼)-⅓|21
+0-(¼&gt;⅓)|41
+(⅓&gt;½)-⅔|42
+⅓-(½&gt;⅔)|62
+(⅔&gt;¾)-1|63
+⅔-(¾&gt;1)|83
+</code></pre>
+<p><img src="leftPlusExample3.svg" /></p>
+<hr />
+<p>The <code>+|</code> operator does addition, but takes the events from the right argument:</p>
+<p><img src="rightPlusExample1.svg" /></p>
+<p><img src="rightPlusExample2.svg" /></p>
+<p><img src="rightPlusExample3.svg" /></p>
+<hr />
+<p>The <code>|+|</code> operator does addition, but takes the events from both arguments:</p>
+<p><img src="bothPlusExample1.svg" /></p>
+<p><img src="bothPlusExample2.svg" /></p>
+<p><img src="bothPlusExample3.svg" /></p>
+<hr />
+<p>If you use <code>+</code>, it’s like <code>|+|</code>:</p>
+<p><img src="justPlusExample1.svg" /></p>
+<hr />
+<p>There are a bunch of operators that work in the same way documented at <a href="https://tidalcycles.org/docs/patternlib/tutorials/pattern_structure" class="uri">https://tidalcycles.org/docs/patternlib/tutorials/pattern_structure</a>.</p>
+<h2 id="applying-a-pattern-of-functions">Applying a pattern of functions</h2>
+<p>The above are examples of <code>Pattern</code>’s <code>Applicative</code> instance, which is a Haskell thing. It allows you to apply a pattern of unary functions to a pattern of arguments.</p>
+<pre><code>instance Applicative Pattern where
+  -- | Repeat the given value once per cycle, forever
+  pure v = Pattern $ \(State a _) -&gt;
+    map (\a&#39; -&gt; Event (Context []) (Just a&#39;) (sect a a&#39;) v) $ cycleArcsInArc a
+
+  (&lt;*&gt;) = applyPatToPatBoth</code></pre>
+<pre><code>Prelude Sound.Tidal.Context&gt; a = fastFromList [ (2.0*), exp, (max 7) ]
+Prelude Sound.Tidal.Context&gt; :t a
+a :: (Floating a, Ord a) =&gt; Pattern (a -&gt; a)
+Prelude Sound.Tidal.Context&gt; b = fastFromList [1, 2]
+Prelude Sound.Tidal.Context&gt; a &lt;*&gt; b
+(0&gt;⅓)|2.0
+(⅓&gt;½)|2.718281828459045
+(½&gt;⅔)|7.38905609893065
+(⅔&gt;1)|7.0
+</code></pre>
+<p><img src="applicativeboth.svg" /></p>
+<p>There are also the operators <code>&lt;*</code> and <code>*&gt;</code>, which take the structure from the left and right, respectively.</p>
+<pre><code>Prelude&gt; import Prelude hiding ((&lt;*), (*&gt;))
+Prelude&gt; import Sound.Tidal.Context
+Prelude Sound.Tidal.Context&gt; a = fastFromList [ (2.0*), exp, (max 7) ]
+Prelude Sound.Tidal.Context&gt; b = fastFromList [1, 2]
+Prelude Sound.Tidal.Context&gt; a &lt;* b
+  (0&gt;⅓)|2.0
+(⅓&gt;½)-⅔|2.718281828459045
+⅓-(½&gt;⅔)|7.38905609893065
+  (⅔&gt;1)|7.0
+</code></pre>
+<p><img src="applicativeleft.svg" /></p>
+<pre><code>Prelude Sound.Tidal.Context&gt; a *&gt; b
+(0&gt;⅓)-½|2.0
+0-(⅓&gt;½)|2.718281828459045
+(½&gt;⅔)-1|7.38905609893065
+½-(⅔&gt;1)|7.0
+</code></pre>
+<p><img src="applicativeright.svg" /></p>
+<p>(Only the first event contains the whole’s onset, so that’s the one that’ll get sent out via OSC.)</p>
+<p>These operators are the more general ones that are called into by <code>|+</code>, <code>+|</code>, etc.</p>
+<h2 id="mapping-over-a-pattern">Mapping over a pattern</h2>
+<p>You can map a function over a <code>Pattern</code>. It’ll apply the function to that pattern’s events.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; fmap abs fastFromList [ 2, -3, 1, -1, 4 ]
+(0&gt;⅕)|2
+(⅕&gt;⅖)|3
+(⅖&gt;⅗)|1
+(⅗&gt;⅘)|1
+(⅘&gt;1)|4
+Prelude Sound.Tidal.Context&gt; fmap ((+3) . (*2)) fastFromList [ 1, 2, 3, 4 ]
+(0&gt;¼)|5
+(¼&gt;½)|7
+(½&gt;¾)|9
+(¾&gt;1)|11
+</code></pre>
+<p>There are also various filter functions defined in <code>Pattern.hs</code>.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; filterValues (&gt; 0) $ fastFromList [ 2, -3, 1, -1, 4 ]
+(0&gt;⅕)|2
+(⅖&gt;⅗)|1
+(⅘&gt;1)|4
+</code></pre>
+<p><img src="filtervaluesexample.svg" /></p>
+<p>See <code>filterJust</code>, <code>filterWhen</code>, <code>filterOnsets</code>, <code>filterEvents</code>, etc.</p>
+<h2 id="patterns-of-patterns">Patterns of patterns</h2>
+<p>You can of course define patterns of patterns as well.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = fastFromList [ fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;], fastFromList [&#39;d&#39;,&#39;e&#39;] ]
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;½)|(0&gt;⅓)|&#39;a&#39;
+(⅓&gt;⅔)|&#39;b&#39;
+(⅔&gt;1)|&#39;c&#39;
+(½&gt;1)|(0&gt;½)|&#39;d&#39;
+(½&gt;1)|&#39;e&#39;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern (Pattern Char)
+</code></pre>
+<p>The way to read this is that there’s one event on <code>(0&gt;½)</code> that contains the first pattern, and there’s a second event on <code>(½&gt;1)</code> that contains the second pattern.</p>
+<hr />
+<p>You can use <code>unwrap</code> if you want to flatten the patterns:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = unwrap $ fastFromList [ fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;], fastFromList [&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;] ]
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;⅓)|&#39;a&#39;
+(⅓&gt;½)|&#39;b&#39;
+(½&gt;¾)|&#39;l&#39;
+(¾&gt;1)|&#39;m&#39;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: Pattern Char
+</code></pre>
+<p><img src="unwrapexample.svg" /></p>
+<p>So this is allowing the inner patterns to shine through the windows defined by the events they’re contained in. The wholes and the parts are cleaned up so that they’re coincident for every event.</p>
+<hr />
+<p><code>innerJoin</code> flattens the pattern but takes the structure from the inner pattern.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; innerJoin $ fastFromList [ fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;], fastFromList [&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;] ]
+  (0&gt;⅓)|&#39;a&#39;
+(⅓&gt;½)-⅔|&#39;b&#39;
+  (½&gt;¾)|&#39;l&#39;
+  (¾&gt;1)|&#39;m&#39;
+</code></pre>
+<p><img src="innerjoinexample.svg" /></p>
+<p>The events are defined by the inner patterns over the entire cycle, and those windowed by the outer events they’re contained in. This looks like the <code>unwrap</code> case, but the wholes from the inner pattern are preserved in the output events.</p>
+<p>We can emulate this with <code>queryArc</code> to help understand what <code>innerJoin</code> is doing:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]) (Arc 0 0.5) ++ queryArc (fastFromList [&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;]) (Arc 0.5 1)
+[[](0&gt;⅓)|&#39;a&#39;,[](⅓&gt;½)-⅔|&#39;b&#39;,[](½&gt;¾)|&#39;l&#39;,[](¾&gt;1)|&#39;m&#39;]
+</code></pre>
+<hr />
+<p><code>outerJoin</code> flattens the pattern but takes the structure from the outer pattern.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; outerJoin $ fastFromList [ fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;], fastFromList [&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;] ]
+(0&gt;½)|&#39;a&#39;
+(½&gt;1)|&#39;l&#39;
+</code></pre>
+<p><img src="outerjoinexample.svg" /></p>
+<p>Note that the wholes come from the outer pattern.</p>
+<hr />
+<p>Finally, there’s <code>squeezeJoin</code>, which compresses each of the inner patterns into the event they’re contained in.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; squeezeJoin $ fastFromList [ fastFromList [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;], fastFromList [&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;] ]
+(0&gt;⅙)|&#39;a&#39;
+(⅙&gt;⅓)|&#39;b&#39;
+(⅓&gt;½)|&#39;c&#39;
+(½&gt;⅝)|&#39;j&#39;
+(⅝&gt;¾)|&#39;k&#39;
+(¾&gt;⅞)|&#39;l&#39;
+(⅞&gt;1)|&#39;m&#39;
+</code></pre>
+<p><img src="squeezejoinexample.svg" /></p>
+<h2 id="manually-defining-the-query-function">Manually defining the query function</h2>
+<p>Since patterns basically only provide a query function, you can write one yourself instead of using the API we’ve explored so far.</p>
+<p>Here’s a trivial example:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = Pattern { query = \s -&gt; [] }
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 0 1)
+[]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 1 100)
+[]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 7 7)
+[]
+</code></pre>
+<p>(<code>empty</code> is defined as <code>empty = Pattern {query = const []}</code> in <code>Pattern.hs</code>.)</p>
+<p>Set the value from the query arc’s start time:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = Pattern { query = \(State a ctrls) -&gt; [Event (Context []) (Just a) a (fromRational $ start a :: Double)] }
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 0 1)
+[[](0&gt;1)|0.0]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 1 100)
+[[](1&gt;100)|1.0]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 7 7)
+[[](7&gt;7)|7.0]
+</code></pre>
+<p>Return events whose value is the cycle number:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; :{
+Prelude Sound.Tidal.Context| pat = Pattern { query = \(State a _) -&gt;
+Prelude Sound.Tidal.Context|     map
+Prelude Sound.Tidal.Context|         (\cyclearc -&gt; Event
+Prelude Sound.Tidal.Context|             (Context [])
+Prelude Sound.Tidal.Context|             (Just cyclearc)
+Prelude Sound.Tidal.Context|             (sect a cyclearc)
+Prelude Sound.Tidal.Context|             (fromRational $ sam $ start cyclearc :: Double))
+Prelude Sound.Tidal.Context|         (cycleArcsInArc a) }
+Prelude Sound.Tidal.Context| :}
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 0 3)
+[[](0&gt;1)|0.0,[](1&gt;2)|1.0,[](2&gt;3)|2.0]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 5 9)
+[[](5&gt;6)|5.0,[](6&gt;7)|6.0,[](7&gt;8)|7.0,[](8&gt;9)|8.0]
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 7.5 9.5)
+[[]7-(7½&gt;8)|7.0,[](8&gt;9)|8.0,[](9&gt;9½)-10|9.0]
+</code></pre>
+<p>(The <code>:{</code> and <code>:}</code> lines are for ghci, to have the definition span multiple lines.)</p>
+<p>A pattern with zero events in the zeroth cycle, one event in the first, two events in the second, etc.:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; :{
+Prelude Sound.Tidal.Context| pat = Pattern { query = \s -&gt;
+Prelude Sound.Tidal.Context|     let
+Prelude Sound.Tidal.Context|         subpattern :: Int -&gt; Pattern Int
+Prelude Sound.Tidal.Context|         subpattern = \i -&gt; fast (fromIntegral i) $ pure i
+Prelude Sound.Tidal.Context|         outterpattern :: Pattern (Pattern Int)
+Prelude Sound.Tidal.Context|         outterpattern = fromList $ map subpattern [0,1..5]
+Prelude Sound.Tidal.Context|     in
+Prelude Sound.Tidal.Context|         query (unwrap outterpattern) s }
+Prelude Sound.Tidal.Context| :}
+Prelude Sound.Tidal.Context&gt; queryArc pat (Arc 0 7)
+[[](1&gt;2)|1,[](2&gt;2½)|2,[](2½&gt;3)|2,[](3&gt;3⅓)|3,[](3⅓&gt;3⅔)|3,[](3⅔&gt;4)|3,[](4&gt;4¼)|4,[](4¼&gt;4½)|4,[](4½&gt;4¾)|4,[](4¾&gt;5)|4,[](5&gt;5⅕)|5,[](5⅕&gt;5⅖)|5,[](5⅖&gt;5⅗)|5,[](5⅗&gt;5⅘)|5,[](5⅘&gt;6)|5]
+</code></pre>
+<p>And so on.</p>
+<p>(This last example can be done in a one-liner with <code>pat = unwrap (fromList $ map (\i -&gt; fast (fromIntegral i) $ pure i) [0,1..5])</code>; going through the <code>query</code> here is actually unnecessary, but you get the idea)</p>
+<p>The part for each event must fit inside its whole.</p>
+<p>These functions are executed every time the pattern is queried. They shouldn’t be computationally expensive so they can be rendered in real time. Also, it seems that you can’t rely on them being lazily evaluated (there seems to be be some strictness somewhere during evaluation). Using <code>[0..]</code> above instead of <code>[0,1..5]</code> hung ghci for me.</p>
+<p>You can put a long function expression in a text file with a <code>.hs</code> extension and load it in a ghci session using <code>:load</code> and <code>:reload</code> (<code>:l</code> and <code>:r</code>).</p>
+<h2 id="mini-notation">Mini-Notation</h2>
+<p>So this is sort of the main event. Tidal includes a “mini-notation” for succinctly specifying patterns as text strings. Most of the examples you see will start with this format.</p>
+<p>It’s functionality that sits on top of <code>Sound.Tidal.Pattern</code> and <code>Sound.Tidal.Core</code>, so I felt it was less fundamental and left it until now. It’s defined in <code>ParseBP.hs</code>.</p>
+<p>So as we saw in ‘Starting to look at some expressions’ above, expressions like <code>s "bd ~ bd ~"</code> don’t work in ghci by default. You need to add <code>parseBP_E</code> or turn on implicit string handling with <code>:set -XOverloadedStrings</code>. This will be already turned on in Tidal proper. For the examples here I’ll include <code>parseBP_E</code> explicitly for the sake of understanding and driving the point home.</p>
+<p>See <a href="https://tidalcycles.org/docs/patternlib/tutorials/mini_notation" class="uri">https://tidalcycles.org/docs/patternlib/tutorials/mini_notation</a> for further notes on the syntax more examples.</p>
+<hr />
+<p>So the most basic pattern just lists the event values in a string. They’re compressed into one cycle, like with <code>fastFromList</code>.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a b c&quot; :: Pattern Char
+(0&gt;⅓)|&#39;a&#39;
+(⅓&gt;⅔)|&#39;b&#39;
+(⅔&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a b c&quot;
+
+[19 cycles]
+|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
+</code></pre>
+<p><img src="basicpattern.svg" /></p>
+<p>There are some things to note here. The type of the values is inferred from the outer type annotation. To wit:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; :set +t
+Prelude Sound.Tidal.Context&gt; parseBP_E &quot;1 2 3&quot; :: Pattern Double
+(0&gt;⅓)|1.0
+(⅓&gt;⅔)|2.0
+(⅔&gt;1)|3.0
+it :: Pattern Double
+Prelude Sound.Tidal.Context&gt; parseBP_E &quot;1 2 3&quot; :: Pattern Char
+(0&gt;⅓)|&#39;1&#39;
+(⅓&gt;⅔)|&#39;2&#39;
+(⅔&gt;1)|&#39;3&#39;
+it :: Pattern Char
+Prelude Sound.Tidal.Context&gt; parseBP_E &quot;1 2 3&quot; :: Pattern Int
+(0&gt;⅓)|1
+(⅓&gt;⅔)|2
+(⅔&gt;1)|3
+it :: Pattern Int
+Prelude Sound.Tidal.Context&gt; parseBP_E &quot;1 0 0 1&quot; :: Pattern Bool
+(0&gt;¼)|True
+(¼&gt;½)|False
+(½&gt;¾)|False
+(¾&gt;1)|True
+it :: Pattern Bool
+</code></pre>
+<p>If you don’t give a type hint, it’ll fall back to a default type for the values.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;e f g&quot;
+(0&gt;⅓)|4
+(⅓&gt;⅔)|5
+(⅔&gt;1)|7
+it :: (Enumerable a, Parseable a) =&gt; Pattern a
+</code></pre>
+<p>If you omit the type hint some characters just don’t work.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;j k l&quot; :: Pattern Char
+(0&gt;⅓)|&#39;j&#39;
+(⅓&gt;⅔)|&#39;k&#39;
+(⅔&gt;1)|&#39;l&#39;
+it :: Pattern Char
+Prelude Sound.Tidal.Context&gt; parseBP_E &quot;j k l&quot;
+*** Exception: Syntax error in sequence:
+  &quot;j k l&quot;
+   ^  
+unexpected &#39;j&#39;
+expecting white space, &quot;-&quot;, &quot;+&quot;, number, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;g&quot;, &quot;a&quot;, &quot;b&quot;, &quot;&#39;&quot;, rest, &quot;[&quot;, &quot;{&quot;, &quot;&lt;&quot;, &quot;^&quot;, &quot;.&quot;, &quot;?&quot; or end of input
+</code></pre>
+<p>Also, <code>drawLine</code> expects a pattern of type <code>Pattern Char</code>. So you can’t use it to show patterns of strings, for example.</p>
+<hr />
+<p>Onward with more mini-notation. Tilde is a rest:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;b ~ b ~&quot; :: Pattern Char
+(0&gt;¼)|&#39;b&#39;
+(½&gt;¾)|&#39;b&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;b ~ b ~&quot;
+
+[15 cycles]
+|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.|b.b.
+</code></pre>
+<p>So a dot in the <code>drawLine</code> output is a rest.</p>
+<p><img src="tildeisarest.svg" /></p>
+<hr />
+<p>Underscore elongates a note:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a _ c&quot; :: Pattern Char
+(0&gt;⅔)|&#39;a&#39;
+(⅔&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a _ c&quot;
+
+[19 cycles]
+|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c|a-c
+</code></pre>
+<p>A hyphen in the <code>drawLine</code> output means that a note is held for an extra division.</p>
+<p><img src="underscoreelongates.svg" /></p>
+<hr />
+<p><code>@</code> elongates a pattern by some number of counts:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a@3 b&quot; :: Pattern Char
+(0&gt;¾)|&#39;a&#39;
+(¾&gt;1)|&#39;b&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a@3 b&quot;
+
+[15 cycles]
+|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b|a--b
+</code></pre>
+<p><img src="atelongates.svg" /></p>
+<hr />
+<p>Repeat an event with * . Notice how it takes the time the event would have taken and subdivides that:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a*2 c&quot; :: Pattern Char
+(0&gt;¼)|&#39;a&#39;
+(¼&gt;½)|&#39;a&#39;
+(½&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a*2 c&quot;
+
+[15 cycles]
+|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-|aac-
+</code></pre>
+<p><img src="repeateventasterisk.svg" /></p>
+<p>So instead of getting the cycle divided into three, it’s divided into four. The ‘a’ events have duration 1/4.</p>
+<hr />
+<p>Use ! to repeat an event. Contrast this with * .</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a!2 c&quot; :: Pattern Char
+(0&gt;⅓)|&#39;a&#39;
+(⅓&gt;⅔)|&#39;a&#39;
+(⅔&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a!2 c&quot;
+
+[19 cycles]
+|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac|aac
+</code></pre>
+<p><img src="repeateventbang.svg" /></p>
+<p>The ‘a’ events have duration 1/3 here.</p>
+<hr />
+<p>Use square brackets for grouping.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;[a b c] [d e]&quot; :: Pattern Char
+(0&gt;⅙)|&#39;a&#39;
+(⅙&gt;⅓)|&#39;b&#39;
+(⅓&gt;½)|&#39;c&#39;
+(½&gt;¾)|&#39;d&#39;
+(¾&gt;1)|&#39;e&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;[a b c] [d e]&quot;
+
+[6 cycles]
+|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
+</code></pre>
+<p>So it divided the pattern into two halves, and then divided the first half into three and the second half into two.</p>
+<p><img src="squarebrackets.svg" /></p>
+<hr />
+<p>You can do the same with a dot:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a b c . d e&quot; :: Pattern Char
+(0&gt;⅙)|&#39;a&#39;
+(⅙&gt;⅓)|&#39;b&#39;
+(⅓&gt;½)|&#39;c&#39;
+(½&gt;¾)|&#39;d&#39;
+(¾&gt;1)|&#39;e&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a b c . d e&quot;
+
+[6 cycles]
+|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--|a-b-c-d--e--
+</code></pre>
+<p><img src="thedot.svg" /></p>
+<hr />
+<p>Use a comma to play two patterns in parallel. Apparently you need the square brackets as well.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;[a b c , d e]&quot; :: Pattern Char
+(0&gt;⅓)|&#39;a&#39;
+(0&gt;½)|&#39;d&#39;
+(⅓&gt;⅔)|&#39;b&#39;
+(½&gt;1)|&#39;e&#39;
+(⅔&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;[a b c , d e]&quot;
+
+[11 cycles]
+|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-|a-b-c-
+|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--|d--e--
+</code></pre>
+<p>The first expression’s output orders the interleaved events by onset time.</p>
+<p><img src="commaforparallel.svg" /></p>
+<hr />
+<p>You can create polymetric sequences with braces:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;{a b c , d e}&quot; :: Pattern Char
+(0&gt;⅓)|&#39;a&#39;
+(0&gt;⅓)|&#39;d&#39;
+(⅓&gt;⅔)|&#39;b&#39;
+(⅓&gt;⅔)|&#39;e&#39;
+(⅔&gt;1)|&#39;c&#39;
+(⅔&gt;1)|&#39;d&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;{a b c , d e}&quot;
+
+[19 cycles]
+|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc|abc
+|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded|ede|ded
+</code></pre>
+<p><img src="polymetricbraces.svg" /></p>
+<p>So it looks like it takes the first pattern and divides the cycle by the number of elements it has, and then uses that length for each element of the second pattern.</p>
+<p>Contrast with doing it in the other order:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;{d e , a b c}&quot; :: Pattern Char
+(0&gt;½)|&#39;d&#39;
+(0&gt;½)|&#39;a&#39;
+(½&gt;1)|&#39;e&#39;
+(½&gt;1)|&#39;b&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;{d e , a b c}&quot;
+
+[26 cycles]
+|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de|de
+|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca|bc|ab|ca
+</code></pre>
+<p><img src="polymetricbracesotherorder.svg" /></p>
+<p>So in this second version, the ‘a b c’ events have a longer duration: putting the “d e” first divides the cycle in two, and so the “a b c” pattern repeats every 1.5 cycles.</p>
+<hr />
+<p>You can set the length of the polymetric sequence with <code>%</code>.</p>
+<p>This expression divides the cycle into eight:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;{a b c d e}%8&quot; :: Pattern Char
+(0&gt;⅛)|&#39;a&#39;
+(⅛&gt;¼)|&#39;b&#39;
+(¼&gt;⅜)|&#39;c&#39;
+(⅜&gt;½)|&#39;d&#39;
+(½&gt;⅝)|&#39;e&#39;
+(⅝&gt;¾)|&#39;a&#39;
+(¾&gt;⅞)|&#39;b&#39;
+(⅞&gt;1)|&#39;c&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;{a b c d e}%8&quot;
+
+[8 cycles]
+|abcdeabc|deabcdea|bcdeabcd|eabcdeab|cdeabcde|abcdeabc|deabcdea|bcdeabcd
+</code></pre>
+<p><img src="polymetricdividebyeight.svg" /></p>
+<p>This expression divides the cycle into seven.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;{a b c d e}%7&quot; :: Pattern Char
+  (0&gt;⅐)|&#39;a&#39;
+ (⅐&gt;²₇)|&#39;b&#39;
+(²₇&gt;³₇)|&#39;c&#39;
+(³₇&gt;⁴₇)|&#39;d&#39;
+(⁴₇&gt;⁵₇)|&#39;e&#39;
+(⁵₇&gt;⁶₇)|&#39;a&#39;
+ (⁶₇&gt;1)|&#39;b&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;{a b c d e}%7&quot;
+
+[9 cycles]
+|abcdeab|cdeabcd|eabcdea|bcdeabc|deabcde|abcdeab|cdeabcd|eabcdea|bcdeabc
+</code></pre>
+<p><img src="polymetricdividebyseven.svg" /></p>
+<hr />
+<p>Use angle brackets to alternate between the events</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;&lt;a b c&gt; d &lt;e f&gt;&quot; :: Pattern Char
+(0&gt;⅓)|&#39;a&#39;
+(⅓&gt;⅔)|&#39;d&#39;
+(⅔&gt;1)|&#39;e&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;&lt;a b c&gt; d &lt;e f&gt;&quot;
+
+[19 cycles]
+|ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade|bdf|cde|adf|bde|cdf|ade
+</code></pre>
+<p><img src="anglebrackets.svg" /></p>
+<hr />
+<p>Use brackets to create a Euclidean rhythm:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; parseBP_E &quot;a(3,7)&quot; :: Pattern Char
+  (0&gt;⅐)|&#39;a&#39;
+(²₇&gt;³₇)|&#39;a&#39;
+(⁴₇&gt;⁵₇)|&#39;a&#39;
+Prelude Sound.Tidal.Context&gt; drawLine $ parseBP_E &quot;a(3,7)&quot;
+
+[9 cycles]
+|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..|a.a.a..
+</code></pre>
+<p><img src="euclideanrhythm.svg" /></p>
+<h2 id="querying-events-crossing-cycle-boundaries">Querying events crossing cycle boundaries</h2>
+<p>Interestingly, querying a <code>slow 1.5</code> expression shows that it apparently splits events at cycle boundaries:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = slow 1.5 $ fastFromList [&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;] :: Pattern Char
+Prelude Sound.Tidal.Context&gt; drawLine pat
+
+[8 cycles]
+|a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a|a----c--|a--a--b-|b---a--a
+Prelude Sound.Tidal.Context&gt; stripContext = setContext $ Context []
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 3) (stripContext pat)
+[](0&gt;⅜)|&#39;a&#39;
+[](⅜&gt;¾)|&#39;a&#39;
+[](¾&gt;1)-1⅛|&#39;b&#39;
+[]¾-(1&gt;1⅛)|&#39;b&#39;
+[](1⅛&gt;1½)|&#39;c&#39;
+[](1½&gt;1⅞)|&#39;a&#39;
+[](1⅞&gt;2)-2¼|&#39;a&#39;
+[]1⅞-(2&gt;2¼)|&#39;a&#39;
+[](2¼&gt;2⅝)|&#39;b&#39;
+[](2⅝&gt;3)|&#39;c&#39;
+</code></pre>
+<p><img src="slowoneandahalf.svg" /></p>
+<p>(<code>stripContext</code> is copied from <code>TestUtils.hs</code>.)</p>
+<p>Events that straddle a cycle boundary show up as two events with different parts but the same whole. In this example, we have</p>
+<ul>
+<li>(¾&gt;1)-1⅛|‘b’</li>
+<li>¾-(1&gt;1⅛)|‘b’</li>
+</ul>
+<p>Both events’ wholes are the same: (¾&gt;1⅛).</p>
+<p>I’m not sure if this is intentional or if it’s an artifact of how I’m doing this.</p>
+<p>I don’t think it’s important in practice since I would assume the scheduler sends out the event that contains the whole’s onset and ignores the other one. I confirmed using a Tidal REPL (BootTidal.hs) and <code>oscdump</code> that using <code>speed 1.5</code> sends the OSC messages that you’d expect.</p>
+<p>The way I found to work around this is to use <code>defragParts</code> and <code>sort</code>:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; import Data.List (sort)
+Prelude Sound.Tidal.Context Data.List&gt; mapM_ print $ sort $ defragParts $ queryArc (stripContext pat) (Arc 0 3)
+[](0&gt;⅜)|&#39;a&#39;
+[](⅜&gt;¾)|&#39;a&#39;
+[](¾&gt;1⅛)|&#39;b&#39;
+[](1⅛&gt;1½)|&#39;c&#39;
+[](1½&gt;1⅞)|&#39;a&#39;
+[](1⅞&gt;2¼)|&#39;a&#39;
+[](2¼&gt;2⅝)|&#39;b&#39;
+[](2⅝&gt;3)|&#39;c&#39;
+</code></pre>
+<h2 id="controlpattern-and-valuemap"><code>ControlPattern</code> and <code>ValueMap</code></h2>
+<p>Tidal examples often start with something like <code>s $ "bd sd bd sd"</code>. If we look at its type:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; pat = s $ parseBP_E &quot;bd sd bd sd&quot;
+Prelude Sound.Tidal.Context&gt; pat
+(0&gt;¼)|s: &quot;bd&quot;
+(¼&gt;½)|s: &quot;sd&quot;
+(½&gt;¾)|s: &quot;bd&quot;
+(¾&gt;1)|s: &quot;sd&quot;
+Prelude Sound.Tidal.Context&gt; :t pat
+pat :: ControlPattern
+</code></pre>
+<p>A <code>ControlPattern</code> is a pattern that contains events whose values are maps with key/value pairs. It is defined in <code>src/Sound/Tidal/Pattern.hs</code></p>
+<pre><code>type ControlPattern = Pattern ValueMap
+
+type ValueMap = Map.Map String Value
+
+-- | Polymorphic values
+data Value = VS { svalue :: String   }
+           | VF { fvalue :: Double   }
+           | VN { nvalue :: Note     }
+           ...</code></pre>
+<p>So each event in the pattern has a value of type <code>ValueMap</code>. As I understand it, the idea is that the various keys in the <code>ValueMap</code> get inserted into the outgoing OSC message. The particular keys to use are defined by SuperDirt, so this is the point where we need to factor in how SuperDirt works.</p>
+<p>From <a href="https://github.com/musikinformatik/SuperDirt/blob/master/classes/DirtEvent.sc"><code>SuperDirt/classes/DirtEvent.sc</code></a>:</p>
+<pre><code>DirtEvent {
+    ...
+
+    play {
+        event.parent = orbit.defaultParentEvent;
+        event.use {
+            // s and n stand for synth/sample and note/number
+            ~s ?? { this.splitName };
+            ...
+    }
+    ...
+}
+
+splitName {
+    var s, n;
+    #s, n = ~sound.asString.split($:);
+    ~s = s.asSymbol;
+    ~n = if(n.notNil) { n.asFloat } { 0.0 };
+}</code></pre>
+<p>So the key <code>s</code> refers to the synth or sample to use.</p>
+<p>The Tidal function <code>s</code> is an alias for <code>sound</code>. It’s defined in <code>src/Sound/Tidal/Params.hs</code>.</p>
+<pre><code>s :: Pattern String -&gt; ControlPattern
+s = sound
+
+sound :: Pattern String -&gt; ControlPattern
+sound = grp [mS &quot;s&quot;, mF &quot;n&quot;]</code></pre>
+<p>This is combining a string value with key “s” and a float value with key “n”.</p>
+<p><code>d1 $ s "sd bd hh"</code> sends this over OSC:</p>
+<pre><code>e56dd4d3.2f855800 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 79.000000 &quot;delta&quot; 0.592592 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd4d3.c7397800 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 79.333336 &quot;delta&quot; 0.592593 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e56dd4d4.5eeda000 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 79.666664 &quot;delta&quot; 0.592593 &quot;orbit&quot; 0 &quot;s&quot; &quot;hh&quot;
+e56dd4d4.f6a1c800 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 80.000000 &quot;delta&quot; 0.592593 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd4d5.8e55f000 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 80.333336 &quot;delta&quot; 0.592592 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e56dd4d6.260a1000 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 80.666664 &quot;delta&quot; 0.592593 &quot;orbit&quot; 0 &quot;s&quot; &quot;hh&quot;</code></pre>
+<p><code>d1 $ s "sd sd:1 sd:2 sd:3"</code> sends this over OSC:</p>
+<pre><code>e56dd58a.4bf71800 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 182.000000 &quot;delta&quot; 0.444445 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58a.bdbe3800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 182.250000 &quot;delta&quot; 0.444445 &quot;n&quot; 1.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58b.2f855800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 182.500000 &quot;delta&quot; 0.444444 &quot;n&quot; 2.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58b.a14c7000 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 182.750000 &quot;delta&quot; 0.444445 &quot;n&quot; 3.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58c.13139000 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 183.000000 &quot;delta&quot; 0.444444 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58c.84daa800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 183.250000 &quot;delta&quot; 0.444445 &quot;n&quot; 1.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58c.f6a1c800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 183.500000 &quot;delta&quot; 0.444444 &quot;n&quot; 2.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;
+e56dd58d.6868e000 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 183.750000 &quot;delta&quot; 0.444445 &quot;n&quot; 3.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;sd&quot;</code></pre>
+<p>So for e.g. snare drum samples, there are several snare drums to choose from, and this is cycling through the first four of them.</p>
+<h2 id="the-operator">The (#) operator</h2>
+<p>You see the operator <code>(#)</code> in Tidal examples a lot, such as <code>sound "bd*8" # pan rand</code>. It’s an alias for <code>(|&gt;)</code>, which is one of the pattern union operators. From <code>Core.hs</code>:</p>
+<pre><code>-- Backward compatibility - structure from left, values from right.
+(#) :: Unionable b =&gt; Pattern b -&gt; Pattern b -&gt; Pattern b
+(#) = (|&gt;)
+
+(|&gt; ) :: Unionable a =&gt; Pattern a -&gt; Pattern a -&gt; Pattern a
+a |&gt;  b = flip union &lt;$&gt; a &lt;* b</code></pre>
+<p>So it takes the events from the left pattern, and does the <code>ValueMap</code> union with the values from the pattern on the right.</p>
+<h2 id="layering-parameter-patterns-to-build-up-an-event-stream">Layering parameter patterns to build up an event stream</h2>
+<p>So one reason <code>ControlPattern</code>s are interesting is that you can create individual patterns for different parameters and then combine them into one stream of events.</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; stripContext = setContext $ Context []
+Prelude Sound.Tidal.Context&gt; putStrLn $ showAll (Arc 0 3) $ stripContext $ (s $ parseBP_E &quot;bd sd hh&quot;) # (slow 3 $ pan $ parseBP_E &quot;0.2 0.5 0.7&quot;)
+[](0&gt;⅓)|pan: 0.2f, s: &quot;bd&quot;
+[](⅓&gt;⅔)|pan: 0.2f, s: &quot;sd&quot;
+[](⅔&gt;1)|pan: 0.2f, s: &quot;hh&quot;
+[](1&gt;1⅓)|pan: 0.5f, s: &quot;bd&quot;
+[](1⅓&gt;1⅔)|pan: 0.5f, s: &quot;sd&quot;
+[](1⅔&gt;2)|pan: 0.5f, s: &quot;hh&quot;
+[](2&gt;2⅓)|pan: 0.7f, s: &quot;bd&quot;
+[](2⅓&gt;2⅔)|pan: 0.7f, s: &quot;sd&quot;
+[](2⅔&gt;3)|pan: 0.7f, s: &quot;hh&quot;
+</code></pre>
+<p><img src="valueAlgebraMapDiagram.svg" /></p>
+<p>This is a little more succinct to express in Tidal proper. You can write it as</p>
+<pre><code>tidal&gt; s &quot;bd sd hh&quot; # (slow 3 $ pan &quot;0.2 0.5 0.7&quot;)</code></pre>
+<p>or</p>
+<pre><code>tidal&gt; s &quot;bd sd hh&quot; # pan &quot;{0.2 0.5 0.7}%1&quot;</code></pre>
+<h2 id="booting-tidal-from-ghci">Booting Tidal from ghci</h2>
+<p>You can actually boot a live Tidal from ghci and get a prompt:</p>
+<pre><code>$ ghci
+GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+Prelude&gt; :script BootTidal.hs
+[TidalCycles version 1.7.8]
+Installed in /.../.cabal/store/ghc-8.10.7/tdl-1.7.8-5d5b197d/share
+Listening for external controls on 127.0.0.1:6010
+tidal&gt; Waiting for SuperDirt (v.1.7.2 or higher)..
+
+tidal&gt;
+tidal&gt; s &quot;a b c&quot;
+(0&gt;⅓)|s: &quot;a&quot;
+(⅓&gt;⅔)|s: &quot;b&quot;
+(⅔&gt;1)|s: &quot;c&quot;</code></pre>
+<p>Either run <code>ghci</code> and then <code>:script BootTidal.hs</code>, or run <code>ghci -ghci-script BootTidal.hs</code>.</p>
+<h2 id="inspecting-osc">Inspecting OSC</h2>
+<p>You can use <code>oscdump</code> from <code>liblo</code> to see what messages are being sent out:</p>
+<pre><code>$ ./oscdump 57120</code></pre>
+<p>Then in the Tidal REPL:</p>
+<pre><code>$ ghci -ghci-script BootTidal.hs
+GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+Loaded package environment from /.../.ghc/x86_64-darwin-8.10.7/environments/default
+[TidalCycles version 1.7.8]
+Installed in /.../.cabal/store/ghc-8.10.7/tdl-1.7.8-5d5b197d/share
+Listening for external controls on 127.0.0.1:6010
+Loaded GHCi configuration from BootTidal.hs
+tidal&gt; Waiting for SuperDirt (v.1.7.2 or higher)..
+
+tidal&gt;
+tidal&gt; d1 $ s &quot;bd&quot;</code></pre>
+<p>You see in the running <code>oscdump</code>:</p>
+<pre><code>e520f7d6.950bd000 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 47.000000 &quot;delta&quot; 1.777778 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f7d6.faaf9a8b /dirt/handshake
+e520f7d8.5c284800 /dirt/play sssfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 48.000000 &quot;delta&quot; 1.777778 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f7d8.fae3e6c3 /dirt/handshake</code></pre>
+<p>Another example:</p>
+<pre><code>tidal&gt; d1 $ s &quot;bd&quot; + (n &quot;1 2 3&quot;)
+
+in oscdump:
+e520f856.950bd000 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 119.000000 &quot;delta&quot; 0.592593 &quot;n&quot; 1.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f857.26c8a372 /dirt/handshake
+e520f857.2cbff800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 119.333336 &quot;delta&quot; 0.592593 &quot;n&quot; 2.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f857.c4742000 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 119.666664 &quot;delta&quot; 0.592593 &quot;n&quot; 3.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f858.5c284800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 120.000000 &quot;delta&quot; 0.592592 &quot;n&quot; 1.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f858.f3dc6800 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 120.333336 &quot;delta&quot; 0.592593 &quot;n&quot; 2.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;
+e520f859.2854de7e /dirt/handshake
+e520f859.8b909000 /dirt/play sssfsfsfsfsiss &quot;_id_&quot; &quot;1&quot; &quot;cps&quot; 0.562500 &quot;cycle&quot; 120.666664 &quot;delta&quot; 0.592593 &quot;n&quot; 3.000000 &quot;orbit&quot; 0 &quot;s&quot; &quot;bd&quot;</code></pre>
+<p>So this is a good way of sanity checking how patterns are played and what’s the result of combining patterns.</p>
+<p>Use this to prevent the handshake messages from showing up:</p>
+<pre><code>./oscdump -L 57120 | grep -v dirt.handshake</code></pre>
+<h2 id="continuous-patterns">Continuous patterns</h2>
+<p>Tidal also has continuous patterns, like <code>sine</code>:</p>
+<pre><code>Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0 :: Arc)
+[[]~0&gt;0~|pan: 0.5f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0.1 :: Arc)
+[[]~⅒&gt;⅒~|pan: 0.7938926261462366f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0.2 :: Arc)
+[[]~⅕&gt;⅕~|pan: 0.9755282581475768f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0.25 :: Arc)
+[[]~¼&gt;¼~|pan: 1.0f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0.5 :: Arc)
+[[]~½&gt;½~|pan: 0.5000000000000001f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (0.75 :: Arc)
+[[]~¾&gt;¾~|pan: 0.0f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (1.0 :: Arc)
+[[]~1&gt;1~|pan: 0.4999999999999999f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (1.25 :: Arc)
+[[]~1¼&gt;1¼~|pan: 1.0f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (1.5 :: Arc)
+[[]~1½&gt;1½~|pan: 0.5000000000000002f]
+Prelude Sound.Tidal.Context&gt; queryArc (pan sine) (1.75 :: Arc)
+[[]~1¾&gt;1¾~|pan: 0.0f]
+</code></pre>
+<p>So it varies continuously.</p>
+<p><code>sine</code> is defined in <code>src/Sound/Tidal/Core.hs</code></p>
+<p>These continuous patterns are implemented via <code>sig</code> in <code>Core.hs</code></p>
+<pre><code>-- | Takes a function from time to values, and turns it into a &#39;Pattern&#39;.
+sig :: (Time -&gt; a) -&gt; Pattern a</code></pre>
+<p>When you query over an arc, it gives back the entire arc as the event part extents. It has no whole.</p>
+<pre><code>tidal&gt; e = head $ queryArc (pan sine) (Arc 0.5 2)
+tidal&gt; whole e
+Nothing
+tidal&gt; part e
+½&gt;2
+tidal&gt; value e
+pan: 1.0f
+</code></pre>
+<p>NB: <code>sig</code> evaluates the continuous function in the <em>middle</em> of the query arc:</p>
+<pre><code>tidal&gt; queryArc (pan sine) (Arc 0.5 0.7)
+[[]~½&gt;7/10~|pan: 0.2061073738537635f]
+tidal&gt; queryArc (pan sine) (Arc 0.6 0.6)
+[[]~⅗&gt;⅗~|pan: 0.2061073738537635f]
+</code></pre>
+<p><img src="sigEvaluatesAtMiddle.svg" /></p>
+<h3 id="setting-event-parameters-from-a-continuous-pattern">Setting event parameters from a continuous pattern</h3>
+<p>To take the panning value for each event of a pattern from a second continuous signal you can do this:</p>
+<pre><code>tidal&gt; s &quot;a b c d&quot; # pan sine
+(0&gt;¼)|pan: 0.8535533905932737f, s: &quot;a&quot;
+(¼&gt;½)|pan: 0.8535533905932737f, s: &quot;b&quot;
+(½&gt;¾)|pan: 0.14644660940672627f, s: &quot;c&quot;
+(¾&gt;1)|pan: 0.14644660940672616f, s: &quot;d&quot;
+</code></pre>
+<p>It’s sampling the sine in the middle of each event.</p>
+<p>You can also use the <code>segment</code> function to first sample the continuous pattern before applying it to the notes:</p>
+<pre><code>tidal&gt; s &quot;a b c d&quot; # (pan $ segment 7 sine)
+    (0&gt;⅐)-¼|pan: 0.716941869558779f, s: &quot;a&quot;
+    0-(⅐&gt;¼)|pan: 0.9874639560909118f, s: &quot;a&quot;
+   (¼&gt;²₇)-½|pan: 0.9874639560909118f, s: &quot;b&quot;
+¼-(²₇&gt;³₇)-½|pan: 0.890915741234015f, s: &quot;b&quot;
+   ¼-(³₇&gt;½)|pan: 0.5000000000000001f, s: &quot;b&quot;
+   (½&gt;⁴₇)-¾|pan: 0.5000000000000001f, s: &quot;c&quot;
+½-(⁴₇&gt;⁵₇)-¾|pan: 0.10908425876598515f, s: &quot;c&quot;
+   ½-(⁵₇&gt;¾)|pan: 1.253604390908819e-2f, s: &quot;c&quot;
+   (¾&gt;⁶₇)-1|pan: 1.253604390908819e-2f, s: &quot;d&quot;
+   ¾-(⁶₇&gt;1)|pan: 0.28305813044122086f, s: &quot;d&quot;
+tidal&gt; filterEvents eventHasOnset $ s &quot;a b c d&quot; # (pan $ segment 7 sine)
+ (0&gt;⅐)-¼|pan: 0.716941869558779f, s: &quot;a&quot;
+(¼&gt;²₇)-½|pan: 0.9874639560909118f, s: &quot;b&quot;
+(½&gt;⁴₇)-¾|pan: 0.5000000000000001f, s: &quot;c&quot;
+(¾&gt;⁶₇)-1|pan: 1.253604390908819e-2f, s: &quot;d&quot;
+</code></pre>
+<p><img src="sigToSetPanning.svg" /></p>
+<p>I confirmed with <code>oscdump</code> that this is effectively only applying the panning value at each note onset. The events without onsets don’t get sent out over OSC.</p>
+<p>See <a href="http://tidalcycles.org/docs/reference/sampling/#segment" class="uri">http://tidalcycles.org/docs/reference/sampling/#segment</a> for an example of <code>segment</code> which is similar to this.</p>
+<h2 id="deconstructing-longer-expressions">Deconstructing longer expressions</h2>
+<p>We can use the following to check how the expressions are being parenthesized:</p>
+<pre><code>ghci -ddump-splices -XTemplateHaskell -ghci-script BootTidal.hs
+...
+tidal&gt; $([| s &quot;1 2 3 4&quot; # pan sine # amp square # speed tri |])
+&lt;interactive&gt;:17:3-55: Splicing expression
+    [| s &quot;1 2 3 4&quot; # pan sine # amp square # speed tri |]
+  ======&gt;
+    (((s &quot;1 2 3 4&quot; # pan sine) # amp square) # speed tri)
+...</code></pre>
+<p>So it looks like (#) is left associative. Function application always binds more tightly than operators, so that’s why we don’t need brackets between the <code>#</code>s.</p>
+<pre><code>tidal&gt; $([| slow 3 $ s &quot;1 2 3 4&quot; # pan sine # amp square # speed tri |])
+&lt;interactive&gt;:24:3-64: Splicing expression
+    [| slow 3 $ s &quot;1 2 3 4&quot; # pan sine # amp square # speed tri |]
+  ======&gt;
+    (slow 3 $ (((s &quot;1 2 3 4&quot; # pan sine) # amp square) # speed tri))
+...</code></pre>
+<p>And using <code>slow</code> in this way operates on everything to its right (which I guess is to be expected due to the <code>$</code>).</p>
+<h2 id="ui.hs"><code>UI.hs</code></h2>
+<p><code>UI.hs</code> contains the higher-level pattern manipulation functions. I’m not super interested in documenting all of these, but I’ll review a few for completeness.</p>
+<p>“<code>rand</code> generates a continuous pattern of (pseudo-)random numbers between <code>0</code> and <code>1</code>.”</p>
+<pre><code>tidal&gt; sound &quot;bd*8&quot; # pan rand
+(0&gt;⅛)|pan: 0.1573922149837017f, s: &quot;bd&quot;
+(⅛&gt;¼)|pan: 0.8002497870475054f, s: &quot;bd&quot;
+(¼&gt;⅜)|pan: 0.5694582536816597f, s: &quot;bd&quot;
+(⅜&gt;½)|pan: 0.6965191215276718f, s: &quot;bd&quot;
+(½&gt;⅝)|pan: 0.8397923950105906f, s: &quot;bd&quot;
+(⅝&gt;¾)|pan: 0.412840036675334f, s: &quot;bd&quot;
+(¾&gt;⅞)|pan: 0.7543692551553249f, s: &quot;bd&quot;
+(⅞&gt;1)|pan: 0.6971595510840416f, s: &quot;bd&quot;
+</code></pre>
+<p>The infamous <code>jux</code> takes a function and a pattern; it puts one copy of the pattern in the left channel, and another copy of the pattern in the right channel with the function applied.</p>
+<pre><code>tidal&gt; jux rev $ s &quot;sd bd oh ch&quot;
+(0&gt;¼)|pan: 0.0f, s: &quot;sd&quot;
+(0&gt;¼)|pan: 1.0f, s: &quot;ch&quot;
+(¼&gt;½)|pan: 0.0f, s: &quot;bd&quot;
+(¼&gt;½)|pan: 1.0f, s: &quot;oh&quot;
+(½&gt;¾)|pan: 0.0f, s: &quot;oh&quot;
+(½&gt;¾)|pan: 1.0f, s: &quot;bd&quot;
+(¾&gt;1)|pan: 0.0f, s: &quot;ch&quot;
+(¾&gt;1)|pan: 1.0f, s: &quot;sd&quot;
+</code></pre>
+<p><img src="juxexample.svg" /></p>
+<p><code>shuffle</code> divides a cycle up and randomly permutes the parts.</p>
+<pre><code>tidal&gt; shuffle 4 $ s &quot;sd bd oh ch&quot;
+(0&gt;¼)|s: &quot;sd&quot;
+(¼&gt;½)|s: &quot;bd&quot;
+(½&gt;¾)|s: &quot;oh&quot;
+(¾&gt;1)|s: &quot;ch&quot;
+</code></pre>
+<p><img src="shuffleexample.svg" /></p>
+<p>There’s lots more to explore in <code>UI.hs</code>. It’s documented on <a href="https://hackage.haskell.org/package/tidal-1.7.9/docs/Sound-Tidal-UI.html">hackage</a>.</p>
+<h2 id="boottidal.hs"><code>BootTidal.hs</code></h2>
+<p>The <code>BootTidal.hs</code> starts up Tidal and sets up several of the convenience aliases that make it easier to write code live.</p>
+<p><code>tidal</code> here refers to the variable that’s returned by <code>startTidal</code>.</p>
+<pre><code>p = streamReplace tidal
+...
+hush = streamHush tidal
+mute = streamMute tidal
+unmute = streamUnmute tidal
+...
+solo = streamSolo tidal
+...
+setcps = asap . cps
+getcps = streamGetcps tidal
+...
+d1 = p 1 . (|&lt; orbit 0)
+d2 = p 2 . (|&lt; orbit 1)
+d3 = p 3 . (|&lt; orbit 2)
+...</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>So that’s it. Hopefully that was helpful if you’re trying to understand Tidal’s codebase or to use it from ghci. Now I’m off to make some music!</p>
+<h2 id="see-also">See also</h2>
+<p>Live code with Tidal Cycles | Tidal Cycles<br/> <a href="https://tidalcycles.org/" class="uri">https://tidalcycles.org/</a></p>
+<p>Types in tidal-cycles<br/> <a href="https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/" class="uri">https://www.imn.htwk-leipzig.de/~waldmann/etc/untutorial/tc/types/</a></p>
+<p>What is a pattern? - TidalCycles userbase<br/> <a href="https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F" class="uri">https://userbase.tidalcycles.org/index.php/What_is_a_pattern%3F</a></p>
+<p>Tidal Adventures. Introduction | by Carsten Heisterkamp | Medium<br/> <a href="https://heisterkamp.medium.com/tidal-adventures-ab627f05ef7c" class="uri">https://heisterkamp.medium.com/tidal-adventures-ab627f05ef7c</a></p>
+<p>tidal: Pattern language for improvised music<br/> <a href="https://hackage.haskell.org/package/tidal" class="uri">https://hackage.haskell.org/package/tidal</a></p>
+<h2 id="document-version">Document Version</h2>
+<p>This document was built from the following git commit:<br/> v1 (0a55b14425636ae2b3b041314f9c714bbe4afd23), 2022-01-05</p>
+<p><strong>Version history</strong></p>
+<p>v1 (0a55b14425636ae2b3b041314f9c714bbe4afd23), 2022-01-05<br/></p>
+<ul>
+<li>Initial release</li>
+</ul>
+</body>
+</html>
