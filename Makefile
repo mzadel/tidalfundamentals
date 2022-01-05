@@ -32,9 +32,6 @@ tidal-output-%.txt: | tidal-input-%.txt
 $(document).html: $(document).txt $(addsuffix .svg,$(diagrams)) $(replsessions)
 	pandoc -f markdown -t html -s --toc --lua-filter renderghcisessions.lua --lua-filter gitinfo.lua < $< > $@
 
-watch:
-	while true; do $(MK) -q || $(MK); sleep 0.5; done
-
 clean:
 	git clean -f $(wildcard $(diagramexecutable)*)
 	git clean -f $(foreach module,$(modules),$(wildcard $(module)*))
